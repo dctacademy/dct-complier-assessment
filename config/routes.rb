@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :practices
   resources :assignment_groups
-  resources :batches do 
+  resources :batches do
     resources :assignment_groups
   end
   resources :students
@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       get 'index'
       get 'search'
       get 'questions'
+      get 'assignments'
     end
   end
 

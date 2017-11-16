@@ -30,6 +30,11 @@
     <% end %>
   </tbody>
     </table>
+
+    <% if can? :create, AssignmentGroup.new %>
+      <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
+    <% end %>
+
   </div>
 
   <div class="col-md-4">
