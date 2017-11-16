@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def create
 		@user = User.new(user_params)
-		User.invite!(user_params)
+		#User.invite!(user_params)
     if @user.save
       redirect_to root_path ,notice: "successfully sent invitation."
     else
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   private
 
 	def user_params
-		params[:user].permit(:email, :username, role_ids: [])
+		params[:user].permit(:email, :username, :student_id, :password, role_ids: [])
 	end
 
 end

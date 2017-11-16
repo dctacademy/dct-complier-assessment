@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107060319) do
+ActiveRecord::Schema.define(version: 20171115035753) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 20171107060319) do
     t.string   "output"
     t.integer  "assignment_id"
     t.string   "language"
+  end
+
+  create_table "assignment_groups", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "batch_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.datetime "due_datetime"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -35,6 +43,29 @@ ActiveRecord::Schema.define(version: 20171107060319) do
     t.string   "code"
     t.boolean  "approved",   default: false
     t.index ["deleted_at"], name: "index_assignments_on_deleted_at"
+  end
+
+  create_table "batch_students", force: :cascade do |t|
+    t.integer  "batch_id"
+    t.integer  "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "batches", force: :cascade do |t|
+    t.string   "title"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "course_id"
+    t.boolean  "is_completed", default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "favourites", force: :cascade do |t|
@@ -72,8 +103,37 @@ ActiveRecord::Schema.define(version: 20171107060319) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "practice_students", force: :cascade do |t|
+    t.integer  "assignment_group_id"
+    t.integer  "student_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "practices", force: :cascade do |t|
+    t.integer  "assignment_group_id"
+    t.integer  "assignment_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_courses", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "mobile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -125,6 +185,7 @@ ActiveRecord::Schema.define(version: 20171107060319) do
     t.string   "invited_by_type"
     t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
+    t.integer  "student_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"

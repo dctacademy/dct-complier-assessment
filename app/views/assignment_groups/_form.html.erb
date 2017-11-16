@@ -1,0 +1,43 @@
+<%= form_for(assignment_group) do |f| %>
+  <% if assignment_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assignment_group.errors.count, "error") %> prohibited this assignment_group from being saved:</h2>
+
+      <ul>
+      <% assignment_group.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :batch_id %>
+    <%= f.collection_select :batch_id, Batch.all, :id, :title, {}, {class: "form-control chosen-select", disabled: true} %>
+    <%= f.hidden_field :batch_id, value: params[:batch_id] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :due_datetime %>
+    <%= f.datetime_select :due_datetime, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :assignment_id %>
+    <%= f.collection_select :assignment_ids, Assignment.all, :id, :title, {}, {class: "form-control chosen-select", multiple: true} %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :students %>
+    <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]), :id, :name, {}, {class: "chosen-select", multiple: true} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

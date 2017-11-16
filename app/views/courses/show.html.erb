@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @course.name %>
+</p>
+
+<% if can? :update, @course %>
+	<%= link_to 'Edit', edit_course_path(@course) %> |
+<% end %>
+<%= link_to 'Back', courses_path %>

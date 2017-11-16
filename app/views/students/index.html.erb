@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="page-header">
+      <h2>Listing Students</h2>
+    </div>
+    <table class="table table-striped">
+      <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.name %></td>
+        <td><%= student.email %></td>
+        <td><%= student.mobile %></td>
+        <td><%= link_to 'Show', student %></td>
+        <% if can? :update, student %>
+          <td><%= link_to 'Edit', edit_student_path(student) %></td>
+        <% end %>
+        <% if can? :destroy, student %>
+          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-4">
+
+  </div>
+</div>
+
+<br>
+<% if can? :create, Student.new %>
+  <%= link_to 'New Student', new_student_path, class: "btn btn-primary" %>
+<% end %>

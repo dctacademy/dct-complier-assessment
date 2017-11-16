@@ -34,6 +34,8 @@ class Ability
     elsif user.role? "moderator"
         can :read ,[Assignment,Answer]
         can :update, Assignment
+    elsif user.role? "student"
+        can :read, [Assignment]
     end
     # The first argument to `can` is the action you are giving the user
     # permission to do.

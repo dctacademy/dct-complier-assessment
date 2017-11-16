@@ -1,0 +1,28 @@
+<%= form_for(practice) do |f| %>
+  <% if practice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(practice.errors.count, "error") %> prohibited this practice from being saved:</h2>
+
+      <ul>
+      <% practice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :assignment_group_id %>
+    <%= f.collection_select :assignment_group_id, AssignmentGroup.all, :id, :title, {}, {class: "chosen-select"} %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :assignment_id %>
+    <%= f.collection_select :assignment_id, Assignment.all, :id, :title, {}, {class: "chosen-select"} %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit "submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

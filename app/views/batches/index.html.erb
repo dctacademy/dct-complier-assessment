@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header">
+      <h2>List Batches</h2>
+    </div>
+    <table class="table table-striped">
+       <thead>
+    <tr>
+      <th>Title</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Course</th>
+      <th>Is completed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @batches.each do |batch| %>
+      <tr>
+        <td><%= batch.title %></td>
+        <td><%= batch.start_date %></td>
+        <td><%= batch.end_date %></td>
+        <td><%= batch.course.name %></td>
+        <td><%= batch.is_completed %></td>
+        <td><%= link_to 'Show', batch %></td>
+        <% if can? :update, batch %>
+         <td><%= link_to 'Edit', edit_batch_path(batch) %></td>
+        <% end %>
+        <% if can? :destroy, batch %>
+         <td><%= link_to 'Destroy', batch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+
+  </div>
+</div>
+<br>
+
+<% if can? :create, Batch.new %>
+  <%= link_to 'New Batch', new_batch_path, class: "btn btn-primary" %>
+<% end %>

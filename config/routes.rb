@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :practices
+  resources :assignment_groups
+  resources :batches do 
+    resources :assignment_groups
+  end
+  resources :students
+  resources :courses
   devise_for :users , :path_prefix => "my"
   resources :users
   resources :assignments do

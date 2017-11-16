@@ -1,10 +1,13 @@
 class Assignment < ApplicationRecord
 
-  # searchable do
-  #   string :title
-  #   text :body
-  #   #string :tag_list
-  # end
+  searchable do
+    string :title
+    text :body
+    string :tag_list
+  end
+
+  has_many :practices
+  has_many :assignment_groups, through: :practices
 
   validates_uniqueness_of :code , message: "Re-submit to generate a new code."
 

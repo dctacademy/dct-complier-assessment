@@ -1,29 +1,29 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :invitable,
-         :recoverable, :rememberable, :trackable, :validatable
-         has_many :my_answers,foreign_key: "user_id",class_name: "Answer"
+    devise :invitable, :database_authenticatable,
+         :recoverable, :rememberable, :trackable, :validatable#, :invitable
+     has_many :my_answers,foreign_key: "user_id",class_name: "Answer"
 
-         has_many :permissions
-         has_many :roles,through: :permissions
+     has_many :permissions
+     has_many :roles,through: :permissions
 
-         has_many :my_assignments,foreign_key: "user_id",class_name: "Assignment"
+     has_many :my_assignments,foreign_key: "user_id",class_name: "Assignment"
 
-         has_many :favourites
-         has_many :assignments, through: :favourites
+     has_many :favourites
+     has_many :assignments, through: :favourites
 
-         has_many :forks
-         has_many :answers,through: :forks
+     has_many :forks
+     has_many :answers,through: :forks
 
-         has_many :lists
-         #after_create :assign_user_role
+     has_many :lists
+     #after_create :assign_user_role
 
-         def role? role
-           self.roles.pluck(:name).include? role
-         end
+     def role? role
+       self.roles.pluck(:name).include? role
+     end
 
-        #  def assign_user_role
-        #    Permission.create(user_id: self.id,role_id: Role.last.id)
-        #  end
+    #  def assign_user_role
+    #    Permission.create(user_id: self.id,role_id: Role.last.id)
+    #  end
 end

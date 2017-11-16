@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="page-header">
+			<h2><%= @practice.assignment_group.title %></h2>
+		</div>	
+		<p>
+		  <strong>Assignment:</strong>
+		  <%= @practice.assignment.title %>
+		</p>
+
+	</div>
+
+	<div class="col-md-4">
+		<div class="page-header">
+			<h2>Students</h2>
+		</div>	
+		<ul class="list-group">
+		<% @practice.students.each do |student| %>
+			<li class="list-group-item"><%= student.name %></li>
+		<% end %>
+		</ul>
+
+	</div>
+</div>
+
+<%= link_to 'Edit', edit_practice_path(@practice) %> |
+<%= link_to 'Back', practices_path %>
