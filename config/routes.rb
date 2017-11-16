@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     collection do
       get 'recents' # to override assignments_recents action will be recents_assignments
       get 'approved'
-      get 'deleted'
       get 'search'
       get 'approval'
       get 'sources'
@@ -22,9 +21,6 @@ Rails.application.routes.draw do
       get 'random'
     end
   end
-
-  get 'paranoid/restore'
-  get 'paranoid/delete_forever'
 
   resources :answers do
       collection do
@@ -54,7 +50,6 @@ Rails.application.routes.draw do
   get 'tags/question_filter'
 
   get 'home/index'
-  get 'home/input'
   get 'home/check_cache'
 
 

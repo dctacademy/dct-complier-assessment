@@ -11,8 +11,6 @@ class Assignment < ApplicationRecord
 
   validates_uniqueness_of :code , message: "Re-submit to generate a new code."
 
-  acts_as_paranoid
-
   belongs_to :user
 
   has_many :answers

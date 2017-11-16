@@ -5,9 +5,12 @@
       <div class="form-inline">
 
       <select class="form-control-sm col-md-3" name="language" id="sel">
-        <option value="ruby">Ruby</option>
+        <% @practice.assignment_group.tag_list.each do |lang| %>
+          <option value="<%= lang %>"><%= lang %></option>
+         <% end %>
+        <!-- <option value="ruby">Ruby</option>
         <option value="javascript">JavaScript</option>
-        <option value="python">Python3</option>
+        <option value="python">Python3</option> --> -->
       </select>
        <h4 class="pull-right"><b class="font">Stats:</b><i class="icon-javascript" style="font-size:2em" id="js" ><%= @js.size %></i> || <i class="icon-python" style="font-size:2em" id="py" ><%= @py.size %></i> || <i class="icon-ruby" style="font-size:2em" id="rb" ><%= @rb.size %></i></h4><br/><br/>
     </div>
@@ -131,11 +134,10 @@ $(document).ready(function(){
   //this is compiler code
   var flag = true;
   var lang = "ruby";
-  var eName = "<%= current_user.try(:id).to_s + "_" + @assignment.id.to_s %>";
   var web = "/answers/"
-  var js = jcode = "//type code here";
-  var pythoncon = pcode = "#type code here";
-  var rubycon = rcode = "#type code here";
+  var js = jcode = "//type js code here";
+  var pythoncon = pcode = "#type python code here";
+  var rubycon = rcode = "#type ruby code here";
   var j = 1;
   var rid = 0;
   var jsid = 0;
@@ -199,7 +201,6 @@ $(document).ready(function(){
               flag = true;
               break;
           }
-            //editor.setOption("mode",lang);
         }else{
           switch (lang) {
             case "python":
@@ -229,8 +230,8 @@ $(document).ready(function(){
             // editor.setOption("mode","text");
             // editor.setOption("readOnly","nocursor");
         }
+          editor.setOption("mode",lang);
         }
-        editor.setOption("mode",lang);
       });
     };
 
@@ -256,10 +257,9 @@ $(document).ready(function(){
               break;
           }
         $.ajax({
-          url: "<%= home_input_path%>",
+          url: "http://compilez.herokuapp.com/home/input",
           type: "get",
           data: {
-            name: eName,
             content: sent,
             extension: lang
           },

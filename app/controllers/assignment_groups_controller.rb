@@ -1,7 +1,7 @@
 class AssignmentGroupsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  
+
   before_action :set_assignment_group, only: [:show, :edit, :update, :destroy]
 
   # GET /assignment_groups
@@ -10,7 +10,7 @@ class AssignmentGroupsController < ApplicationController
     if params[:batch_id]
       @batch = Batch.find(params[:batch_id])
       @assignment_groups = @batch.assignment_groups
-    else 
+    else
       @assignment_groups = AssignmentGroup.all
     end
   end
@@ -34,7 +34,7 @@ class AssignmentGroupsController < ApplicationController
   # POST /assignment_groups.json
   def create
     @assignment_group = AssignmentGroup.new(assignment_group_params)
-
+    @assignment_group.tag_list = params[:assignment_group][:tag_list]
     respond_to do |format|
       if @assignment_group.save
         format.html { redirect_to batch_assignment_group_path(@assignment_group.batch, @assignment_group), notice: 'Assignment group was successfully created.' }
@@ -49,6 +49,7 @@ class AssignmentGroupsController < ApplicationController
   # PATCH/PUT /assignment_groups/1
   # PATCH/PUT /assignment_groups/1.json
   def update
+    @assignment_group.tag_list = params[:assignment_group][:tag_list]
     respond_to do |format|
       if @assignment_group.update(assignment_group_params)
         format.html { redirect_to batch_assignment_group_path(@assignment_group.batch, @assignment_group), notice: 'Assignment group was successfully updated.' }
@@ -78,6 +79,6 @@ class AssignmentGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_group_params
-      params.require(:assignment_group).permit(:title, :batch_id, :due_datetime, assignment_ids: [], student_ids: [])
+      params.require(:assignment_group).permit(:title, :batch_id, :tag_list, :due_datetime, assignment_ids: [], student_ids: [])
     end
 end

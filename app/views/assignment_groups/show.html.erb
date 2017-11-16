@@ -34,11 +34,10 @@
         <td><%= raw (practice.assignment.body).truncate(75) %></td>
         <td><%= practice.assignment.is_allowed ? "true" : "false" %></td>
         <td><%= practice.assignment.tag_list %></td>
-        <td><%= link_to 'Solve', practice.assignment %>
+        <td><%= link_to 'Solve', practice %>
 
           <% if current_user %>
-
-            <% if can? :destroy, practice %>
+  					<% if can? :destroy, practice %>
               <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
         <% end %>

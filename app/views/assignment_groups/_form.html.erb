@@ -37,6 +37,11 @@
     <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]), :id, :name, {}, {class: "chosen-select", multiple: true} %>
   </div>
 
+  <div class="field">
+    <%= f.label :tag_list %>
+    <%= f.collection_select :tag_list , ["ruby","javascript","python"], :to_s, :to_s, {},{class: "chosen-select",multiple: true}%>
+  </div>
+
   <div class="actions">
     <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>

@@ -32,7 +32,6 @@ class AnswersController < ApplicationController
       if @answer.save
         #format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
         format.json { render :show, status: :created, location: @answer }
-        FileDeleteJob.perform_later @answer
       else
         #format.html { render :new }
         format.json { render json: @answer.errors, status: :unprocessable_entity }

@@ -21,7 +21,6 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'cancancan', '~> 2.0'
-gem 'acts_as_paranoid'
 gem "mustache"
 gem 'sunspot_rails'
 gem 'httparty'
