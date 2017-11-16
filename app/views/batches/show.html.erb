@@ -45,7 +45,7 @@
           <td><%= assignment_group.students.count %></td>
           <td><%= assignment_group.due_datetime %></td>
           <td><%= link_to 'Show', batch_assignment_group_path(@batch, assignment_group) %></td>
-          <% if can? :update, assignment_group %> 
+          <% if can? :update, assignment_group %>
             <td><%= link_to 'Edit', edit_batch_assignment_group_path(@batch, assignment_group) %></td>
           <% end %>
         </tr>
@@ -68,7 +68,7 @@
   <div class="col-md-3">
     <div class="page-header">
       <h2>Students</h2>
-    </div>  
+    </div>
     <ul class="list-group">
     <% @batch.students.each do |student| %>
       <li class="list-group-item"><%= student.name %></li>
@@ -77,4 +77,3 @@
 
   </div>
 </div>
-

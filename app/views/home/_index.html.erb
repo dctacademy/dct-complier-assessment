@@ -182,7 +182,7 @@ $(document).ready(function(){
           if(resp == "default"){
           switch (lang) {
             case "python":
-              editor.setOption("value",js);
+              //editor.setOption("value",js);
               editor.setOption("value", pcode);
               result.setOption("value","Your result appears here");
               flag = true;
@@ -193,12 +193,13 @@ $(document).ready(function(){
               flag = true;
               break;
             default:
-              editor.setOption("value",js);
+              //editor.setOption("value",js);
               editor.setOption("value",rcode);
               result.setOption("value","Your result appears here");
               flag = true;
               break;
           }
+            //editor.setOption("mode",lang);
         }else{
           switch (lang) {
             case "python":
@@ -224,10 +225,12 @@ $(document).ready(function(){
               web = "/answers/" + rid;
               flag = false;
               break;
-          }
+            }
+            // editor.setOption("mode","text");
+            // editor.setOption("readOnly","nocursor");
         }
-          editor.setOption("mode",lang);
         }
+        editor.setOption("mode",lang);
       });
     };
 

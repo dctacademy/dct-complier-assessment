@@ -5,11 +5,3 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-Role.create(name: "admin")
-Role.create(name: "contributor")
-Role.create(name: "solver")
-Role.create(name: "moderator")
-Role.create(name: "student")
-User.create(email: "ani@dctacademy.com", username: "ani", password: "secret123")
-Permission.create(user_id: 1, role_id: 1)

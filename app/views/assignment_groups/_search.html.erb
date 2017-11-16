@@ -1,0 +1,71 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="text-center">
+    <h1>Search</h1>
+  </div>
+  <div class="text-center">
+    <input type="radio" name="type" value="any" id="any">Any
+    <input type="radio" name="type" value="exact" id="exact">Exact
+  </div>
+
+  <div class="form-group">
+    <label for="Enter Input">Enter Input</label>
+    <%= select_tag "",options_from_collection_for_select(ActsAsTaggableOn::Tag.all,"name","name") ,{id: "search" ,class: "chosen-select",multiple: true } %>
+  </div>
+</div>
+
+<div id="table">
+  <table id="example" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>code</th>
+        <th>body</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#table").hide();
+    checked = "";
+    $("#any").on('click',function(){
+      checked = $("#any").val();
+    });
+    $("#exact").on('click',function(){
+      checked = $("#exact").val();
+    });
+    $("#search").on('change',function(){
+      if(checked != ""){
+        if($("#search").val() != null){
+        sentTag = $("#search").val().join(",");
+      }
+        $.ajax({
+          url: "<%= assignments_tags_path %>",
+          type: "get",
+          data: {
+            type: 'json',
+            tag_name: sentTag,
+            search_type: checked,
+            bid: "<%= params[:batch_id] %>"
+          },
+          success: function(response){
+            $('#example').DataTable({
+              destroy: true,
+              data: response,
+              columns: [
+                { 'data' : 'title' },
+                { 'data' : 'code' },
+                { 'data' : 'body' },
+                { 'data' : 'url' },
+              ]
+            });
+            $("#table").show();
+          }
+        });
+      }else{
+        alert("Please select search type");
+      }
+    });
+  });
+</script>
