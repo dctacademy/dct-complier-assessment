@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   get 'tags/question_filter'
 
   get 'home/index'
+  get 'home/input'
   get 'home/check_cache'
 
 

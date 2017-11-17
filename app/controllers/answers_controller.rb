@@ -46,7 +46,6 @@ class AnswersController < ApplicationController
       if @answer.update(answer_params)
         #format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
         format.json { render :show, status: :ok, location: @answer }
-        FileDeleteJob.perform_later @answer
       else
         #format.html { render :edit }
         format.json { render json: @answer.errors, status: :unprocessable_entity }

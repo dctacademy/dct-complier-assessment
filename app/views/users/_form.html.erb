@@ -12,7 +12,7 @@
 				      </ul>
         </div>
     <% end %>
-  
+
       <%= f.label :username %>
       <%= f.text_field :username , class: "form-control"%>
 
@@ -23,7 +23,7 @@
       <%= f.text_field :password ,class: "form-control" %>
 
       <%= f.label :student %>
-      <%= f.collection_select :student_id, Student.all, :id, :name, class: "chosen-select" %>
+      <%= f.collection_select :student_id, Student.all, :id, :name, class: "chosen-select" %><br>
 
       <%= f.label :role_ids %><br>
       <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %><br>
