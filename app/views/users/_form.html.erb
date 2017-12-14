@@ -19,12 +19,6 @@
       <%= f.label :email %>
       <%= f.text_field :email ,class: "form-control" %>
 
-      <%= f.label :password %>
-      <%= f.text_field :password ,class: "form-control" %>
-
-      <%= f.label :student %>
-      <%= f.collection_select :student_id, Student.all, :id, :name, class: "chosen-select" %><br>
-
       <%= f.label :role_ids %><br>
       <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %><br>
 

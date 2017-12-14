@@ -3,13 +3,6 @@
   <div>
     <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
     <b><span class="right">Favourite</span></b>
-
-      <div class="link padding-bottom pull-right" hidden="true" id="link">
-        <%= link_to 'Next question', random_assignments_path(id: @assignment.id,type: "next") ,class: "btn btn-primary margin-left" %>
-      </div>
-      <div class="link padding-bottom pull-right">
-          <%= link_to 'skip', random_assignments_path(id: @assignment.id,type: "skip") ,class: "btn btn-primary" %>
-      </div>
   </div>
   <br>
 <p>
