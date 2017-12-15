@@ -4,7 +4,7 @@ class User < ApplicationRecord
     devise :invitable, :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable#, :invitable
      has_many :my_answers,foreign_key: "user_id",class_name: "Answer"
-
+     has_many :submissions
      has_many :permissions
      has_many :roles,through: :permissions
 

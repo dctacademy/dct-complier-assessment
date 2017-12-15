@@ -30,4 +30,17 @@ class HomeController < ApplicationController
     end
   end
 
+  def check_submission
+    @response = {}
+    @uid = params[:uid]
+    @aid = params[:aid]
+    @prac_id = params[:prac_id]
+    @lang = params[:language]
+    @obj = CheckSub.new(@uid,@aid,@lang,@prac_id)
+    @response["response"] = @obj.has_cache
+    respond_to do |format|
+      format.json { render json: @response}
+    end
+  end
+
 end

@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-
+  skip_authorize_resource only: [:submissions]
   before_action :set_practice, only: [:show, :edit, :update, :destroy]
 
   # GET /practices
@@ -67,6 +67,11 @@ class PracticesController < ApplicationController
       format.html { redirect_to practices_url, notice: 'Practice was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def submissions
+    @practice = Practice.find(params[:practice_id])
+    @submissions = @practice.submissions
   end
 
   private

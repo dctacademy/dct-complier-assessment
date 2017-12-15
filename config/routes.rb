@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :practices
+  resources :practices do
+    get 'submissions'
+  end
   resources :assignment_groups
   resources :batches do
     resources :assignment_groups
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
       get 'random'
     end
   end
+
+  resources :submissions
 
   resources :answers do
       collection do
@@ -49,10 +53,9 @@ Rails.application.routes.draw do
 
   get 'tags/question_filter'
 
-  get 'home/index'
+  get 'home/check_submission'
   get 'home/input'
   get 'home/check_cache'
-
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

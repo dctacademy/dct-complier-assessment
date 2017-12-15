@@ -14,6 +14,7 @@ class Assignment < ApplicationRecord
   belongs_to :user
 
   has_many :answers
+  has_many :submissions
 
   acts_as_taggable
 	acts_as_taggable_on :tags,:companies
