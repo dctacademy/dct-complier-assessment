@@ -1,5 +1,9 @@
 class AssignmentGroup < ApplicationRecord
 
+	acts_as_taggable_on
+	acts_as_taggable_on :tags
+
+
 	has_many :practices
 	has_many :assignments, through: :practices
 

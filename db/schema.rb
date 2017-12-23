@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171115035753) do
+ActiveRecord::Schema.define(version: 20171215070218) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -39,10 +39,8 @@ ActiveRecord::Schema.define(version: 20171115035753) do
     t.integer  "user_id"
     t.string   "source"
     t.boolean  "is_allowed", default: false
-    t.datetime "deleted_at"
     t.string   "code"
     t.boolean  "approved",   default: false
-    t.index ["deleted_at"], name: "index_assignments_on_deleted_at"
   end
 
   create_table "batch_students", force: :cascade do |t|
@@ -136,6 +134,17 @@ ActiveRecord::Schema.define(version: 20171115035753) do
     t.string   "mobile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.text     "statement"
+    t.string   "output"
+    t.integer  "user_id"
+    t.string   "language"
+    t.integer  "assignment_id"
+    t.integer  "practice_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "taggings", force: :cascade do |t|

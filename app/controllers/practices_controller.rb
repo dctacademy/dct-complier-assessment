@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  
+  skip_authorize_resource only: [:submissions]
   before_action :set_practice, only: [:show, :edit, :update, :destroy]
 
   # GET /practices
@@ -13,6 +13,11 @@ class PracticesController < ApplicationController
   # GET /practices/1
   # GET /practices/1.json
   def show
+    @assignment = Assignment.find(Practice.find(params[:id]).assignment)
+    @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
+    @rb = @assignment.answers.where(language: "ruby")
+    @js = @assignment.answers.where(language: "javascript")
+    @py = @assignment.answers.where(language: "python")
   end
 
   # GET /practices/new
@@ -62,6 +67,11 @@ class PracticesController < ApplicationController
       format.html { redirect_to practices_url, notice: 'Practice was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def submissions
+    @practice = Practice.find(params[:practice_id])
+    @submissions = @practice.submissions
   end
 
   private

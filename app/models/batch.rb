@@ -1,7 +1,6 @@
 class Batch < ApplicationRecord
 
 	has_many :assignment_groups
-	
 	has_many :batch_students
 	has_many :students, through: :batch_students
 

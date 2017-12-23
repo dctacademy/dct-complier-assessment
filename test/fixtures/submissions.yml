@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  statement: MyText
+  output: MyString
+  user_id: 1
+  language: MyString
+  assignment_id: 1
+  practice_id: 1
+
+two:
+  statement: MyText
+  output: MyString
+  user_id: 1
+  language: MyString
+  assignment_id: 1
+  practice_id: 1

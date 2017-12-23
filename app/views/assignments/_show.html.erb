@@ -34,11 +34,7 @@
 </div>
 
 <% if can? :create,Answer %>
-  <% if @rb.size == 3 && @js.size == 3 && @py.size == 3 %>
-    <p>Solutions are already given for this question solve something else.</p>
-  <%  else %>
-    <%= render '/home/aindex' %>
-    <% end %>
+  <%= render '/home/index' %>
 <% end %>
 
 <script type="text/javascript">

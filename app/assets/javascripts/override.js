@@ -20,25 +20,18 @@ $.rails.showConfirmationDialog = function(link){
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, Log me out',
-    cancelButtonText: 'No, cancel!',
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No!',
     // buttonsStyling: false
   }).then(function () {
-    swal(
-      'success',
-      'You have been logged out.',
-      'success'
-    )
-    setTimeout(function(){
       $.rails.confirmed(link);
-    },1500)
   }, function (dismiss) {
   // dismiss can be 'cancel', 'overlay',
   // 'close', and 'timer'
     if (dismiss === 'cancel') {
       swal(
-        'YAY....!!!',
-        'We love having you online :)',
+        'Cancelled!!!',
+        '',
         'info'
       )
     }

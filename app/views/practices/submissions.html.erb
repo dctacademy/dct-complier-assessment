@@ -1,0 +1,60 @@
+<div class="col-md-12">
+<div class="row">
+<div class="col-md-6">
+  <h2 class="page-header">Submissions</h2>
+    <% @submissions.each do |sub| %>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <%= sub.user.username %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          <%= sub.statement %><div class="btn-group btn-group-xs" role="group"><button type="button" name="button" class="btn btn-default fork" language="<%= sub.language %>" statement="<%= sub.statement %>" >Test</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<div class="col-md-6">
+  <h2 class="page-header">Output</h2>
+  <div id="result" class="padding-bottom"></div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    var result = CodeMirror(document.getElementById('result'),{
+      value: "Your result appears here",
+      mode: "text",
+      keyMap: "sublime",
+      theme: "monokai",
+      tabSize: 2,
+      tabIndex: 2,
+      readOnly: "nocursor"
+    });
+
+    $("button.fork").on("click",function(){
+      result.setOption("value","Your result appears here");
+      $.ajax({
+        url: "<%= home_input_path %>",
+        type: "get",
+        data: {
+          content: $(this).attr("statement"),
+          extension: $(this).attr("language")
+        },
+        success: function(response){
+          result.setOption("value", response["response"]);
+        }
+      });
+    });
+
+
+  });
+</script>

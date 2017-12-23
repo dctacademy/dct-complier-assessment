@@ -5,20 +5,19 @@
       <div class="form-inline">
 
       <select class="form-control-sm col-md-3" name="language" id="sel">
-        <% @practice.assignment_group.tag_list.each do |lang| %>
-          <option value="<%= lang %>"><%= lang %></option>
-         <% end %>
+        <option value="ruby">Ruby</option>
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python3</option>
       </select>
-      </div>
+       <h4 class="pull-right"><b class="font">Stats:</b><i class="icon-javascript" style="font-size:2em" id="js" ><%= @js.size %></i> || <i class="icon-python" style="font-size:2em" id="py" ><%= @py.size %></i> || <i class="icon-ruby" style="font-size:2em" id="rb" ><%= @rb.size %></i></h4><br/><br/>
+    </div>
 
       <div class="col-md-12">
         <!-- text -->
         <div id="text" class="padding-bottom"></div>
         <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
         <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
-        <% if @practice.assignment_group.due_datetime >= Time.now %>
         <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
-        <% end %>
       </div>
     </div>
   </div>
@@ -27,17 +26,113 @@
       <h2>Output</h2>
       <div id="result" class="padding-bottom"></div>
     </div>
+<!-- accordion -->
+<% if !@rb.empty? %>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Ruby Solutions
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <% @rb.each do |r| %>
+          <li class="ruby" id="<%= r.id %>" ><b><%=r.user.username %></b>:<p><%= r.statement %><% if !(@a.include? r.id) %><button class="fork" id="<%= r.id %>" type="button" data-toggle="tooltip" title="Fork" value="ruby"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
 
+<% if !@js.empty? %>
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingTwo">
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Javascript solutions
+      </a>
+    </h4>
+  </div>
+  <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+    <div class="panel-body">
+      <% @js.each do |j| %>
+        <li class="javascript" id="<%= j.id %>"><b><%= j.user.username %></b>:<p><%= j.statement %><% if !(@a.include? j.id) %><button class="fork" id="<%= j.id %>" type="button" data-toggle="tooltip" title="Fork"value="javascript" ><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<% if !@py.empty? %>
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingThree">
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Python Solutions
+      </a>
+    </h4>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div class="panel-body">
+      <% @py.each do |p| %>
+      <li class="python" id="<%= p.id %>"><b><%= p.user.username %></b>:<p><%= p.statement %></p><% if !(@a.include? p.id) %><button class="fork" id="<%= p.id %>" type="button" data-toggle="tooltip" title="Fork" value="python"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
 </div>
 
 
 <script type="text/javascript">
 $(document).ready(function(){
 
+  //this is fork code
+  $("button.fork").on('click',function(){
+    var type = $(this).val();
+    var code = $("li#" + $(this).attr("id") + "." + type).find('p').text();
+    switch (type) {
+      case "javascript":
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+      case "python":
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+      default:
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+    }//switch end
+    var fork = {};
+    fork["forks"] = {};
+    fork["forks"]["user_id"] = "<%= current_user.id %>";
+    fork["forks"]["answer_id"] = $(this).attr("id");
+    $.ajax({
+      url: "/forks",
+      type: "post",
+      data: fork,
+      success: function(response){
+        swal(
+          'You forked this.'
+        )
+      }
+    });
+    $(this).hide();
+  });
+
+
   //this is compiler code
   var flag = true;
   var lang = $("#sel option:first").val();
-  var web = "/submissions/"
+  var web = "/answers/"
   var js = jcode = "//type js code here";
   var pythoncon = pcode = "#type python code here";
   var rubycon = rcode = "#type ruby code here";
@@ -75,12 +170,11 @@ $(document).ready(function(){
 
     function check(lang){
       $.ajax({
-        url: "<%= home_check_submission_path %>",
+        url: "<%= home_check_cache_path %>",
         type: "get",
         data: {
           uid: "<%= current_user.id %>",
           aid: "<%= @assignment.id %>",
-          prac_id: "<%= @practice.id %>",
           language: lang
         },
         success: function(response){
@@ -112,14 +206,14 @@ $(document).ready(function(){
               editor.setOption("value",resp);
               result.setOption("value","Your result appears here");
               pid = response["response"]["id"];
-              web = "/submissions/" + pid;
+              web = "/answers/" + pid;
               flag = false;
               break;
             case "javascript":
               editor.setOption("value",resp);
               jsid = response["response"]["id"];
               result.setOption("value","Your result appears here");
-              web = "/submissions/" + jsid;
+              web = "/answers/" + jsid;
               flag = false;
               break;
             default:
@@ -127,7 +221,7 @@ $(document).ready(function(){
               editor.setOption("value",resp);
               result.setOption("value","Your result appears here");
               rid = response["response"]["id"];
-              web = "/submissions/" + rid;
+              web = "/answers/" + rid;
               flag = false;
               break;
             }
@@ -182,7 +276,6 @@ $(document).ready(function(){
       args["statement"] = sent;
       args["output"] = out;
       args["assignment_id"] = "<%= @assignment.id %>";
-      args["practice_id"] = "<%= @practice.id %>";
       args["language"] = lang;
       if(sent == js || sent == pythoncon || sent == rubycon || out == "Your result appears here"){
         swal(
@@ -193,10 +286,10 @@ $(document).ready(function(){
       }else{
         if(flag){
         $.ajax({
-          url: "<%= submissions_path %>",
+          url: "<%= answers_path %>",
           type: "post",
           data: {
-            submission: args
+            answer: args
           },
           success: function(response){
             swal(
@@ -204,6 +297,18 @@ $(document).ready(function(){
               'Your code was submitted successfully.',
               'success'
             )
+            $("#link").prop("hidden",false);
+            switch(lang){
+              case "javascript":
+                $("#js").text(parseInt($("#js").text()) + 1);
+                break;
+              case "python":
+                $("#py").text(parseInt($("#py").text()) + 1);
+                break;
+              default:
+                $("#rb").text(parseInt($("#rb").text()) + 1);
+                break;
+            }
           }
         });
       }else{
@@ -211,7 +316,7 @@ $(document).ready(function(){
           url: web,
           type: "patch",
           data: {
-            submission: args
+            answer: args
           },
           success: function(response){
             swal(

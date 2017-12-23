@@ -1,25 +1,10 @@
 <div class="row">
 	<div class="col-md-8">
 		<div class="page-header">
-			<h2><%= @practice.assignment_group.title %></h2>
-		</div>	
-		<p>
-		  <strong>Assignment:</strong>
-		  <%= @practice.assignment.title %>
-		</p>
-
+			<h2> <b>Assignment:</b> <%= @practice.assignment_group.title %></h2>
+		</div>
 	</div>
-
-	<div class="col-md-4">
-		<div class="page-header">
-			<h2>Students</h2>
-		</div>	
-		<ul class="list-group">
-		<% @practice.students.each do |student| %>
-			<li class="list-group-item"><%= student.name %></li>
-		<% end %>
-		</ul>
-
+	<%= render "assignments/show" %>
 	</div>
 </div>
 

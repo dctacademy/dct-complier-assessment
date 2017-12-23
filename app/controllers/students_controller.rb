@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  
+
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students
@@ -31,6 +31,8 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
+        @user = User.new(email: @student.email,role_ids: [Role.last.id])
+        @user.invite!
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else

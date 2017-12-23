@@ -12,7 +12,7 @@
 		 	</h2>
 	</div>
 
-<div class="alert alert-info" role="alert">Assignments in this group is due on due on <%= @assignment_group.due_datetime %></div>
+<div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime %></div>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -34,13 +34,13 @@
         <td><%= raw (practice.assignment.body).truncate(75) %></td>
         <td><%= practice.assignment.is_allowed ? "true" : "false" %></td>
         <td><%= practice.assignment.tag_list %></td>
-        <td><%= link_to 'Solve', practice.assignment %>
+        <td><%= link_to 'Solve', practice %>
 
           <% if current_user %>
-
-            <% if can? :destroy, practice %>
-              <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <% end %>
+  					<% if can? :destroy, practice %>
+              <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
+							<%= link_to "submissions" , practice_submissions_path(practice) %></td>
+						<% end %>
         <% end %>
       </tr>
     <% end %>

@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve,:findslug,:random]
+  skip_authorize_resource  only: [:recents,:approved,:approval,:search,:sources,:approve,:findslug,:random]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
@@ -56,6 +56,8 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
+    @assignment.tag_list = params[:assignment][:tag_list]
+    @assignment.company_list = params[:assignment][:company_list]
     respond_to do |format|
       if @assignment.update(assignment_params)
         format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
@@ -87,10 +89,6 @@ class AssignmentsController < ApplicationController
 
   def approve
     @assignments = Assignment.where(approved: false).limit(10)
-  end
-
-  def deleted
-    @assignments = Assignment.only_deleted
   end
 
   def approval
