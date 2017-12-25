@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 lock '3.10.0'
 
-set :repo_url,        'git@github.com:pavanKumar2/dct-compiler.git'
+set :repo_url,        'git@github.com:dctacademy/dct-complier-assessment.git'
 set :user,            'deploy'
 
 ## Defaults:
