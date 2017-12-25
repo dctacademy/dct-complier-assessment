@@ -40,6 +40,7 @@ class AssignmentsController < ApplicationController
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
+    # binding.pry
     @assignment.tag_list = params[:assignment][:tag_list]
     @assignment.company_list = params[:assignment][:company_list]
     respond_to do |format|

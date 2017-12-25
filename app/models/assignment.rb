@@ -3,7 +3,7 @@ class Assignment < ApplicationRecord
   searchable do
     string :title
     text :body
-    string :tag_list
+    string :tag_list ,:multiple => true, :stored => true
   end
 
   has_many :practices
