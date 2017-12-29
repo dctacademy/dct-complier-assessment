@@ -15,7 +15,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.json { render json: @response}
     end
-    # FileDeleteJob.perform_later @name
+    FileDeleteJob.perform_later @name
   end
 
   def check_cache
