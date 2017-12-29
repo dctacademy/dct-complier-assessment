@@ -15,7 +15,7 @@
         <!-- text -->
         <div id="text" class="padding-bottom"></div>
         <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
-        <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
+        <button type="button" name="reset" id="reset" class="btn btn-danger">Clear</button>
         <% if @practice.assignment_group.due_datetime >= Time.now %>
         <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
         <% end %>
@@ -56,7 +56,18 @@ $(document).ready(function(){
     indentUnit: 2,
     smartIndent: true,
     indentWithTabs: true,
-    tabIndex: 2
+    tabIndex: 2,
+    lint: true,
+    gutters: ["CodeMirror-lint-markers"]
+  });
+
+
+  editor.on('keyup',function(){
+      if($(".CodeMirror-gutter-elt").size() === 1){
+        $("#load").removeAttr('disabled');
+        }else{
+          $("#load").attr('disabled','disabled');
+      }
   });
   var result = CodeMirror(document.getElementById('result'),{
     value: "Your result appears here",
