@@ -61,14 +61,6 @@ $(document).ready(function(){
     gutters: ["CodeMirror-lint-markers"]
   });
 
-
-  editor.on('keyup',function(){
-      if($(".CodeMirror-gutter-elt").size() === 1){
-        $("#load").removeAttr('disabled');
-        }else{
-          $("#load").attr('disabled','disabled');
-      }
-  });
   var result = CodeMirror(document.getElementById('result'),{
     value: "Your result appears here",
     mode: "text",
