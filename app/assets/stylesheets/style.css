@@ -34,3 +34,7 @@ input[type=checkbox].glyphicon{
 .right{
   padding-left: 25px
 }
+.floating{
+  position: fixed !important;
+  right: 0;
+}
