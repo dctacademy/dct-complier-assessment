@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <%= f.label :students %>
-    <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]), :id, :name, {}, {class: "chosen-select", multiple: true} %>
+    <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]).order('name'), :id, :name, {}, {class: "chosen-select", multiple: true} %>
   </div>
 
   <div class="field">
@@ -46,3 +46,13 @@
     <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<li class="search-choice"><span>1</span><a class="search-choice-close" data-option-array-index="0"></a></li>
+
+<script>
+  var studentList = document.getElementById('assignment_group_student_ids');
+  for(var i = 0; i < studentList.options.length;i++) {
+    studentList.options[i].selected = true;
+  }
+  
+</script>

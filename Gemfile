@@ -10,6 +10,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'devise'
 gem 'devise_invitable'
 gem 'pry'
+gem 'faker'
 gem 'rails', '~> 5.0.6'
 gem 'pg' , group: :production
 gem 'sqlite3' ,group: :development
@@ -22,7 +23,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'cancancan', '~> 2.0'
 gem "mustache"
-gem 'sunspot_rails'
+#gem 'sunspot_rails'
 gem 'httparty'
 
 group :development, :test do
@@ -39,7 +40,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1', '>= 1.1.6'
   gem 'capistrano-rbenv', '~> 2.0', '>= 2.0.4'
   gem 'capistrano3-puma'
-  gem 'sunspot_solr'
+ # gem 'sunspot_solr'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
