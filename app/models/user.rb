@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :invitable, :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable#, :invitable
+         :recoverable, :rememberable, :trackable, :validatable
      has_many :my_answers,foreign_key: "user_id",class_name: "Answer"
      has_many :submissions
      has_many :permissions
@@ -17,7 +17,10 @@ class User < ApplicationRecord
      has_many :answers,through: :forks
 
      has_many :lists
+
+     belongs_to :student
      #after_create :assign_user_role
+
 
      def role? role
        self.roles.pluck(:name).include? role

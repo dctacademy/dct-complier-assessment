@@ -7,12 +7,7 @@ class AssignmentGroupsController < ApplicationController
   # GET /assignment_groups
   # GET /assignment_groups.json
   def index
-    if params[:batch_id]
-      @batch = Batch.find(params[:batch_id])
-      @assignment_groups = @batch.assignment_groups
-    else
-      @assignment_groups = AssignmentGroup.all
-    end
+    @assignment_groups = @batch.assignment_groups
   end
 
   # GET /assignment_groups/1
@@ -74,7 +69,8 @@ class AssignmentGroupsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assignment_group
-      @assignment_group = AssignmentGroup.find(params[:id])
+      @batch = (current_user.role? "admin") ? Batch.find(params[:batch_id]) : current_student.batches.find(params[:batch_id])
+      @assignment_group = (current_user.role? "admin") ? AssignmentGroup.find(params[:id]) : @batch.assignment_groups.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

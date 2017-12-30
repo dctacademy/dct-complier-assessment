@@ -6,7 +6,7 @@ class BatchesController < ApplicationController
   # GET /batches
   # GET /batches.json
   def index
-    @batches = Batch.all
+    @batches = (current_user.role? "admin") ? Batch.all : current_student.batches
   end
 
   # GET /batches/1
@@ -66,7 +66,7 @@ class BatchesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
-      @batch = Batch.find(params[:id])
+      @batch = (current_user.role? "admin") ? Batch.find(params[:id]) : current_student.batches.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
