@@ -10,7 +10,6 @@
       <th>Start date</th>
       <th>End date</th>
       <th>Course</th>
-      <th>Is completed</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,10 +18,9 @@
     <% @batches.each do |batch| %>
       <tr>
         <td><%= batch.title %></td>
-        <td><%= batch.start_date %></td>
-        <td><%= batch.end_date %></td>
+        <td><%= batch.start_date.strftime("%d, %B %Y") %></td>
+        <td><%= batch.end_date.strftime("%d, %B %Y") %></td>
         <td><%= batch.course.name %></td>
-        <td><%= batch.is_completed %></td>
         <td><%= link_to 'Show', batch %></td>
         <% if can? :update, batch %>
          <td><%= link_to 'Edit', edit_batch_path(batch) %></td>

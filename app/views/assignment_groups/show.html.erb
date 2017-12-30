@@ -12,7 +12,12 @@
 		 	</h2>
 	</div>
 
-<div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime %></div>
+<div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
+  <span class="pull-right"> 
+    <span id="display">time remaining </span>
+  </span>
+
+</div>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -50,7 +55,7 @@
 <% if can? :update, @assignment_group %>
 	<%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> |
 <% end %>
-<%= link_to 'Back', assignment_groups_path %>
+<%= link_to 'Back', batch_path(params[:batch_id]) %>
 
 </div>
 
@@ -63,6 +68,40 @@
       <li class="list-group-item"><%= student.name %></li>
     <% end %>
     </ul>
-
-
 </div>
+
+<script>
+    var currentDate = new Date();
+    var dueDateTime = new Date('<%= @assignment_group.due_datetime.year %>', '<%= @assignment_group.due_datetime.month - 1 %>', '<%= @assignment_group.due_datetime.day %>', '<%= @assignment_group.due_datetime.hour %>', '<%= @assignment_group.due_datetime.min %>');
+
+    var count = Math.round((Number(dueDateTime) - Number(currentDate))/1000);
+    var timerRef;
+
+    function prepend(n){
+      return (n <= 9) ? `0${n}` : n;
+    }
+
+    function formatTime(count){
+      var days = Math.floor(count/86400);
+      var hours = Math.floor((count % 86400) / 3600);
+      var minutes = Math.floor(((count % 86400) % 3600)/60)
+      var seconds = Math.floor((count % 86400) % 3600) % 60;
+
+      return ` time remaining ${prepend(days)} : ${prepend(hours)} : ${prepend(minutes)} : ${prepend(seconds)}`;
+    }
+
+    if(count > 0){
+       timerRef = setInterval(function(){
+          document.querySelector('#display').innerHTML = formatTime(count);
+          count--;
+          if(count < 0){
+            clearInterval(timerRef);
+            document.querySelector('#display').innerHTML = "<strong> time up</strong>";
+          }
+        },1000);
+     } else {
+        document.querySelector('#display').innerHTML = "<strong> time up</strong>";
+     }
+   
+
+</script>

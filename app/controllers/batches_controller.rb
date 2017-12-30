@@ -6,7 +6,7 @@ class BatchesController < ApplicationController
   # GET /batches
   # GET /batches.json
   def index
-    @batches = (current_user.role? "admin") ? Batch.all : current_student.batches
+    @batches = (current_user.role? "admin") ? Batch.order('start_date DESC') : current_student.batches
   end
 
   # GET /batches/1

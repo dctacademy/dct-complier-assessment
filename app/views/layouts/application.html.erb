@@ -41,6 +41,7 @@
   <!-- jquery-dialog -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 
 <body id="main">
@@ -103,8 +104,8 @@
             </ul>
           </li>
           <% end %>
-
-            <li><%= link_to "my forks", forks_myforks_path %></li>
+            <li><%= link_to "Batches", batches_path %></li>
+            <li><%= link_to "Forks", forks_myforks_path %></li>
             <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> <%= current_user.username %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -136,10 +137,9 @@
   <script src="/javascripts/python.js"></script>
   <script src="/javascripts/javascript.js"></script>
   <script src="/javascripts/sublime.js"></script>
-  <script src="/javascripts/addons/lint.js"></script>
-  <script src="/javascripts/addons/javascript-lint.js"></script>
-  <script src="/javascripts/addons/fullscreen.js"></script>
-
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <!-- jquery datetime picker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.min.css" >
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.js"></script>
 </body>
 </html>
