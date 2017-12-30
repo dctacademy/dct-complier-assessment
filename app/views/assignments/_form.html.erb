@@ -46,8 +46,13 @@
     <%= f.text_field :source ,class: "form-control" %>
   </div>
 
+  <% if controller.action_name == "edit" %> 
+    <%= f.label :approved %>
+    <%= f.check_box :approved  %>
+  <% end %>
+
   <div class="actions">
-    <%= f.submit "create", class: "btn btn-primary btn-margin" %>
+    <%= f.submit "Submit", class: "btn btn-primary btn-margin" %>
   </div>
 <% end %>
 

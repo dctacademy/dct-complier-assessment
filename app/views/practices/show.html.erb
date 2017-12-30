@@ -1,4 +1,10 @@
 <div class="row">
+	<ol class="breadcrumb">
+	  <li><a href="/">Home</a></li>
+	  <li><a href="/batches/<%= @practice.assignment_group.batch_id %>"><%= @practice.assignment_group.batch.title %></a></li>
+	  <li><a href="/batches/<%= @practice.assignment_group.batch_id %>/assignment_groups/<%= @practice.assignment_group_id%>">Assignment Group</a></li>
+	  <li class="active"><%= @practice.assignment_group.title %></li>
+	</ol>
 	<div class="col-md-8">
 		<div class="page-header">
 			<h2> <b>Assignment:</b> <%= @practice.assignment_group.title %></h2>
