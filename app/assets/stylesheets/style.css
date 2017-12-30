@@ -44,3 +44,24 @@ input[type=checkbox].glyphicon{
 .navbar-brand img{
   height: 27px;
 }
+
+/* batches */
+
+.index-headline{
+  padding: 10px 0px;
+}
+
+.index-headline h2{
+  color: #7b7878;
+  font-size: 26px;
+  margin: 0px;
+}
+
+.batches-main .table .btn{
+  padding: 2px !important;
+  width: 60px;
+}
+
+.table{
+  border: 1px solid #dddddd;
+}
