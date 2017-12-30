@@ -1,47 +1,65 @@
-<%= form_for(batch) do |f| %>
-  <% if batch.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+  <%= form_for(batch, html: {class: "form-horizontal"}) do |f| %>
+    <% if batch.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
 
-      <ul>
-      <% batch.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% batch.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :title, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :title, class: "form-control" %>
+     </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :start_date, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :start_date, class: "form-control" %>
+     </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :end_date, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.text_field :end_date, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :course, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.collection_select :course_id, Course.all, :id, :name, {prompt: "Select Course"}, {class: "chosen-select form-control"} %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :students, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <%= f.collection_select :student_ids, Student.all, :id, :name, {prompt: "Select Students"}, {class: "chosen-select form-control", multiple: true} %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :is_completed, class: "col-sm-2 control-label" %>
+        <div class="checkbox col-sm-10">
+          <label>
+             <%= f.check_box :is_completed %> 
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2">
+           <%= f.submit "submit", class: "btn btn-primary " %>
+        </div>
+      </div>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :start_date %>
-    <%= f.date_select :start_date %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :end_date %>
-    <%= f.date_select :end_date %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :select_course %>
-    <%= f.collection_select :course_id, Course.all, :id, :name, {prompt: "Select Course"}, {class: "chosen-select form-control"} %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :select_students %>
-    <%= f.collection_select :student_ids, Student.all, :id, :name, {prompt: "Select Course"}, {class: "chosen-select form-control", multiple: true} %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :is_completed %>
-    <%= f.check_box :is_completed %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>

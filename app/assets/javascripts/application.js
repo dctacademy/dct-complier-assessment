@@ -15,3 +15,14 @@
 //= require chosen-jquery
 //= require chosen
 //= require_tree .
+
+$(document).ready(function(){
+	$('#batch_start_date').datepicker(
+			{ dateFormat: 'dd-mm-yy' }
+	);
+	$('#batch_end_date').datepicker({ 
+		dateFormat: 'dd-mm-yy',
+		numberOfMonths: 4
+	});
+});
+
