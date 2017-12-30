@@ -60,8 +60,19 @@ $(document).ready(function(){
     indentUnit: 2,
     smartIndent: true,
     indentWithTabs: true,
-    tabIndex: 2
+    tabIndex: 2,
+    lint: true,
+    gutters: ["CodeMirror-lint-markers"],
+    extraKeys: {
+        "F11": function(cm) {
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        }
+      }
   });
+
   var result = CodeMirror(document.getElementById('result'),{
     value: "Your result appears here",
     mode: "text",
