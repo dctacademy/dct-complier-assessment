@@ -1,11 +1,19 @@
 <div class="row">
-	<div class="col-md-8">
-		<div class="page-header">
-			<h1>Edit Batch</h1>
+	<div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
+		<div class="row main-headline">
+			<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+					<h2>Edit Batch</h2>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+				<%= link_to 'Show', @batch , class: "btn btn-success"%>
+				<%= link_to 'Back', batches_path , class: 'btn btn-primary'%>
+			</div>
 		</div>
-		<%= render 'form', batch: @batch %>
 	</div>
 </div>
 
-<%= link_to 'Show', @batch %> |
-<%= link_to 'Back', batches_path %>
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+		<%= render 'form', batch: @batch %>
+	</div>
+</div>
