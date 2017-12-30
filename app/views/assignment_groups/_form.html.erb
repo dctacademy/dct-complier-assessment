@@ -1,4 +1,4 @@
-<%= form_for(assignment_group) do |f| %>
+<%= form_for([@batch, assignment_group]) do |f| %>
   <% if assignment_group.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(assignment_group.errors.count, "error") %> prohibited this assignment_group from being saved:</h2>
