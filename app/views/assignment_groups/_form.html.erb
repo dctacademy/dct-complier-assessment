@@ -12,47 +12,87 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :title, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :batch_id %>
-    <%= f.collection_select :batch_id, Batch.all, :id, :title, {}, {class: "form-control chosen-select", disabled: true} %>
-    <%= f.hidden_field :batch_id, value: params[:batch_id] %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :batch_id, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.collection_select :batch_id, Batch.all, :id, :title, {}, {class: "form-control chosen-select", disabled: true} %>
+        <%= f.hidden_field :batch_id, value: params[:batch_id] %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :due_datetime %>
-    <%= f.datetime_select :due_datetime, class: "form-control" %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :due_datetime, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.datetime_select :due_datetime, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :assignment_id %>
-    <%= f.collection_select :assignment_ids, @a = Assignment.all, :id, :code, {}, {class: "form-control chosen-select", multiple: true,include_blank: true} %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :assignment_id, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.collection_select :assignment_ids, @a = Assignment.all, :id, :code, {}, {class: "form-control chosen-select", multiple: true,include_blank: true} %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :students %>
-    <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]).order('name'), :id, :name, {}, {class: "chosen-select", multiple: true} %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :students, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.collection_select :student_ids, Student.joins(:batches).where('batches.id = ?', params[:batch_id]).order('name'), :id, :name, {}, {class: "chosen-select", multiple: true} %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :language_list %>
-    <%= f.collection_select :tag_list , ["ruby","javascript","python"], :to_s, :to_s, {},{class: "chosen-select",multiple: true}%>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :language_list, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.collection_select :tag_list , ["ruby","javascript","python"], :to_s, :to_s, {},{class: "chosen-select",multiple: true}%>
+      </div>
+    </div>
   </div>
 
   <div class="actions">
-    <%= f.submit "Submit", class: "btn btn-primary" %>
+    <div class="form-group">
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+         <%= f.submit "submit", class: "btn btn-primary pull-right" %>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<li class="search-choice"><span>1</span><a class="search-choice-close" data-option-array-index="0"></a></li>
+<!-- <li class="search-choice"><span>1</span><a class="search-choice-close" data-option-array-index="0"></a></li> -->
 
 <script>
   var studentList = document.getElementById('assignment_group_student_ids');
   for(var i = 0; i < studentList.options.length;i++) {
     studentList.options[i].selected = true;
   }
-  
+
 </script>
