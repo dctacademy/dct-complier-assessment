@@ -1,8 +1,18 @@
 <div class="row">
-  <div class="col-md-8">
-    <div class="page-header">
-      <h2>Listing Students</h2>
+  <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
+
+    <div class="row main-headline">
+      <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+          <h2 class="page-heading">List Students</h2>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+        <% if can? :create, Student.new %>
+          <%= link_to 'New Student', new_student_path, class: "btn btn-primary pull-right" %>
+        <% end %>
+      </div>
     </div>
+
+
     <table class="table table-striped">
       <thead>
     <tr>
@@ -19,25 +29,16 @@
         <td><%= student.name %></td>
         <td><%= student.email %></td>
         <td><%= student.mobile %></td>
-        <td><%= link_to 'Show', student %></td>
+        <td><%= link_to 'Show', student , class: "btn btn-success"%></td>
         <% if can? :update, student %>
-          <td><%= link_to 'Edit', edit_student_path(student) %></td>
+          <td><%= link_to 'Edit', edit_student_path(student) , class: "btn btn-info"%></td>
         <% end %>
         <% if can? :destroy, student %>
-          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"%></td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
     </table>
   </div>
-
-  <div class="col-md-4">
-
-  </div>
 </div>
-
-<br>
-<% if can? :create, Student.new %>
-  <%= link_to 'New Student', new_student_path, class: "btn btn-primary" %>
-<% end %>
