@@ -46,6 +46,10 @@ input{
   border-radius: 0 !important;
 }
 
+body{
+  font-family: 'Open Sans', sans-serif !important;
+}
+
 /* navbar */
 
 .navbar-brand img{
@@ -62,6 +66,7 @@ input{
   color: #7b7878;
   font-size: 26px;
   margin: 0px;
+  padding-bottom: 10px;
 }
 
 .batches-main .table .btn{
@@ -78,4 +83,44 @@ div#batch_student_ids_chosen{
   width: 100% !important;
   height: 34px !important;
   border-radius: 0;
+}
+
+
+/* assignments */
+
+.assignment-box{
+  border: 1px solid #cacaca;
+  padding: 13px;
+  background: #f9f9f9;
+  box-shadow: 0px 2px 6px 3px #ccc;
+  margin-bottom: 20px;
+  min-height: 204px;
+}
+
+.assignment-count{
+  float: right;
+  color: #636363;
+  font-weight: bold;
+}
+
+.assignment-languages{
+  background: #443d3d;
+  border: 1px solid #bfb6b6;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 10px;
+}
+
+.assignment-box .edit-button a{
+  padding: 2px !important;
+  width: 60px;
+}
+
+.margin-heading{
+  margin: 20px 0px;
+}
+
+.assignment-box .clock-icon{
+  padding-right: 2px;
+  color: #5a5353;
 }
