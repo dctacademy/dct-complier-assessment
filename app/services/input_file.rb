@@ -35,32 +35,20 @@ class InputFile
     end
     sleep(0.3)
   end
-  # binding.pry
-  # sleep(0.3)
-  # end
 
   def respond
     val = File.read("tmp/#{self.name}/#{self.name}_out.txt")
-    # case self.extension
-    #   when "py"
-    #     if val.split("line ").size > 1
-    #       leftpar = "code.py"
-    #       ex = val.split("line ")[1].split("")[0].to_i - 2
-    #       val = val.split("line ")[1].split("")
-    #       val.shift
-    #       rightpar = val.unshift(ex).join("")
-    #       val = leftpar + "line " + rightpar
-    #     end
-    #   else
-    #     if val.split("rb:").size > 1
-    #       leftpar = "code."
-    #       ex = val.split("rb:")[1].split("")[0].to_i - 3
-    #       val = val.split("rb:")[1].split("")
-    #       val.shift
-    #       rightpar = val.unshift(ex).join("")
-    #       val = leftpar + "rb:" + rightpar
-    #   end
-    # end
+    begin
+      case self.extension
+        when "py"
+          val.gsub!("tmp/#{self.name}/#{self.name}","File")
+        when "js"
+          val.gsub!("#{Dir.pwd}/tmp/#{self.name}/#{self.name}","File")
+        else
+          val.gsub!("tmp/#{self.name}/#{self.name}","File")
+        end
+    end
     return val
   end
+
 end
