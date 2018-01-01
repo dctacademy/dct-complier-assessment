@@ -19,24 +19,24 @@
         <th>Start date</th>
         <th>End date</th>
         <th>Course</th>
-        <th colspan="3"></th>
+        <!-- <th colspan="3"></th> -->
       </tr>
     </thead>
 
     <tbody>
       <% @batches.each do |batch| %>
         <tr>
-          <td><%= batch.title %></td>
+          <td><%= link_to batch.title, batch %></td>
           <td><%= batch.start_date.strftime("%d, %B %Y") %></td>
           <td><%= batch.end_date.strftime("%d, %B %Y") %></td>
           <td><%= batch.course.name %></td>
-          <td><%= link_to 'Show', batch , class: "btn btn-success btn-small" %></td>
-          <% if can? :update, batch %>
+          <!-- <td><%= link_to 'Show', batch , class: "btn btn-success btn-small" %></td> -->
+          <!-- <% if can? :update, batch %>
            <td><%= link_to 'Edit', edit_batch_path(batch) , class: "btn btn-info btn-small"%></td>
-          <% end %>
-          <% if can? :destroy, batch %>
+          <% end %> -->
+          <!-- <% if can? :destroy, batch %>
            <td><%= link_to 'Destroy', batch, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-small"%></td>
-          <% end %>
+          <% end %> -->
         </tr>
       <% end %>
     </tbody>
