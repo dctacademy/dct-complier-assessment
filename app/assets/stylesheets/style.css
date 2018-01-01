@@ -50,6 +50,11 @@ body{
   font-family: 'Open Sans', sans-serif !important;
 }
 
+.heading-margin{
+  margin: 15px 0px !important;
+  padding: 0;
+}
+
 /* navbar */
 
 .navbar-brand img{
@@ -69,7 +74,7 @@ body{
   padding-bottom: 10px;
 }
 
-.batches-main .table .btn{
+.btn-small{
   padding: 2px !important;
   width: 60px;
 }
@@ -123,4 +128,31 @@ div#batch_student_ids_chosen{
 .assignment-box .clock-icon{
   padding-right: 2px;
   color: #5a5353;
+}
+
+/* compiler */
+
+/*.stats-compiler{
+  font-size: 23px;
+  font-weight: 600;
+  color: #4e4a4a;
+}*/
+
+.compiler-page .stat-icon{
+  font-size: 20px;
+  color: #2c2f2f;
+}
+
+.heart-icon{
+  color: #ff6161;
+  top: -8px !important;
+  right: 15px;
+}
+
+.compiler-question{
+  border: 1px solid #bbb8b8;
+}
+
+.question-padding{
+  padding: 10px;
 }

@@ -1,35 +1,41 @@
 <% @a = current_user.answers.map{|n| n.id} %>
-<div class="col-md-4 pull-right">
-  <div>
-    <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
-    <b><span class="right">Favourite</span></b>
-  </div>
-  <br>
-<p>
-  <strong>Tags:</strong>
-  <%= @assignment.try(:tag_list) %>
-  <%= @assignment.try(:company_list) %>
-</p>
-<p>
-  <strong>Title:</strong>
-  <%= @assignment.title %>
-</p>
+<div class="col-md-4 pull-right compiler-question">
+  <!-- <div class="row question-padding"> -->
+    <!-- <span class="right">Favourite</span> -->
+  <!-- </div> -->
 
-<p>
-  <strong>Body:</strong>
-  <%= raw(@assignment.body) %>
-</p>
+  <div class="row question-padding">
+    <p>
+      <strong>Tags:</strong>
+      <%= @assignment.try(:tag_list) %>
+      <%= @assignment.try(:company_list) %>
+      <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart heart-icon pull-right" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
+    </p>
+    <p>
+      <strong>Title:</strong>
+      <%= @assignment.title %>
+    </p>
 
-<p>
-  <strong>Url:</strong>
-  <%= @assignment.url %>
-</p>
+    <p>
+      <strong>Body:</strong>
+      <%= raw(@assignment.body) %>
+    </p>
 
-<% if can? :update, @assignment %>
-<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<% end %>
+    <p>
+      <strong>Url:</strong>
+      <%= @assignment.url %>
+    </p>
+</div>
 
-<%= link_to 'Back', assignments_path %>
+<div class="row pull-right question-padding">
+  <% if can? :update, @assignment %>
+  <%= link_to 'Edit', edit_assignment_path(@assignment) , class: "btn btn-info btn-small"%>
+  <% end %>
+
+  <%= link_to 'Back', assignments_path , class: "btn btn-primary btn-small"%>
+</div>
+
+
 
 </div>
 
