@@ -3,7 +3,7 @@
 <span>No users yet</span>
 <% else %>
 <h2 class="page-heading">Listing Users</h2>
-<ul class="user-list">
+<ul class="special-list">
   <% @users.each do |u| %>
   <li><i class="fa fa-user user-icon" aria-hidden="true"></i>
 <%= link_to u.username , u%></li>

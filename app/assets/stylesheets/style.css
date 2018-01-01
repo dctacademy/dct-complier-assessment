@@ -164,16 +164,17 @@ div#batch_student_ids_chosen{
 
 /* users */
 
-ul.user-list li{
+ul.special-list li{
   list-style-type: none;
 }
 
-ul.user-list{
+ul.special-list{
   padding-left: 10px;
 }
 
 .user-icon,
-.tag-icon{
+.tag-icon,
+.question-icon{
   color: #8e8e8e;
   padding-right: 8px;
 }
