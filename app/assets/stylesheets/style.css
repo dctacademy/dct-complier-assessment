@@ -42,9 +42,9 @@ input[type=checkbox].glyphicon{
 
 /* general */
 
-input{
+/*input{
   border-radius: 0 !important;
-}
+}*/
 
 body{
   font-family: 'Open Sans', sans-serif !important;
