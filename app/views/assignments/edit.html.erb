@@ -1,6 +1,17 @@
-<h1>Editing Assignment</h1>
+<div class="row">
+  <div class="col-lg-6">
+    <h1 class="page-heading">Editing Assignment</h1>
+  </div>
+  <div class="col-lg-6 pull-right">
+    <div class="pull-right">
+      <%= link_to 'Show', @assignment , class: "btn btn-success"%>
+      <%= link_to 'Back', assignments_path , class: "btn btn-primary"%>
+    </div>
+  </div>
+</div>
 
-<%= render 'form', assignment: @assignment %>
-
-<%= link_to 'Show', @assignment %> |
-<%= link_to 'Back', assignments_path %>
+<div class="row">
+  <div class="col-lg-12">
+    <%= render 'form', assignment: @assignment %>
+  </div>
+</div>
