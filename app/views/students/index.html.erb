@@ -29,12 +29,12 @@
         <td><%= student.name %></td>
         <td><%= student.email %></td>
         <td><%= student.mobile %></td>
-        <td><%= link_to 'Show', student , class: "btn btn-success"%></td>
+        <td><%= link_to 'Show', student , class: "btn btn-success btn-small" %></td>
         <% if can? :update, student %>
-          <td><%= link_to 'Edit', edit_student_path(student) , class: "btn btn-info"%></td>
+          <td><%= link_to 'Edit', edit_student_path(student) , class: "btn btn-info btn-small" %></td>
         <% end %>
         <% if can? :destroy, student %>
-          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"%></td>
+          <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-small" %></td>
         <% end %>
       </tr>
     <% end %>
