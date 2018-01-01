@@ -76,7 +76,7 @@ body{
   color: #7b7878;
   font-size: 26px;
   margin: 0px;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 .btn-small{
@@ -160,4 +160,24 @@ div#batch_student_ids_chosen{
 
 .question-padding{
   padding: 10px;
+}
+
+/* users */
+
+ul.user-list li{
+  list-style-type: none;
+}
+
+ul.user-list{
+  padding-left: 10px;
+}
+
+.user-icon{
+  color: #8e8e8e;
+  padding-right: 8px;
+}
+
+.invite-user-radio input[type=checkbox],
+.invite-user-radio label{
+  margin-right: 5px;
 }

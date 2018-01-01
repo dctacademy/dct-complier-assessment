@@ -2,10 +2,11 @@
 <% if @users.nil? %>
 <span>No users yet</span>
 <% else %>
-<h2>Listing Users</h2>
-<ul>
+<h2 class="page-heading">Listing Users</h2>
+<ul class="user-list">
   <% @users.each do |u| %>
-  <li><%= link_to u.username , u%></li>
+  <li><i class="fa fa-user user-icon" aria-hidden="true"></i>
+<%= link_to u.username , u%></li>
   <% end %>
 </ul>
 <% end %>
