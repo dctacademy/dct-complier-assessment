@@ -1,38 +1,32 @@
-
-<div class="form-signin">
-<h2 class="form-signin-heading">Log in</h2>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-    <%= f.label :username ,class: "sr-only" %><br />
-    <%= f.text_field :username, autofocus: true , class: "form-control" ,placeholder: "Username"%>
-
-
-
-    <%= f.label :password ,class: "sr-only" %><br />
-    <%= f.password_field :password, autocomplete: "off",class: "form-control",placeholder: "Password",id: "pass" %>
-
-    <input type="checkbox" id="show"> Show
-
-  <% if devise_mapping.rememberable? -%>
+<div class="login">
+  <h2 class="login-header">Log in</h2>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="login-container">
+    <p><%= f.text_field :username, autofocus: true ,placeholder: "Username"%></p>
+    <p><%= f.password_field :password, autocomplete: "off",placeholder: "Password",id: "pass" %></p>
+    <input type="checkbox" id="show" class="show-checkbox"> Show
+    <% if devise_mapping.rememberable? -%>
     <div class="checkbox">
       <label><%= f.check_box :remember_me %> Remember me</label>
     </div>
-  <% end -%>
+    <% end -%>
 
-    <%= f.submit "Sign in" ,class: "btn btn-lg btn-primary btn-block"%>
+    <p><input type="submit" value="Log in"></p>
 
-<% end %>
-<%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
+  </div>
+  <% end %>
 </div>
 
+
 <script type="text/javascript">
-  $(document).ready(function(){
-    $("#show").on('change',function(){
-      if($(this).is(":checked")){
-        $("#pass").prop("type","text");
-      }else{
-        $("#pass").prop("type","password");
-      }
-    });
+$(document).ready(function(){
+  $("#show").on('change',function(){
+    if($(this).is(":checked")){
+      $("#pass").prop("type","text");
+    }else{
+      $("#pass").prop("type","password");
+    }
   });
+});
 </script>
