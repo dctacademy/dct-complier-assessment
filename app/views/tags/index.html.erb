@@ -1,24 +1,30 @@
 <div class="col-md-4" >
-<h1>Listing Tags</h1>
+<h1 class="page-heading">Listing Tags</h1>
   <div id="tags">
-  <% @tags.each do |t| %>
-  <li><%= t.name %> - <%= t.taggings_count %></li>
-  <% end %>
+
+  <ul class="user-list">
+    <% @tags.each do |t| %>
+    <li>
+      <i class="fa fa-tag tag-icon" aria-hidden="true"></i>
+      <%= t.name %> - <%= t.taggings_count %>
+    </li>
+    <% end %>
+  </ul>
   </div>
 </div>
 
 <div id="tag-form">
   <div class="col-md-4">
    <div class="header">
-      <h2>Add Tag</h2>
+      <h2 class="page-heading">Add Tag</h2>
     </div>
      <%= form_for(ActsAsTaggableOn::Tag.new, url: "/tags", html: {id: "formtag"}, remote: true) do |f| %>
-           <div class="form-group">
-             <%= f.label :name %><br>
-             <%= f.text_field :name, class: "form-control" %>
-           </div>
-          <%= f.submit "Create", class: "btn btn-default" %>
-          <% end %>
+       <div class="form-group">
+         <%= f.label :name %><br>
+         <%= f.text_field :name, class: "form-control" %>
+       </div>
+      <%= f.submit "Create", class: "btn btn-default pull-right" %>
+      <% end %>
   </div>
 </div>
 <button type="button" name="Form" class="btn btn-default" id="btn">Add Tag</button>

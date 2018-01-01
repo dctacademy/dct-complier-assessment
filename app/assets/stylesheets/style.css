@@ -172,7 +172,8 @@ ul.user-list{
   padding-left: 10px;
 }
 
-.user-icon{
+.user-icon,
+.tag-icon{
   color: #8e8e8e;
   padding-right: 8px;
 }
