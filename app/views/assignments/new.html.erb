@@ -1,13 +1,12 @@
-
-<h2 align="center" class="page-header">New Assignment</h2>
+<h2 class="page-heading">New Assignment</h2>
 <div class="col-md-6">
-  <h2 align="Center">Form</h2>
+  <h2 class="small-heading">Form</h2>
 <%= render 'form', assignment: @assignment %>
-<%= link_to 'Back', assignments_path %>
+<%= link_to 'Back', assignments_path , class: "btn btn-primary btn-small"%>
 </div>
 
 <div class="col-md-6">
-  <h2>Check for existing assignments</h2>
+  <h2 class="small-heading">Check for existing assignments</h2>
   <form class="" id="search-form">
     <%= text_field_tag :search  %>
     <%= submit_tag "Search" ,:id => "submit" %>
