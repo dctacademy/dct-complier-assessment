@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :solutions
   resources :practices do
     get 'submissions'
   end
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
       get 'findslug'
       get 'random'
     end
+    resources :solutions
   end
 
   resources :submissions

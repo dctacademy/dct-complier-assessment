@@ -1,0 +1,37 @@
+<p>
+  <strong>User:</strong>
+  <%= @solution.user.username %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <textarea class="cm">
+  	<%= @solution.body %>
+  </textarea>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @solution.language %>
+</p>
+
+<p>
+  <strong>Assignment:</strong>
+  <%= link_to @solution.assignment.title, assignment_solutions_path(@solution.assignment_id) %>
+</p>
+
+<%= link_to 'Edit', edit_solution_path(@solution) %> |
+<script>
+  $(document).ready(function(){
+   $.each($('.cm'),function(key,obj){
+   var code = CodeMirror.fromTextArea(obj,{
+     mode: obj.name,
+     keyMap: "sublime",
+     theme: "monokai",
+     readOnly: "nocursor",
+     lineNumbers: true
+   })
+  //code.setSize(400,100);
+  })
+  })
+</script>

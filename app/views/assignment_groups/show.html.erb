@@ -45,14 +45,17 @@
             <%= practice.submissions.length %>  / <%= @assignment_group.students.count %>
           </td>
         <% end %>
-        <td><%= link_to 'Solve', practice %>
+        <td>
+          <%= link_to 'Solve', practice %><br/>
 
           <% if current_user %>
   					<% if can? :destroy, practice %>
-              <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
-							<%= link_to "Submissions" , practice_submissions_path(practice) %></td>
+              <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+							<%= link_to "Submissions" , practice_submissions_path(practice) %><br/>
 						<% end %>
         <% end %>
+        <%= link_to "Solutions", assignment_solutions_path(practice.assignment_id)  %>
+       </td>
       </tr>
     <% end %>
   </tbody>

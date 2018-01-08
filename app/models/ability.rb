@@ -35,7 +35,7 @@ class Ability
         can :read ,[Assignment,Answer]
         can :update, Assignment
     elsif user.role? "student"
-        can :read, [Assignment,Answer, Batch, AssignmentGroup, Practice]
+        can :read, [Assignment,Answer, Batch, AssignmentGroup, Practice, Solution]
         can :create, [Answer,Submission]
         can :update, Answer do |ans|
           ans.user = user

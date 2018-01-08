@@ -17,6 +17,7 @@ class User < ApplicationRecord
      has_many :answers,through: :forks
 
      has_many :lists
+     has_many :solutions
 
      belongs_to :student
      #after_create :assign_user_role
