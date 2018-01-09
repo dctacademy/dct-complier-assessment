@@ -1,0 +1,46 @@
+<%= form_for(solution) do |f| %>
+  <% if solution.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(solution.errors.count, "error") %> prohibited this solution from being saved:</h2>
+
+      <ul>
+      <% solution.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body, class: "cm" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :language %>
+    <%= f.select :language, ["Ruby", "Javascript", "Python"], prompt: "Select Language" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :assignment_id %>
+    <%= f.collection_select :assignment_id, Assignment.all, :id, :code %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+   $.each($('.cm'),function(key,obj){
+   var code = CodeMirror.fromTextArea(obj,{
+     mode: obj.name,
+     keyMap: "sublime",
+     theme: "monokai",
+     lineNumbers: true
+   })
+  //code.setSize(400,100);
+  })
+  })
+</script>

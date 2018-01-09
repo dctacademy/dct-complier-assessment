@@ -22,7 +22,7 @@
         <td><%= raw (assignment.body).truncate(75) %></td>
         <td><%= assignment.is_allowed ? "true" : "false" %></td>
         <td><%= assignment.answers.size %></td>
-        <td><%= assignment.tag_list %></td>
+        <td><%= assignment.tag_list.join(", ") %></td>
         <td><%= link_to 'Solve', assignment %>
           <% if assignment.answers.find_by_user_id(current_user.id) %>
           <span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" title="solved" ></span>

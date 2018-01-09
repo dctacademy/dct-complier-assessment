@@ -26,7 +26,10 @@
 </p>
 
 <% if can? :update, @assignment %>
-<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
+  <% if !@assignment.approved %> 
+    <%= link_to "Approve", assignments_approve_assignment_path(assignment_id: @assignment.id), remote: true, class: "btn btn-success btn-sm", id: "approve-assignment" %> 
+  <% end %>
+  <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
 <% end %>
 
 <%= link_to 'Back', assignments_path %>

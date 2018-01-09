@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :solutions
   resources :practices do
     get 'submissions'
   end
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   resources :courses
   devise_for :users , :path_prefix => "my"
   resources :users
+  get 'assignments/approve_assignment'
   resources :assignments do
     collection do
       get 'recents' # to override assignments_recents action will be recents_assignments
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
       get 'findslug'
       get 'random'
     end
+    resources :solutions
   end
 
   resources :submissions
