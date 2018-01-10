@@ -1,11 +1,10 @@
 <%= render 'breadcrum' %>
 
 
-	<% if (@assignment_group.due_datetime > Date.today) || (current_user.role? "student") %>
-
+	<% if (current_user.role? "student") || (Date.today > @assignment_group.due_datetime) %>
 		<div class="alert alert-warning"> 
 			<p>The submission date is due on <b><%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></b>. Solutions will be made available after submission date closes. <br/>
-				<span class="lead"> Come back later. </span>
+				<span class="lead">You can come back later. </span>
 			</p>
 		</div>
 	<% else %>
@@ -17,7 +16,7 @@
 						</div>
 				    <% @submissions.each do |sub| %>
 						<div class="page-header">
-								<h4> <%= sub.assignment.title %> </h4>
+								<h4> <%= sub.assignment.code %> - <%= sub.assignment.title %> </h4>
 						</div>
 				    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 				    <div class="panel panel-default">

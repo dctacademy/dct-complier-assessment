@@ -36,7 +36,6 @@
         <th>Assignments</th>
         <th>Created Date</th>
         <th>Due Datetime</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -48,9 +47,7 @@
           <td><%= assignment_group.assignments.count %></td>
           <td><%= assignment_group.created_at.strftime("%d, %b %Y") %></td>
           <td><%= assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></td>
-          <% if can? :update, assignment_group %>
-           <%= link_to 'Edit', edit_batch_assignment_group_path(@batch, assignment_group) %></td>
-          <% end %>
+         
         </tr>
       <% end %>
     </tbody>

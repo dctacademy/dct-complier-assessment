@@ -37,7 +37,9 @@
           <% if current_user %>
   					<% if can? :destroy, practice %>
               <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
-							<%= link_to "submissions" , practice_submissions_path(practice) %></td>
+							<%= link_to "submissions" , practice_submissions_path(practice) %>
+                
+              </td>
 						<% end %>
         <% end %>
       </tr>
