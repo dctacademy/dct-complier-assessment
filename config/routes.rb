@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :roles
   get 'dashboard/index'
 
   resources :solutions
