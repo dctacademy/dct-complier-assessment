@@ -23,21 +23,23 @@ class InputFile
     begin
       case self.extension
       when "js"
-        cmd = "timeout -k 5 5 node tmp/#{self.name}/#{self.name}.js >> tmp/#{self.name}/#{self.name}_out.txt 2>&1"
+        cmd = "(time timeout -k 5 5 node tmp/#{self.name}/#{self.name}.js >> tmp/#{self.name}/#{self.name}_out.txt) >> tmp/#{self.name}/#{self.name}_time.txt 2>&1"
         `#{cmd}`
       when "py"
-        cmd = "timeout -k 5 5 python3 tmp/#{self.name}/#{self.name}.py >> tmp/#{self.name}/#{self.name}_out.txt 2>&1"
+        cmd = "(time timeout -k 5 5 python3 tmp/#{self.name}/#{self.name}.py >> tmp/#{self.name}/#{self.name}_out.txt) >> tmp/#{self.name}/#{self.name}_time.txt 2>&1"
         `#{cmd}`
       else
-      cmd = "timeout -k 5 5 ruby tmp/#{self.name}/#{self.name}.rb >> tmp/#{self.name}/#{self.name}_out.txt 2>&1"
+      cmd = "(time timeout -k 5 5 ruby tmp/#{self.name}/#{self.name}.rb >> tmp/#{self.name}/#{self.name}_out.txt) >> tmp/#{self.name}/#{self.name}_time.txt 2>&1"
       `#{cmd}`
       end
     end
-    sleep(0.3)
+    # sleep(0.3)
   end
 
   def respond
     val = File.read("tmp/#{self.name}/#{self.name}_out.txt")
+    time = File.read("tmp/#{self.name}/#{self.name}_time.txt")
+    # TODO: Time to be displayed in output
     begin
       case self.extension
         when "py"
