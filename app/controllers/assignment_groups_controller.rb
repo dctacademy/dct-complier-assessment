@@ -1,6 +1,7 @@
 class AssignmentGroupsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
+  skip_load_and_authorize_resource only: [:student_solutions]
 
   before_action :set_assignment_group, only: [:show, :edit, :update, :destroy]
 
@@ -64,6 +65,12 @@ class AssignmentGroupsController < ApplicationController
       format.html { redirect_to assignment_groups_url, notice: 'Assignment group was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def student_solutions
+    @assignment_group = AssignmentGroup.find(params[:assignment_group_id])
+    @user = params[:student_user_id]
+    @submissions = Submission.where(practice_id: @assignment_group.practice_ids, user_id: @user)
   end
 
   private

@@ -5,7 +5,8 @@
 	  <li><a href="/batches/<%= @practice.assignment_group.batch_id %>/assignment_groups/<%= @practice.assignment_group_id%>">Assignment Group</a></li>
 	  <li class="active"><%= @practice.assignment_group.title %></li>
 	</ol>
-	<div class="col-md-8">
+	
+	<div class="col-md-6">
 		<div class="page-header">
 			<h2> <b>Assignment:</b> <%= @practice.assignment_group.title %></h2>
 		</div>
@@ -14,5 +15,3 @@
 	</div>
 </div>
 
-<%= link_to 'Edit', edit_practice_path(@practice) %> |
-<%= link_to 'Back', practices_path %>

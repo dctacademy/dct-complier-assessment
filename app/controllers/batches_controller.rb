@@ -66,7 +66,11 @@ class BatchesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
-      @batch = (current_user.role? "admin") ? Batch.find(params[:id]) : current_student.batches.find(params[:id])
+     begin
+       @batch = (current_user.role? "admin") ? Batch.find(params[:id]) : current_student.batches.find(params[:id])
+     rescue ActiveRecord::RecordNotFound
+       redirect_to batches_path, alert: "Page you are looking for doesn't exist"
+     end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

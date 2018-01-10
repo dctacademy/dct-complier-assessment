@@ -1,5 +1,5 @@
 <% @a = current_user.answers.map{|n| n.id} %>
-<div class="col-md-4 pull-right">
+<div class="col-md-6">
   <div>
     <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
     <b><span class="right">Favourite</span></b>
