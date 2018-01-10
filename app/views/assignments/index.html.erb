@@ -4,37 +4,20 @@
 <table id="myTable" class="table table-striped">
   <thead>
     <tr>
-      <th>Title</th>
       <th>Code</th>
-      <th>Body</th>
-      <th>Is_allowed</th>
-      <th>Ans count</th>
+      <th>Title</th>
       <th>Tags</th>
-      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @assignments.each do |assignment| %>
       <tr>
-        <td><%= assignment.title %></td>
         <td><%= assignment.code %></td>
-        <td><%= raw (assignment.body).truncate(75) %></td>
-        <td><%= assignment.is_allowed ? "true" : "false" %></td>
-        <td><%= assignment.answers.size %></td>
+        <td><%= link_to assignment.title, assignment %></td>
         <td><%= assignment.tag_list.join(", ") %></td>
-        <td><%= link_to 'Solve', assignment %>
-          <% if assignment.answers.find_by_user_id(current_user.id) %>
-          <span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" title="solved" ></span>
-          <% end %>
-          <% if current_user %>
-            <% if can? :update, assignment %>
-              <%= link_to 'Edit', edit_assignment_path(assignment) %>
-            <% end %>
-            <% if can? :destroy, assignment %>
-              <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <% end %>
-        <% end %>
+       
+          
       </tr>
     <% end %>
   </tbody>
