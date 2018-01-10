@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #protect_from_forgery with: :null_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_filter :prepare_exception_notifier
 
   helper_method :current_student
 
@@ -13,6 +14,14 @@ class ApplicationController < ActionController::Base
 
   def current_student
     @current_student ||= current_user.student
+  end
+
+  private
+  
+  def prepare_exception_notifier
+    request.env["exception_notifier.exception_data"] = {
+      :current_user => current_user
+    }
   end
 
   protected
