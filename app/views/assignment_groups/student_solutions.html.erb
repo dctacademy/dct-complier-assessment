@@ -1,7 +1,7 @@
 <%= render 'breadcrum' %>
 
 
-	<% if @assignment_group.due_datetime > Date.today %>
+	<% if (@assignment_group.due_datetime > Date.today) || (current_user.role? "student") %>
 
 		<div class="alert alert-warning"> 
 			<p>The submission date is due on <b><%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></b>. Solutions will be made available after submission date closes. <br/>
