@@ -61,7 +61,11 @@
     <ul class="list-group">
     <% @assignment_group.students.each do |student| %>
       <li class="list-group-item">
+        <% if current_user.role? "admin" %>
           <%= link_to student.name, batch_assignment_groups_student_solutions_path(@batch.id, assignment_group_id: @assignment_group.id, student_user_id: student.user.id) %>
+        <% else %>
+          <%= student.name %>
+        <% end %>
       </li>
     <% end %>
     </ul>
