@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_student
 
   rescue_from CanCan::AccessDenied do
-		redirect_to root_path ,notice: "You are not Authorized to access to this page."
+		redirect_to root_path ,notice: "The page you are looking for doesn't exist"
 	end 
 
   def current_student
