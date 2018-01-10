@@ -5,7 +5,9 @@
 <h2>Listing Users</h2>
 <ul>
   <% @users.each do |u| %>
-  <li><%= link_to u.username , u%></li>
+  <li><%= link_to u.username , u%>
+    <%= link_to 'destroy', user_path(u), method: :delete, data: {confirm: "Are you sure?"} %>
+  </li>
   <% end %>
 </ul>
 <% end %>
