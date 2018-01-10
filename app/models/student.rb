@@ -20,6 +20,6 @@ class Student < ApplicationRecord
 
   def create_user_and_assign_role
   	user = User.create(email: self.email, username: self.name, password: self.mobile, student_id: self.id)
-    Permission.create(user_id: user.id, role_id: Role.last.id)
+    Permission.create(user_id: user.id, role_id: Role.find_by(name: "student").id)
   end  
 end
