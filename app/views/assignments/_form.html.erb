@@ -11,37 +11,31 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title , class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :body %>
     <%= f.text_area :body %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :url %>
     <%= f.text_field :url ,class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.hidden_field :user_id ,value: current_user.try(:id) %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :tag_list %>
-    <%= f.text_field :tag_list , :data => {:role => "tagsinput"} ,id: "tags"%>
+   <%= f.collection_select :tag_list, ActsAsTaggableOn::Tag.order('name'), :name, :name,{}, {multiple: true, class: "form-control"} %>
   </div>
 
-
-  <div class="field">
-    <%= f.label :company_list %>
-    <%= f.text_field :company_list , :data => {:role => "tagsinput"} ,id: "companies" %>
-  </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= f.label :source %>
     <%= f.text_field :source ,class: "form-control" %>
   </div>
@@ -58,4 +52,5 @@
 
 <script type="text/javascript">
   CKEDITOR.replace('assignment_body');
+  $('#assignment_tag_list').chosen();
 </script>
