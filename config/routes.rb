@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  get 'dashboard/index'
+
   resources :solutions
   resources :practices do
     get 'submissions'
   end
   resources :assignment_groups
   resources :batches do
+    get '/assignment_groups/student_solutions'
     resources :assignment_groups
   end
   resources :students
@@ -52,7 +55,7 @@ Rails.application.routes.draw do
   match 'forks' ,to: 'forks#create' ,via: :post
   get 'forks/myforks'
 
-  root "assignments#index"
+  root "dashboard#index"
 
   get 'tags/question_filter'
 

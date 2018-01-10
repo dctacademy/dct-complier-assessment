@@ -21,7 +21,7 @@
         <td><%= batch.start_date.strftime("%d, %B %Y") %></td>
         <td><%= batch.end_date.strftime("%d, %B %Y") %></td>
         <td><%= batch.course.name %></td>
-        <td><%= link_to 'Show', batch %></td>
+        <td><%= link_to 'View Assignments', batch %></td>
         <% if can? :update, batch %>
          <td><%= link_to 'Edit', edit_batch_path(batch) %></td>
         <% end %>

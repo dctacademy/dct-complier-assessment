@@ -1,10 +1,5 @@
 <div class="row">
-	<ol class="breadcrumb">
-	  <li><a href="/">Home</a></li>
-	  <li><a href="/batches/<%= params[:batch_id] %>"><%= @assignment_group.batch.title %></a></li>
-	  <li><a href="/batches/<%= @assignment_group.batch_id %>/assignment_groups">Assignment Group</a></li>
-	  <li class="active"><%= @assignment_group.title %></li>
-	</ol>
+	<%= render 'breadcrum' %>
 
 <div class="col-md-8">
 	<div class="page-header">
@@ -25,7 +20,6 @@
       <th>Title</th>
       <th>Code</th>
       <th>Body</th>
-      <th>Is_allowed</th>
       <th>Tags</th>
       <th>Actions</th>
     </tr>
@@ -37,7 +31,6 @@
         <td><%= practice.assignment.title %></td>
         <td><%= practice.assignment.code %></td>
         <td><%= raw (practice.assignment.body).truncate(75) %></td>
-        <td><%= practice.assignment.is_allowed ? "true" : "false" %></td>
         <td><%= practice.assignment.tag_list %></td>
         <td><%= link_to 'Solve', practice %>
 
@@ -65,7 +58,9 @@
 	</div>
     <ul class="list-group">
     <% @assignment_group.students.each do |student| %>
-      <li class="list-group-item"><%= student.name %></li>
+      <li class="list-group-item">
+          <%= link_to student.name, batch_assignment_groups_student_solutions_path(@batch.id, assignment_group_id: @assignment_group.id, student_user_id: student.user.id) %>
+      </li>
     <% end %>
     </ul>
 </div>
