@@ -23,7 +23,7 @@
     </div>
   
     <div class="page-header">
-      <h2>Listings Assignments 
+      <h2>Listing Assignments 
         <small><%= @batch.assignment_groups.count %></small>
       </h2>
     </div>
@@ -72,12 +72,14 @@
         <h3>Batch Students</h3>
       </div>
       <ul class="list-group">
-      <% @batch.students.each do |student| %>
+      <% @batch.students.order('points DESC').each do |student| %>
         <li class="list-group-item">
-          <%= student.name %>
-          <span class="pull-right">
-            <%= button_to "follow" %>
-          </span>
+          <%= student.name  %> 
+          <% if current_user.role? "admin" %> 
+            <span class="pull-right">
+             <%= student.points %>
+            </span>
+          <% end %>
         </li>
       <% end %>
       </ul>

@@ -43,4 +43,20 @@ class HomeController < ApplicationController
     end
   end
 
+  def check_assignment
+    submission = Submission.find(params[:submission_id])
+    student = submission.user.student
+    assignment = submission.assignment
+    if params[:is_checked] == "true"
+      submission.update_attributes(is_checked: true)
+      student.update_attributes(points: student.points + assignment.points)
+    else
+      submission.update_attributes(is_checked: false)
+      student.update_attributes(points: student.points - assignment.points)
+    end
+    render json: {
+      "message": "Successfully updated"
+    }
+  end
+
 end

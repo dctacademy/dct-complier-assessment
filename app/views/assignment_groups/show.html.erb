@@ -17,10 +17,10 @@
 <table id="myTable" class="table table-striped">
   <thead>
     <tr>
-      <th>Title</th>
       <th>Code</th>
-      <th>Body</th>
+      <th>Title</th>
       <th>Tags</th>
+      <th>Points</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -28,10 +28,10 @@
   <tbody>
     <% @assignment_group.practices.each do |practice| %>
       <tr>
-        <td><%= practice.assignment.title %></td>
         <td><%= practice.assignment.code %></td>
-        <td><%= raw (practice.assignment.body).truncate(75) %></td>
+        <td><%= practice.assignment.title %></td>
         <td><%= practice.assignment.tag_list %></td>
+        <td><%= practice.assignment.points %></td>
         <td><%= link_to 'Solve', practice %>
 
           <% if current_user %>
@@ -63,6 +63,36 @@
       <li class="list-group-item">
         <% if current_user.role? "admin" %>
           <%= link_to student.name, batch_assignment_groups_student_solutions_path(@batch.id, assignment_group_id: @assignment_group.id, student_user_id: student.user.id) %>
+          <div class="pull-right">
+            <% submissions = Submission.where(user_id: student.user.id, practice_id: @assignment_group.practice_ids) %>
+            <% total_points = 0 
+               student_points = 0
+              @assignment_group.practices.each do |practice|
+                  total_points += practice.assignment.points
+              end
+
+              submissions.each do |submission| 
+                student_points += submission.assignment.points if submission.is_checked
+              end
+            %>
+
+            <span class="badge">
+               <%= submissions.pluck(:is_checked).count(true) %> 
+               <i class="glyphicon glyphicon-ok"></i>
+            </span>
+           <span class="badge">
+              <%= submissions.pluck(:is_checked).count(false) %>
+              <i class="glyphicon glyphicon-remove"></i>
+            </span>
+
+            <span class="badge">
+              <%= @assignment_group.practices.count - submissions.pluck(:is_checked).count(true) - submissions.pluck(:is_checked).count(false) %> NS
+            </span>
+
+            <span class="badge">
+              <%= student_points %>  / <%= total_points %>
+            </span>
+          </div>
         <% else %>
           <%= student.name %>
         <% end %>
