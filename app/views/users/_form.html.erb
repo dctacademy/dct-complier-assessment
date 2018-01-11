@@ -19,6 +19,12 @@
       <%= f.label :email %>
       <%= f.text_field :email ,class: "form-control" %>
 
+      <%= f.label :password %>
+      <%= f.password_field :password ,class: "form-control" %>
+
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation ,class: "form-control" %>
+
       <%= f.label :role_ids %><br>
       <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %><br>
 
