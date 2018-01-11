@@ -36,6 +36,18 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :points %>
+    <%= f.radio_button :points, 5, id: 5 %>
+    <label for="5"> 5 </label>
+    <%= f.radio_button :points, 10, id: 10 %> 
+    <label for="10"> 10  </label>
+    <%= f.radio_button :points, 15, id: 15 %> 
+    <label for="15"> 15  </label>
+    <%= f.radio_button :points, 20, id: 20 %> 
+    <label for="20"> 20  </label>
+  </div>
+
+  <div class="form-group">
     <%= f.label :source %>
     <%= f.text_field :source ,class: "form-control" %>
   </div>
