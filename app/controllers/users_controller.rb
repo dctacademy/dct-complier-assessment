@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+	before_action :authenticate_user!
   load_and_authorize_resource
 
   def index
@@ -13,8 +13,7 @@ class UsersController < ApplicationController
 
   def create
 		@user = User.new(user_params)
-		User.invite!(user_params)
-    if @user.save
+    if @user.save(validate: false)
       redirect_to root_path ,notice: "successfully sent invitation."
     else
       redirect_to root_path, notice: "Sent invitation."
@@ -47,7 +46,7 @@ class UsersController < ApplicationController
   private
 
 	def user_params
-		params[:user].permit(:email, :username, :student_id, :password, role_ids: [])
+		params[:user].permit(:email, :username, :student_id, :password,:password_confirmation, role_ids: [])
 	end
 
 end

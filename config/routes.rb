@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'dashboard/index'
 
   resources :solutions
+
   resources :practices do
     get 'submissions'
   end
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
   get 'home/check_submission'
   get 'home/input'
   get 'home/check_cache'
+  get 'home/check_assignment'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

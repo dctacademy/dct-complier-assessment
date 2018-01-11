@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230142410) do
+ActiveRecord::Schema.define(version: 20180111080617) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -41,13 +41,15 @@ ActiveRecord::Schema.define(version: 20171230142410) do
     t.boolean  "is_allowed", default: false
     t.string   "code"
     t.boolean  "approved",   default: false
+    t.integer  "points"
   end
 
   create_table "batch_students", force: :cascade do |t|
     t.integer  "batch_id"
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "points",     default: 0
   end
 
   create_table "batches", force: :cascade do |t|
@@ -152,8 +154,9 @@ ActiveRecord::Schema.define(version: 20171230142410) do
     t.string   "language"
     t.integer  "assignment_id"
     t.integer  "practice_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "is_checked",    default: false
   end
 
   create_table "taggings", force: :cascade do |t|
