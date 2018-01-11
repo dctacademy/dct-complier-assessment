@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111055053) do
+ActiveRecord::Schema.define(version: 20180111080617) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(version: 20180111055053) do
   create_table "batch_students", force: :cascade do |t|
     t.integer  "batch_id"
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "points",     default: 0
   end
 
   create_table "batches", force: :cascade do |t|
@@ -142,9 +143,8 @@ ActiveRecord::Schema.define(version: 20180111055053) do
     t.string   "name"
     t.string   "email"
     t.string   "mobile"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "points",     default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "submissions", force: :cascade do |t|
