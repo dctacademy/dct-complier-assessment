@@ -77,7 +77,7 @@
           <%= student.name  %> 
           <% if current_user.role? "admin" %> 
             <span class="pull-right">
-             <%= student.points %>
+             <%= BatchStudent.find_by(batch_id: @batch.id, student_id: student.id).points %>
             </span>
           <% end %>
         </li>
