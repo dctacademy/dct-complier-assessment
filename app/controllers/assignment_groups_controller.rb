@@ -82,6 +82,6 @@ class AssignmentGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_group_params
-      params.require(:assignment_group).permit(:title, :batch_id, :tag_list, :due_datetime, assignment_ids: [], student_ids: [])
+      params.require(:assignment_group).permit(:title, :batch_id, :tag_list, :due_datetime, :allow_points, assignment_ids: [], student_ids: [])
     end
 end
