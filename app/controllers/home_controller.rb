@@ -49,10 +49,10 @@ class HomeController < ApplicationController
     assignment = submission.assignment
     if params[:is_checked] == "true"
       submission.update_attributes(is_checked: true)
-      batch_student.update_attributes(points: batch_student.points + assignment.points)
+      batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
     else
       submission.update_attributes(is_checked: false)
-      batch_student.update_attributes(points: batch_student.points - assignment.points)
+      batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
     end
     render json: {
       "message": "Successfully updated"
