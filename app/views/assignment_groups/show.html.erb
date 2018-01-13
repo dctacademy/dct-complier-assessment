@@ -53,6 +53,13 @@
   </tbody>
 </table>
 
+
+<% unless @assignment_group.notes.nil? %>
+  <div class="well">
+    <b>Note : <%= raw(@assignment_group.notes) %></b>
+  </div>
+<% end %>
+
 <% if can? :update, @assignment_group %>
 	<%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> |
 <% end %>

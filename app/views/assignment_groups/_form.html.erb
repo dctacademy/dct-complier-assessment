@@ -42,6 +42,11 @@
     <%= f.collection_select :tag_list , ["ruby","javascript","python"], :to_s, :to_s, {},{class: "chosen-select",multiple: true}%>
   </div>
 
+   <div class="form-group">
+    <%= f.label :notes %>
+    <%= f.text_area :notes, class: "form-control" %>
+  </div>
+
   <div class="form-group">
     <%= f.label :allow_points %>
     <%= f.check_box :allow_points %>
@@ -60,4 +65,8 @@
     studentList.options[i].selected = true;
   }
   
+</script>
+
+<script>
+  CKEDITOR.replace('assignment_group_notes');
 </script>
