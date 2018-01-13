@@ -3,9 +3,15 @@
 
 <div class="col-md-8">
 	<div class="page-header">
+    <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
+      <i class="glyphicon glyphicon-bell gi-2x"></i>
+    <% end %>
 		<h2><%= @assignment_group.title %>
-		 	</h2>
+      </h2>
 	</div>
+  <div>
+  </div>
+
 
 <div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
   <span class="pull-right"> 
@@ -92,6 +98,11 @@
             <span class="badge">
               <%= student_points %>  / <%= total_points %>
             </span>
+            
+            <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&student_user_id=#{student.user.id}&agisui=true" , class: "pull-right"  do %>
+             <i class="glyphicon glyphicon-bell gi-2x"></i>
+            <% end %>
+
           </div>
         <% else %>
           <%= student.name %>
@@ -99,6 +110,8 @@
       </li>
     <% end %>
     </ul>
+  
+    <%#= render '/notifications/index' %>
 </div>
 
 <script>
