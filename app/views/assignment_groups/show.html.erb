@@ -12,14 +12,6 @@
   <div>
   </div>
 
-
-<div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
-  <span class="pull-right"> 
-    <span id="display">time remaining </span>
-  </span>
-
-</div>
-
 <table id="myTable" class="table table-striped">
   <thead>
     <tr>
@@ -53,12 +45,24 @@
   </tbody>
 </table>
 
-
-<% unless @assignment_group.notes.nil? %>
-  <div class="well">
-    <b>Note : <%= raw(@assignment_group.notes) %></b>
+<div class="row">
+  <div class="col-md-6">
+    <% unless @assignment_group.notes.nil? %>
+      <div class="well">
+        <b>Note : <%= raw(@assignment_group.notes) %></b>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <div class="col-md-6">
+    <div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
+      <span class="pull-right"> 
+         <span id="display">time remaining </span>
+      </span>
+    </div>
+  </div>
+
+</div>
+
 
 <% if can? :update, @assignment_group %>
 	<%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> |
