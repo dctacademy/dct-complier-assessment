@@ -19,9 +19,9 @@
             <div id="text" class="padding-bottom"></div>
             <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
             <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
-            <% if @practice.assignment_group.due_datetime >= Time.now %>
-            <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
-            <% end %>
+              <% if (@practice.assignment_group.due_datetime >= Time.now) && !(@practice.submissions.count > 0)%>
+                <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
+              <% end %>
           </div>
         </div>
       </div>
@@ -194,6 +194,7 @@ $(document).ready(function(){
       var sent = editor.getValue();
       var out = result.getValue();
       var args = {};
+      $('#sub').hide();
       args["user_id"] = "<%= current_user.id %>";
       args["statement"] = sent;
       args["output"] = out;

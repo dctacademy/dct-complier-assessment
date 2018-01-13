@@ -12,11 +12,10 @@
 					New assignment <%= link_to notification.title, notification.url %> has been added by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at)  %> ago 
 
   			<% elsif notification.notification_type.name == "assignment_submitted" %>
-					
 						<% if current_user.role? "admin" %> 
 								Assignment - <%= link_to notification.title, notification.url %> has been submitted by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago 
 						<% else %>
-								You submitted an assignment - <%= notification.title %> around <%= time_ago_in_words(notification.created_at) %> ago 
+								You submitted an assignment - <%= link_to notification.title, notification.practice %> around <%= time_ago_in_words(notification.created_at) %> ago 
 						<% end %>
 
   			<% elsif notification.notification_type.name == "assignment_checked" %> 
@@ -24,7 +23,7 @@
   			<% if current_user.role? "admin" %> 
 					Assignment - <%= link_to notification.title, notification.url %> of <%= notification.user.username %> has been corrected by Ani around <%= time_ago_in_words(notification.created_at) %> ago. 
 				<% else %>
-						Your assignment - <%= notification.title %> has been checked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
+						Your assignment - <%= link_to notification.title, notification.practice %> has been checked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
 				<% end %>
 
   			<% elsif notification.notification_type.name == "assignment_unchecked"%>
@@ -32,7 +31,7 @@
   			<% if current_user.role? "admin" %> 
 					Assignment - <%= link_to notification.title, notification.url %> of <%= notification.user.username %> has been marked unchecked around <%= time_ago_in_words(notification.created_at) %> ago. 
 				<% else %>
-						Your assignment - <%= notification.title %> has been marked unchecked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
+						Your assignment - <%= link_to notification.title, notification.practice %> has been marked unchecked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
 				<% end %>
 
 

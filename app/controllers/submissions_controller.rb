@@ -34,6 +34,7 @@ class SubmissionsController < ApplicationController
           title: "#{@submission.assignment.title}", 
           url: "/batches/#{@submission.practice.assignment_group.batch.id}/assignment_groups/student_solutions?assignment_group_id=#{@submission.practice.assignment_group.id}&student_user_id=#{@submission.user_id}",
           user_id: @submission.user_id,
+          practice_id: @submission.practice_id,
           notification_type_id: NotificationType.find_by(name: "assignment_submitted").id
           )
       else

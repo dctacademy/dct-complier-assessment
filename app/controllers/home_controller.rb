@@ -54,6 +54,7 @@ class HomeController < ApplicationController
         title: "#{submission.assignment.title}",
         user_id: submission.user_id,
         url: "", 
+        practice_id: submission.practice_id,
         notification_type_id: NotificationType.find_by(name: "assignment_checked").id
       )
     else
@@ -63,6 +64,7 @@ class HomeController < ApplicationController
           title: "#{submission.assignment.title}", 
           user_id: submission.user_id, 
           url: "",
+          practice_id: submission.practice_id,
           notification_type_id: NotificationType.find_by(name: "assignment_unchecked").id
         )
     end
