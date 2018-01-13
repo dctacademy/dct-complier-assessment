@@ -30,6 +30,11 @@ class SubmissionsController < ApplicationController
       if @submission.save
         #format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
         format.json { render :show, status: :created, location: @submission }
+        Notification.create(
+          title: "Assignment Submitted - #{@submission.assignment.title} was submitted", 
+          url: "/batches/#{@submission.practice.assignment_group.batch.id}/assignment_groups/student_solutions?assignment_group_id=#{@submission.practice.assignment_group.id}&student_user_id=#{@submission.user_id}",
+          user_id: @submission.user_id
+          )
       else
         #format.html { render :new }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
