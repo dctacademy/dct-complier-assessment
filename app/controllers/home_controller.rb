@@ -50,9 +50,21 @@ class HomeController < ApplicationController
     if params[:is_checked] == "true"
       submission.update_attributes(is_checked: true)
       batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
+      Notification.create(
+        title: "#{submission.assignment.title}",
+        user_id: submission.user_id,
+        url: "", 
+        notification_type_id: NotificationType.find_by(name: "assignment_checked").id
+      )
     else
       submission.update_attributes(is_checked: false)
       batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
+       Notification.create(
+          title: "#{submission.assignment.title}", 
+          user_id: submission.user_id, 
+          url: "",
+          notification_type_id: NotificationType.find_by(name: "assignment_unchecked").id
+        )
     end
     render json: {
       "message": "Successfully updated"
