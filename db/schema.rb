@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112050958) do
+ActiveRecord::Schema.define(version: 20180113105557) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180112050958) do
     t.datetime "updated_at",                  null: false
     t.datetime "due_datetime"
     t.boolean  "allow_points", default: true
+    t.text     "notes"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -95,6 +96,21 @@ ActiveRecord::Schema.define(version: 20180112050958) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notification_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "url"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "notification_type_id"
   end
 
   create_table "permissions", force: :cascade do |t|

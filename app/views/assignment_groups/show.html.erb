@@ -3,16 +3,14 @@
 
 <div class="col-md-8">
 	<div class="page-header">
+    <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
+      <i class="glyphicon glyphicon-bell gi-2x"></i>
+    <% end %>
 		<h2><%= @assignment_group.title %>
-		 	</h2>
+      </h2>
 	</div>
-
-<div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
-  <span class="pull-right"> 
-    <span id="display">time remaining </span>
-  </span>
-
-</div>
+  <div>
+  </div>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -46,6 +44,25 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="row">
+  <div class="col-md-6">
+    <% unless @assignment_group.notes.nil? %>
+      <div class="well">
+        <b>Note : <%= raw(@assignment_group.notes) %></b>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
+      <span class="pull-right"> 
+         <span id="display">time remaining </span>
+      </span>
+    </div>
+  </div>
+
+</div>
+
 
 <% if can? :update, @assignment_group %>
 	<%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> |
@@ -92,6 +109,11 @@
             <span class="badge">
               <%= student_points %>  / <%= total_points %>
             </span>
+            
+            <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&student_user_id=#{student.user.id}&agisui=true" , class: "pull-right"  do %>
+             <i class="glyphicon glyphicon-bell gi-2x"></i>
+            <% end %>
+
           </div>
         <% else %>
           <%= student.name %>
@@ -99,6 +121,8 @@
       </li>
     <% end %>
     </ul>
+  
+    <%#= render '/notifications/index' %>
 </div>
 
 <script>

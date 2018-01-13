@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :notification_types
+  resources :notifications
   resources :roles
   get 'dashboard/index'
 

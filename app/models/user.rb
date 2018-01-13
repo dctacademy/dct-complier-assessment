@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
      has_many :lists
      has_many :solutions
+     has_many :notifications
 
      belongs_to :student
      #after_create :assign_user_role

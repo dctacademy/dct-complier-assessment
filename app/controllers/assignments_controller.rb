@@ -47,6 +47,13 @@ class AssignmentsController < ApplicationController
       if @assignment.save
         format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
         format.json { render :show, status: :created, location: @assignment }
+        n = Notification.create(
+          title: "#{@assignment.title}",
+          url: "/assignments/#{@assignment.id}",
+          notification_type_id: NotificationType.find_by(name: "assignment_created").id,
+          user_id: current_user.id
+
+        )
       else
         format.html { render :new }
         format.json { render json: @assignment.errors, status: :unprocessable_entity }
