@@ -48,15 +48,15 @@ class HomeController < ApplicationController
     batch_student = BatchStudent.find_by(batch_id: submission.practice.assignment_group.batch.id ,student_id: submission.user.student.id)
     assignment = submission.assignment
     submission_status = submission.is_checked
-    binding.pry
+    
     if params[:is_checked] == "correct"
       batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points
     elsif params[:is_checked] == "incorrect"
-      binding.pry
+      
       if submission.is_checked == "correct"
-        binding.pry
+        
         batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
-        binding.pry
+        
       end
     end
     submission.update_attributes(is_checked: params[:is_checked])
