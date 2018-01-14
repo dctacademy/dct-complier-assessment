@@ -23,7 +23,10 @@
 					        <div class="col-md-6">
 										<button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" > Execute </button>
 										<%= form_for sub do |f| %>
-											<%= f.check_box :is_checked, class: "correct", id: "#{sub.id}" %> <label for="<%= sub.id %>"> Correct </label>
+
+											<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label>
+											<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label>
+
 										<% end %>
 					        </div>
 				        <% end %>
@@ -84,19 +87,22 @@
     });
 
     $(".correct").on("click", function(){
-    	var corrected;
-      if($(this)[0].checked){
-    		corrected = true;
-    	} else {
-    		corrected = false;
+    	var submission;
+    	var selectedButton;
+    	for(var i = 0; i < $(this).length;i++){
+    		if($(this)[0].checked){
+    			submission = $(this)[i].getAttribute('submission');
+    			selectedButton = $(this)[i];
+    			break;
+    		}
     	}
 
     	$.ajax({
     		url: '/home/check_assignment',
     		type: 'GET' ,
     		data: {
-    			submission_id: $(this).attr("id"),
-    			is_checked: corrected
+    			submission_id: submission,
+    			is_checked: selectedButton.value
     		},
     		success: function(response){
     			console.log(response);
