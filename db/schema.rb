@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180113115504) do
+ActiveRecord::Schema.define(version: 20180113121858) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -172,9 +172,9 @@ ActiveRecord::Schema.define(version: 20180113115504) do
     t.string   "language"
     t.integer  "assignment_id"
     t.integer  "practice_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "is_checked",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "is_checked",    default: "f"
   end
 
   create_table "taggings", force: :cascade do |t|

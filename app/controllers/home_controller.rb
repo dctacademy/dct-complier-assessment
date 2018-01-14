@@ -47,27 +47,36 @@ class HomeController < ApplicationController
     submission = Submission.find(params[:submission_id])
     batch_student = BatchStudent.find_by(batch_id: submission.practice.assignment_group.batch.id ,student_id: submission.user.student.id)
     assignment = submission.assignment
-    if params[:is_checked] == "true"
-      submission.update_attributes(is_checked: true)
-      batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
-      Notification.create(
-        title: "#{submission.assignment.title}",
-        user_id: submission.user_id,
-        url: "", 
-        practice_id: submission.practice_id,
-        notification_type_id: NotificationType.find_by(name: "assignment_checked").id
-      )
-    else
-      submission.update_attributes(is_checked: false)
-      batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
-       Notification.create(
-          title: "#{submission.assignment.title}", 
-          user_id: submission.user_id, 
-          url: "",
-          practice_id: submission.practice_id,
-          notification_type_id: NotificationType.find_by(name: "assignment_unchecked").id
-        )
+    submission_status = submission.is_checked
+    binding.pry
+    if params[:is_checked] == "correct"
+      batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points
+    elsif params[:is_checked] == "incorrect"
+      binding.pry
+      if submission.is_checked == "correct"
+        binding.pry
+        batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
+        binding.pry
+      end
     end
+    submission.update_attributes(is_checked: params[:is_checked])
+
+    # POINTS 
+    # if submission.is_checked == "correct"
+    #   batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
+    # elsif submission.is_checked == "incorrect"
+    #   if submission_status == "correct" # only if is_checked is correct then deduct points other wise we would not have assigned it in the first place
+    #     batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
+    #   end
+    # end
+    Notification.create(
+      title: "#{submission.assignment.title}",
+      user_id: submission.user_id,
+      url: "/batches/#{submission.practice.assignment_group.batch.id}/assignment_groups/student_solutions?assignment_group_id=#{submission.practice.assignment_group.id}&student_user_id=#{submission.user_id}",
+      practice_id: submission.practice_id,
+      notification_type_id: NotificationType.find_by(name: "assignment_correction").id
+    )
+
     render json: {
       "message": "Successfully updated"
     }

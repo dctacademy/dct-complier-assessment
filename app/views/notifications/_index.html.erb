@@ -9,31 +9,22 @@
   		<div class="panel-body">
   			<% if notification.notification_type.name == "assignment_created" %>
 
-					New assignment <%= link_to notification.title, notification.url %> has been added by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at)  %> ago 
+					New assignment <%= link_to notification.title, notification.url, target: "_blank" %> has been <b>added</b> by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at)  %> ago 
 
   			<% elsif notification.notification_type.name == "assignment_submitted" %>
 						<% if current_user.role? "admin" %> 
-								Assignment - <%= link_to notification.title, notification.url %> has been submitted by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago 
+								Assignment - <%= link_to notification.title, notification.url, target: "_blank" %> has been <b>submitted</b> by <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago 
 						<% else %>
-								You submitted an assignment - <%= link_to notification.title, notification.practice %> around <%= time_ago_in_words(notification.created_at) %> ago 
+								You <b>submitted</b> an assignment - <%= link_to notification.title, notification.practice, target: "_blank" %> around <%= time_ago_in_words(notification.created_at) %> ago 
 						<% end %>
 
-  			<% elsif notification.notification_type.name == "assignment_checked" %> 
+  			<% elsif notification.notification_type.name == "assignment_correction" %> 
 
   			<% if current_user.role? "admin" %> 
-					Assignment - <%= link_to notification.title, notification.url %> of <%= notification.user.username %> has been corrected by Ani around <%= time_ago_in_words(notification.created_at) %> ago. 
+					Assignment - <%= link_to notification.title, notification.url, target: "_blank" %> of <%= notification.user.username %> has been marked as <b><%= notification.practice.submissions.where('user_id = ?', notification.user_id).first.is_checked %></b> by Ani around <%= time_ago_in_words(notification.created_at) %> ago. 
 				<% else %>
-						Your assignment - <%= link_to notification.title, notification.practice %> has been checked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
+						Your assignment - <%= link_to notification.title, notification.practice, target: "_blank" %> has been marked as <b><%= notification.practice.submissions.where('user_id = ?', notification.user_id).first.is_checked %></b> by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
 				<% end %>
-
-  			<% elsif notification.notification_type.name == "assignment_unchecked"%>
-
-  			<% if current_user.role? "admin" %> 
-					Assignment - <%= link_to notification.title, notification.url %> of <%= notification.user.username %> has been marked unchecked around <%= time_ago_in_words(notification.created_at) %> ago. 
-				<% else %>
-						Your assignment - <%= link_to notification.title, notification.practice %> has been marked unchecked by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
-				<% end %>
-
 
   			<% end %> 
 			</div>
