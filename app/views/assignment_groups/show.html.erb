@@ -81,7 +81,8 @@
         <% if current_user.role? "admin" %>
           <%= link_to student.name, batch_assignment_groups_student_solutions_path(@batch.id, assignment_group_id: @assignment_group.id, student_user_id: student.user.id) %>
           <div class="pull-right">
-            <% submissions = Submission.where(user_id: student.user.id, practice_id: @assignment_group.practice_ids) 
+            <% 
+              submissions = Submission.where(user_id: student.user.id, practice_id: @assignment_group.practice_ids) 
                total_points = 0 
                student_points = 0
               @assignment_group.practices.each do |practice|
@@ -103,7 +104,12 @@
             </span>
 
             <span class="badge">
-              <%= @assignment_group.practices.count - submissions.pluck(:is_checked).count("correct") - submissions.pluck(:is_checked).count("incorrect") %> NS
+              <%= submissions.pluck(:is_checked).count("partial output") %>
+              <i class="glyphicon glyphicon-adjust"></i>
+            </span>
+
+            <span class="badge">
+              <%= @assignment_group.practices.count - submissions.pluck(:is_checked).count("correct") - submissions.pluck(:is_checked).count("incorrect") - submissions.pluck(:is_checked).count("partial output")%> NS
             </span>
 
             <span class="badge">

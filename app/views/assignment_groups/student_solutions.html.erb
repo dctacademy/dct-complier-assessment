@@ -26,6 +26,7 @@
 
 											<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label>
 											<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label>
+											<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Partial Output </label>
 
 										<% end %>
 					        </div>

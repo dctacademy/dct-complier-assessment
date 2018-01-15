@@ -1,6 +1,17 @@
 <% if @notifications.empty? %>
-	<p class="alert alert-info"> No notifications yet. </p>
+<div class="col-md-12">
+	<div class="jumbotron">
+		<div class="col-md-offset-6">
+			<i class="glyphicon glyphicon-bell gi-4x"> </i>
+		</div>
+		<div class="text-center">
+			<h3>No new notifications.</h3>
+			<p>You’ll see updates here for your submissions, corrections and comments.</p>
+		</div>
+	</div>
+</div>
 <% else %>
+<div class="col-md-8">
  		<div class="page-header">
 			<h2>Listing Notifications <small><%= @notifications.size %></small></h2>
 		</div>
@@ -30,4 +41,5 @@
 			</div>
 		</div>
 		<% end %>
+	</div>
 <% end %>
