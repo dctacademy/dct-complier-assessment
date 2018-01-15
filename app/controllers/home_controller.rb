@@ -51,7 +51,7 @@ class HomeController < ApplicationController
     
     if params[:is_checked] == "correct"
       batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points
-    elsif params[:is_checked] == "incorrect"
+    elsif params[:is_checked] == "incorrect" || params[:is_checked] == "partial output"
       if submission.is_checked == "correct"
         batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
       end

@@ -15,6 +15,7 @@
 <table id="myTable" class="table table-striped">
   <thead>
     <tr>
+      <th> # </th>
       <th>Code</th>
       <th>Title</th>
       <th>Tags</th>
@@ -24,8 +25,9 @@
   </thead>
 
   <tbody>
-    <% @assignment_group.practices.each do |practice| %>
+    <% @assignment_group.practices.each_with_index do |practice, index| %>
       <tr>
+        <td><%= index + 1 %></td>
         <td><%= practice.assignment.code %></td>
         <td><%= practice.assignment.title %></td>
         <td><%= practice.assignment.tag_list %></td>
