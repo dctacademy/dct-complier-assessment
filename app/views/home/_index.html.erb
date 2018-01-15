@@ -198,7 +198,6 @@ $(document).ready(function(){
       var sent = editor.getValue();
       var out = result.getValue();
       var args = {};
-      $('#sub').hide();
       args["user_id"] = "<%= current_user.id %>";
       args["statement"] = sent;
       args["output"] = out;
@@ -213,6 +212,8 @@ $(document).ready(function(){
         )
         $("#sub").removeAttr('disabled');
       }else{
+        $('#sub').hide();
+        $('#comments').show();
         if(flag){
         $.ajax({
           url: "<%= submissions_path %>",

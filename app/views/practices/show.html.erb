@@ -13,5 +13,11 @@
 	</div>
 	<%= render "assignments/show" %>
 	</div>
+	
+	<% if @practice.submissions.where('user_id = ?', current_user.id).count.zero? %>
+		<p class="alert alert-danger"> Commenting can be done only submitting the assignment </p>
+	<% else %>
+		<%= render 'assignment_groups/comment_form', sub: @practice.submissions.where('user_id = ?', current_user.id).first %>
+		<% end %>		
 </div>
 

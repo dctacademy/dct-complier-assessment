@@ -1,4 +1,7 @@
-	<div class="col-md-12 media-body">
+<div class="col-md-12 media-body" id="comment_<%= @comment.id %>">
 		<h4 class="media-heading"><%= @comment.user.username%> <small>commented <%= time_ago_in_words(@comment.created_at) %> ago</small></h4>
+		<%= link_to comment_path(@comment.id), method: :delete, data: {confirm: "Are you sure?"}, remote: true do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %>
 			<p><%= @comment.body %></p>
 	</div>

@@ -31,38 +31,11 @@
 											<%= form_for sub do |f| %>
 												<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label><br/>
 												<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label><br/>
-												<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Partial Output </label>
+												<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_partial_output"> Partial Output </label>
 											<% end %>
 									</div>
 								</div>
-									<div class="col-md-9">
-											<h2 class="text-center lead"> Comments </h2>
-											<hr/>
-												<div class="media" id="comments_sub_<%= sub.id %>">
-														<% sub.comments.each do |comment| %>
-														  <div class="col-md-12 media-body" id="comment_<%= comment.id %>">
-														    <h4 class="media-heading"><%= comment.user.username%> <small>commented <%= time_ago_in_words(comment.created_at) %> ago</small>
-														    </h4>
-														    <%= link_to comment_path(comment.id), method: :delete, data: {confirm: "Are you sure?"}, remote: true do %>
-																<i class="glyphicon glyphicon-trash"></i>
-														    <% end %>
-
-														    <p><%= comment.body %>
-														    </p>
-														    <hr/>
-														  </div>
-													<% end %>
-												</div>
-											<%= form_for(Comment.new, remote: true) do |f| %>
-												<div class="form-group">
-													<%= f.text_area :body, class: 'form-control', placeholder: "your comment..." %>
-													<%= f.hidden_field :submission_id, value: sub.id %> 
-												</div>
-												<div class="form-group">
-													<%= f.submit "Post", class: "btn btn-primary"%>
-												</div>
-											<% end %>
-									</div>
+								<%= render 'comment_form', sub: sub %>
 								
 				        <% end %>
 						</div>

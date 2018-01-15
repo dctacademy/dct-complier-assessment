@@ -1,2 +1,6 @@
 $('#comments_sub_<%= @comment.submission_id %>').append("<%= escape_javascript render('comment') %>")
-$('#new_comment')[0].reset();
+for(var i = 0; i < $('.new_comment').length; i++){
+	$('.new_comment')[i].reset();
+}
+
+$('#comments').append("<%= escape_javascript render('comment') %>");
