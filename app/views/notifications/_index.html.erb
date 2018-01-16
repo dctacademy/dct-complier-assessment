@@ -1,6 +1,17 @@
 <% if @notifications.empty? %>
-	<p class="alert alert-info"> No notifications yet. </p>
+<div class="col-md-12">
+	<div class="jumbotron">
+		<div class="col-md-offset-6">
+			<i class="glyphicon glyphicon-bell gi-4x"> </i>
+		</div>
+		<div class="text-center">
+			<h3>No new notifications.</h3>
+			<p>You’ll see updates here for your submissions, corrections and comments.</p>
+		</div>
+	</div>
+</div>
 <% else %>
+<div class="col-md-8">
  		<div class="page-header">
 			<h2>Listing Notifications <small><%= @notifications.size %></small></h2>
 		</div>
@@ -19,15 +30,31 @@
 						<% end %>
 
   			<% elsif notification.notification_type.name == "assignment_correction" %> 
-
   			<% if current_user.role? "admin" %> 
 					Assignment - <%= link_to notification.title, notification.url, target: "_blank" %> of <%= notification.user.username %> has been marked as <b><%= notification.practice.submissions.where('user_id = ?', notification.user_id).first.is_checked %></b> by Ani around <%= time_ago_in_words(notification.created_at) %> ago. 
 				<% else %>
 						Your assignment - <%= link_to notification.title, notification.practice, target: "_blank" %> has been marked as <b><%= notification.practice.submissions.where('user_id = ?', notification.user_id).first.is_checked %></b> by the Ani around <%= time_ago_in_words(notification.created_at) %> ago.
 				<% end %>
 
+				<% elsif notification.notification_type.name == "comment_created" %> 
+				
+				<% if current_user.role? "admin" %> 
+					New comment added to <%= link_to notification.title, notification.url, target: "_blank" %> of <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago. 
+				<% else %>
+						 New comment added to - <%= link_to notification.title, notification.practice, target: "_blank" %> of <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago. 
+				<% end %>
+
+				<% elsif notification.notification_type.name == "comment_deleted" %> 
+				
+				<% if current_user.role? "admin" %> 
+					A comment has been removed for assignment - <%= link_to notification.title, notification.url, target: "_blank" %> of <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago. 
+				<% else %>
+						 A comment has been removed for assignment - <%= link_to notification.title, notification.practice, target: "_blank" %> of <%= notification.user.username %> around <%= time_ago_in_words(notification.created_at) %> ago. 
+				<% end %>
+	
   			<% end %> 
 			</div>
 		</div>
 		<% end %>
+	</div>
 <% end %>

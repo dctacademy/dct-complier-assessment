@@ -8,10 +8,10 @@
 			</p>
 		</div>
 	<% else %>
-		<div class="col-md-8">
 
+		<div class="col-md-8">
 				<% unless @submissions.empty? %>
-					  <h2>Solutions of <%= User.find(@user).username %></h2>
+					<h2>Solutions of <%= User.find(@user).username %></h2>
 					<% @submissions.each do |sub| %>
 							<div class="page-header">
 									<h4> <%= sub.assignment.code %> - <%= sub.assignment.title %> </h4>
@@ -20,18 +20,25 @@
 								<textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %></textarea>
 								<br/>
 								<% if current_user.role? "admin" %>
-					        <div class="col-md-6">
+								<div class="col-md-3">
+									<h2 class="lead"> Actions </h2>
+									<hr/>
+									<div class="col-md-12">
 										<button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" > Execute </button>
-										<%= form_for sub do |f| %>
-
-											<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label>
-											<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label>
-
-										<% end %>
-					        </div>
+									</div>
+									<div class="col-md-12">
+										<br/>
+											<%= form_for sub do |f| %>
+												<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label><br/>
+												<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label><br/>
+												<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_partial_output"> Partial Output </label>
+											<% end %>
+									</div>
+								</div>
+								<%= render 'comment_form', sub: sub %>
+								
 				        <% end %>
 						</div>
-						<hr/>
 				  <% end %>
 				<% else %>
 					<div class="alert alert-info"> No Solutions Found </div>

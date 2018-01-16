@@ -51,24 +51,12 @@ class HomeController < ApplicationController
     
     if params[:is_checked] == "correct"
       batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points
-    elsif params[:is_checked] == "incorrect"
-      
+    elsif params[:is_checked] == "incorrect" || params[:is_checked] == "partial output"
       if submission.is_checked == "correct"
-        
         batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
-        
       end
     end
     submission.update_attributes(is_checked: params[:is_checked])
-
-    # POINTS 
-    # if submission.is_checked == "correct"
-    #   batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
-    # elsif submission.is_checked == "incorrect"
-    #   if submission_status == "correct" # only if is_checked is correct then deduct points other wise we would not have assigned it in the first place
-    #     batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points # if it is sample test then no need to add points
-    #   end
-    # end
     Notification.create(
       title: "#{submission.assignment.title}",
       user_id: submission.user_id,

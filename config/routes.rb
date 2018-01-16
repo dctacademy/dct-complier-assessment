@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :comments
   resources :notification_types
   resources :notifications
   resources :roles
