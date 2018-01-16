@@ -1,5 +1,5 @@
 <% @a = current_user.answers.map{|n| n.id} %>
-<div class="col-md-4 pull-right">
+<div class="col-md-12">
   <div>
     <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
     <b><span class="right">Favourite</span></b>
@@ -8,7 +8,6 @@
 <p>
   <strong>Tags:</strong>
   <%= @assignment.try(:tag_list) %>
-  <%= @assignment.try(:company_list) %>
 </p>
 <p>
   <strong>Title:</strong>
@@ -34,7 +33,9 @@
 </div>
 
 <% if can? :create,Answer %>
-  <%= render '/home/index' %>
+  <div class="col-md-12">
+   <%= render '/home/index' %>
+  </div>
 <% end %>
 
 <script type="text/javascript">
