@@ -17,7 +17,7 @@
         <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%= sub.id %>" aria-expanded="true" aria-controls="collapseOne">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%= sub.id %>">
                 <%= sub.user.username %>
               </a>
             </h4>
@@ -45,13 +45,14 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-
+  $('.collapse').collapse()
   $.each($('.cm'),function(key,obj){
    var code = CodeMirror.fromTextArea(obj,{
      mode: obj.name,
      keyMap: "sublime",
      theme: "monokai",
-     lineNumbers: true
+     lineNumbers: true,
+     readOnly: true
    })
   //code.setSize(400,100);
   })

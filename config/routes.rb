@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :practices do
     get 'submissions'
   end
+  get 'assignment_groups/view_solutions'
   resources :assignment_groups
   resources :batches do
     get '/assignment_groups/student_solutions'
