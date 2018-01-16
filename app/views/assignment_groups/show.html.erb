@@ -33,15 +33,15 @@
         <td><%= practice.assignment.tag_list %></td>
         <td><%= practice.assignment.points %></td>
         <td><%= link_to 'Solve', practice %>
-
-          <% if current_user %>
-  					<% if can? :destroy, practice %>
-              <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
-							<%= link_to "submissions" , practice_submissions_path(practice) %>
-                
-              </td>
-						<% end %>
-        <% end %>
+            <% if current_user %>
+    					<% if can? :destroy, practice %>
+                <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            <% end %>
+            <% if @assignment_group.due_datetime <= Time.now %>
+  					 <%= link_to "View Solutions" , practice_submissions_path(practice) %>     
+            <% end %>
+         </td>
       </tr>
     <% end %>
   </tbody>

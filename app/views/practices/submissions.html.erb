@@ -7,30 +7,40 @@
   </ol>
 <div class="col-md-8">
   <h3 class="page-header">Submission <%= @practice.assignment.code %> <%= @practice.assignment.title %></h3>
-    <% @submissions.each do |sub| %>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%= sub.id %>" aria-expanded="true" aria-controls="collapseOne">
-            <%= sub.user.username %>
-          </a>
-        </h4>
-      </div>
-      <div id="collapseOne_<%= sub.id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        <textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %></textarea>
-        <br/>
-          <button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" >Test</button>
+  
+  <% if @submissions.empty? %>
+    <p class="alert alert-info"> No Submissions Found</p>
+    <%= link_to "back", :back %>
+  <% else %>
+        <% @submissions.each do |sub| %>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_<%= sub.id %>" aria-expanded="true" aria-controls="collapseOne">
+                <%= sub.user.username %>
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne_<%= sub.id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %></textarea>
+            <br/>
+            <% if current_user.role? "admin" %>
+              <button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" >Test</button>
+            <% end %>
+            </div>
+           
+           </div>
         </div>
-       
-    </div>
-  </div>
+      <% end %>
   <% end %>
 </div>
-<div class="col-md-4">
-  <h3 class="page-header" id="name">Output</h3>
-  <div id="result" class="padding-bottom"></div>
-</div>
+<% if current_user.role? "admin" %>
+  <div class="col-md-4">
+    <h3 class="page-header" id="name">Output</h3>
+    <div id="result" class="padding-bottom"></div>
+  </div>
+<% end %>
 
 <script type="text/javascript">
 
