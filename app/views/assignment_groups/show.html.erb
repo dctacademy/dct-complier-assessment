@@ -3,14 +3,41 @@
 
 <div class="col-md-8">
 	<div class="page-header">
-    <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
+    <% if current_user.role? "admin" %>
+      <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
       <i class="glyphicon glyphicon-bell gi-2x"></i>
+      <% end %>
     <% end %>
 		<h2><%= @assignment_group.title %>
-      </h2>
-	</div>
+      
+
+    <% if current_user.role? "admin" %>
+      <!-- Single button -->
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li id="view_solutions"><%= link_to "Solutions - #{@assignment_group.view_solutions == false ? 'is hidden' : 'is shown'}", assignment_groups_view_solutions_path(assignment_group_id: @assignment_group.id), remote: true %></li>
+          <li role="separator" class="divider"></li>
+          <% if can? :update, @assignment_group %>
+            <li>
+              <%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> 
+            </li>
+          <% end %>
+           <% if can? :destroy, @assignment_group %>
+            <li>
+              <%= link_to 'Destroy', batch_assignment_group_path(params[:batch_id],@assignment_group), method: :delete, data: {confirm: "Are you sure?"} %> 
+            </li>
+          <% end %>
+          
+        </ul>
+      </div>
+      <% end %>
+    </h2>
+	 </div>
   <div>
-  </div>
+</div>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -38,7 +65,7 @@
                 <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>
             <% end %>
-            <% if @assignment_group.due_datetime <= Time.now %>
+            <% if @assignment_group.view_solutions %>
   					 <%= link_to "View Solutions" , practice_submissions_path(practice) %>     
             <% end %>
          </td>
@@ -66,9 +93,7 @@
 </div>
 
 
-<% if can? :update, @assignment_group %>
-	<%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> |
-<% end %>
+
 <%= link_to 'Back', batch_path(params[:batch_id]) %>
 
 </div>
