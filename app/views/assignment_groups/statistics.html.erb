@@ -1,0 +1,129 @@
+<%= render 'breadcrum' %>
+<div class="row">
+	<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+    	<a href="#time" aria-controls="time" role="tab" data-toggle="tab">Time</a></li>
+    <li role="presentation"><a href="#correctness" aria-controls="correctness" role="tab" data-toggle="tab">Correctness</a></li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane active" id="time">
+    		<div class="page-header">
+					<h4>Time for submission</h4>
+				</div>
+
+				<div class="form-group">
+					<select id="timeSelectChart" class="form-control">
+						<option value="time_line_chart"> Line Chart</option>
+						<option value="time_scatter_chart"> Scatter Chart</option>
+					</select>
+				</div>
+	
+				<% @assignment_group.practices.each do |practice| %>
+				
+					<h4><%= practice.assignment.title %></h4>
+					<% data = {} 
+						practice.submissions.each do |submission| 
+							data[submission.user.username] = distance_of_time_in_words(submission.time_in_seconds)
+					 	end %>
+					 	<div class="col-md-12">
+					 		<div class="time_charts time_line_chart">
+								 <%= line_chart(data, xtitle: "students", ytitle: "minutes taken to solve" )%>
+							</div>
+							<div class="time_charts time_scatter_chart">
+							 <%= scatter_chart(data, xtitle: "students", ytitle: "minutes taken to solve" )%>
+							</div>
+						</div>
+				
+				<% end %>
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="correctness">
+    	<div class="page-header">
+    		<h3>Correctness</h3>
+    	</div>
+
+    	<div class="form-group">
+					<select id="correctSelectChart" class="form-control">
+						<option value="correct_pie_chart"> Pie Chart</option>
+						<option value="correct_column_chart"> Column Chart</option>
+					</select>
+				</div>
+
+    	<% @assignment_group.practices.each do |practice| %>
+
+    	<h4><%= practice.assignment.title %></h4>
+				<% data = {}
+					data["correct"] = practice.submissions.where('is_checked = ?', "correct").count
+					data["incorrect"] = practice.submissions.where('is_checked = ?', "incorrect").count
+					data["partial output"] = practice.submissions.where('is_checked = ?', "partial output").count %>
+
+						<div class="col-md-12">
+					 		<div class="correct_charts correct_pie_chart">
+								 <%= pie_chart(data)%>
+							</div>
+
+							<div class="correct_charts correct_column_chart">
+								 <%= column_chart(data)%>
+							</div>
+						</div>
+
+
+    	<% end %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+	function displayTimeChart(){
+		setTimeout(function(){
+			for(var i = 0; i < $('.time_charts').length; i++){
+				if($('.time_charts')[i].className.split(' ').includes($('#timeSelectChart')[0].value)){
+					$('.time_charts')[i].style.display = "block";
+				} else {
+					$('.time_charts')[i].style.display = "none";
+				}
+			}
+		},1000);
+	}
+
+	function displayCorrectChart(){
+		setTimeout(function(){
+			for(var i = 0; i < $('.correct_charts').length; i++){
+				if($('.correct_charts')[i].className.split(' ').includes($('#correctSelectChart')[0].value)){
+					$('.correct_charts')[i].style.display = "block";
+				} else {
+					$('.correct_charts')[i].style.display = "none";
+				}
+			}
+		},1000);
+	}
+
+	(function(){
+			displayTimeChart();
+	})();
+
+
+	
+	$('#timeSelectChart').on('change', function(){
+		displayTimeChart();
+	});
+
+	$('#correctSelectChart').on('change', function(){
+		displayCorrectChart();
+	});
+
+</script>

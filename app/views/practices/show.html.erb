@@ -7,11 +7,16 @@
 	</ol>
 	
 	<div class="col-md-12">
+	<h3 class="alert alert-success" id="watch">
+		<i class="glyphicon glyphicon-time "></i>
+		<span id="display"></span>
+	</h3>
+
 		<div class="page-header">
 			<h2> <b>Assignment:</b> <%= @practice.assignment_group.title %></h2>
 		</div>
 	</div>
-	<%= render "assignments/show" %>
+		<%= render "assignments/show" %>
 	</div>
 	
 	<% if @practice.submissions.where('user_id = ?', current_user.id).count.zero? %>
@@ -20,4 +25,52 @@
 		<%= render 'assignment_groups/comment_form', sub: @practice.submissions.where('user_id = ?', current_user.id).first %>
 		<% end %>		
 </div>
+
+
+<script>
+    var assignmentViewedDate = new Date('<%= @start_time.created_at.year %>', '<%= @start_time.created_at.month - 1 %>', '<%= @start_time.created_at.day %>', '<%= @start_time.created_at.hour %>', '<%= @start_time.created_at.min %>');
+
+    var currentDate = new Date();
+    var availableSeconds = <%= @assignment.minutes * 60 %>;
+
+    var countUp = Math.round((Number(currentDate) - Number(assignmentViewedDate))/1000);
+
+    // interval references
+    var countUpRef;
+
+    function prepend(n){
+      return (n <= 9) ? `0${n}` : n;
+    }
+
+    function setWatchBkClass(seconds){
+    	if(seconds > availableSeconds){
+				$('#watch').removeClass("alert-success");
+	     	$('#watch').addClass("alert-warning");
+	    }
+    }
+   
+
+    function formatTime(count){
+      var days = Math.floor(count/86400);
+      var hours = Math.floor((count % 86400) / 3600);
+      var minutes = Math.floor(((count % 86400) % 3600)/60)
+      var seconds = Math.floor((count % 86400) % 3600) % 60;
+
+      return `${prepend(days)} : ${prepend(hours)} : ${prepend(minutes)} : ${prepend(seconds)}`;
+    }
+
+   	<% if !(@practice.submissions.where('user_id = ?', current_user.id).count > 0) %>
+     countUpRef = setInterval(function(){
+     	 setWatchBkClass(countUp);
+       document.querySelector('#display').innerHTML = `${formatTime(countUp)}`;
+       countUp++;
+		 },1000);
+
+	 <% else %>
+	 		var seconds = <%= @practice.submissions.where('user_id = ?', current_user.id).first.time_in_seconds %>;
+     	 	setWatchBkClass(seconds);
+	 		document.querySelector('#display').innerHTML = `You took ${formatTime(seconds)} to solve`;
+	 <% end %>
+     
+</script>
 

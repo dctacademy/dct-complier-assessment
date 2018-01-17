@@ -14,32 +14,39 @@
 					<h2>Solutions of <%= User.find(@user).username %></h2>
 					<% @submissions.each do |sub| %>
 							<div class="page-header">
-									<h4> <%= sub.assignment.code %> - <%= sub.assignment.title %> </h4>
+									<h4> <%= sub.assignment.code %> - <%= sub.assignment.title %> </h4> 
+									<i class="glyphicon glyphicon-time"></i><span class="timeTaken"></span>
 							</div>
 							<div>
 								<textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %></textarea>
 								<br/>
 								<% if current_user.role? "admin" %>
-								<div class="col-md-3">
-									<h2 class="lead"> Actions </h2>
-									<hr/>
-									<div class="col-md-12">
-										<button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" > Execute </button>
+								<div class="row">
+									<div class="col-md-3">
+										<h2 class="lead"> Actions </h2>
+										<hr/>
+										<div class="col-md-12">
+											<button type="button" name="<%= sub.user.username %>" class="btn btn-primary fork" language="<%= sub.language %>" statement="<%= sub.statement %>" > Execute </button>
+										</div>
+										<div class="col-md-12">
+
+											<br/>
+												<%= form_for sub do |f| %>
+													<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label><br/>
+													<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label><br/>
+													<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_partial_output"> Partial Output </label>
+												<% end %>
+										</div>
 									</div>
-									<div class="col-md-12">
-										<br/>
-											<%= form_for sub do |f| %>
-												<%= f.radio_button :is_checked, "correct", class: "correct", submission: sub.id %> <label for="submission_is_checked_correct"> Correct </label><br/>
-												<%= f.radio_button :is_checked, "incorrect", class: "correct", submission: sub.id %> <label for="submission_is_checked_incorrect"> Incorrect </label><br/>
-												<%= f.radio_button :is_checked, "partial output", class: "correct", submission: sub.id %> <label for="submission_is_checked_partial_output"> Partial Output </label>
-											<% end %>
-									</div>
-								</div>
-								<%= render 'comment_form', sub: sub %>
-								
-				        <% end %>
+									<%= render 'comment_form', sub: sub %>
+									
+					        <% end %>
+							</div>
 						</div>
+
 				  <% end %>
+				  
+
 				<% else %>
 					<div class="alert alert-info"> No Solutions Found </div>
 				<% end %>
@@ -117,4 +124,24 @@
     	})
     });
   })
+
+   function prepend(n){
+      return (n <= 9) ? `0${n}` : n;
+    }
+
+    function formatTime(count){
+      var days = Math.floor(count/86400);
+      var hours = Math.floor((count % 86400) / 3600);
+      var minutes = Math.floor(((count % 86400) % 3600)/60)
+      var seconds = Math.floor((count % 86400) % 3600) % 60;
+
+      return `${prepend(days)} : ${prepend(hours)} : ${prepend(minutes)} : ${prepend(seconds)}`;
+    }
+
+  var submissionTimes = <%= @submissions.pluck(:time_in_seconds) %>;
+  for(var i = 0; i < $('.timeTaken').length; i++){
+  	$('.timeTaken')[i].innerHTML = ` ${formatTime(submissionTimes[i])} `;
+  }
+
+
 </script>

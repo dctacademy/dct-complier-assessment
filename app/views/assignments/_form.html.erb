@@ -52,6 +52,11 @@
     <%= f.text_field :source ,class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :minutes %>
+    <%= f.number_field :minutes, min: 0, max: 60, step: 5, class: "form-control" %>
+  </div>
+
   <% if controller.action_name == "edit" %> 
     <%= f.label :approved %>
     <%= f.check_box :approved  %>

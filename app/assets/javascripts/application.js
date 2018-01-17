@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require chosen-jquery
 //= require chosen
+//= require chartkick
 //= require_tree .
 
 $(document).ready(function(){

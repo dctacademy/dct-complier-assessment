@@ -27,6 +27,8 @@ class Assignment < ApplicationRecord
   has_many :list_assignments
   has_many :lists,through: :list_assignments
 
+  has_many :submission_timers
+
   has_many :solutions
 
   before_validation :assign_code,on: :create

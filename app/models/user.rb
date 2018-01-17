@@ -21,6 +21,8 @@ class User < ApplicationRecord
      has_many :notifications
      has_many :comments
 
+     has_many :assignment_timers
+
      belongs_to :student
      #after_create :assign_user_role
 

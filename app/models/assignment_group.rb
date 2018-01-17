@@ -10,6 +10,8 @@ class AssignmentGroup < ApplicationRecord
 	has_many :practice_students
 	has_many :students, through: :practice_students
 
+	has_many :assignment_timers
+
 	belongs_to :batch
 	validates_presence_of :title, :batch_id, :due_datetime
 end
