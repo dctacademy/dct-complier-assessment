@@ -5,30 +5,8 @@
     <b><span class="right">Favourite</span></b>
   </div>
   <br>
-<p>
-  <strong>Tags:</strong>
-  <%= @assignment.try(:tag_list) %>
-  <%= @assignment.try(:company_list) %>
-</p>
-<p>
-  <strong>Title:</strong>
-  <%= @assignment.title %>
-</p>
 
-<p>
-  <strong>Points:</strong>
-  <%= @assignment.points %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= raw(@assignment.body) %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @assignment.url %>
-</p>
+  <%= render 'show' %>
 
 <% if can? :update, @assignment %>
   <% if !@assignment.approved %> 

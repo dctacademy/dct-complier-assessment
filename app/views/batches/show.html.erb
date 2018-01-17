@@ -32,6 +32,7 @@
     <thead>
       <tr>
         <th>Title</th>
+        <th>Timed</th>
         <th>Languages</th>
         <th>Assignments</th>
         <th>Created Date</th>
@@ -42,7 +43,16 @@
     <tbody>
       <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
         <tr>
-          <td><%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %></td>
+          <td>
+            <%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %>
+          </td>
+           <td>
+            <% if assignment_group.is_timed %>
+                <i class="glyphicon glyphicon-time"></i>
+            <% else %>
+                -
+            <% end %>
+          </td>
           <td><%= assignment_group.tag_list %></td>
           <td><%= assignment_group.assignments.count %></td>
           <td><%= assignment_group.created_at.strftime("%d, %b %Y") %></td>

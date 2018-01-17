@@ -8,17 +8,30 @@
       <i class="glyphicon glyphicon-bell gi-2x"></i>
       <% end %>
     <% end %>
-		<h2><%= @assignment_group.title %>
-      
 
+
+    <% if @assignment_group.is_timed %>
+      <p class="alert alert-info"><i class="glyphicon glyphicon-time"></i> Assignments in this group is timed</p>
+    <% else %>
+      <p class="alert alert-info">Assignments in this group is not timed. Relax !!!</p>
+    <% end %>
+		<h2><%= @assignment_group.title %>
+
+    
+   
     <% if current_user.role? "admin" %>
       <!-- Single button -->
       <div class="btn-group pull-right">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Settings <span class="caret"></span>
+        <i class="glyphicon glyphicon-cog"></i>  Settings <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           <li id="view_solutions"><%= link_to "Solutions - #{@assignment_group.view_solutions == false ? 'is hidden' : 'is shown'}", assignment_groups_view_solutions_path(assignment_group_id: @assignment_group.id), remote: true %></li>
+          <li>
+            <%= link_to assignment_groups_statistics_path(assignment_group_id: @assignment_group.id) do %>
+              <i class="glyphicon glyphicon-equalizer"></i> Statistics  
+            <% end %>
+            </li>
           <li role="separator" class="divider"></li>
           <% if can? :update, @assignment_group %>
             <li>
@@ -59,7 +72,17 @@
         <td><%= practice.assignment.title %></td>
         <td><%= practice.assignment.tag_list %></td>
         <td><%= practice.assignment.points %></td>
-        <td><%= link_to 'Solve', practice %>
+        <td>
+          <%= link_to 'Solve', practice %>
+
+            <% if !SubmissionTimer.find_by(
+               user_id: current_user.id,
+               practice_id: practice.id,
+               assignment_id: practice.assignment.id, 
+               assignment_group_id: @assignment_group.id).nil? 
+            %>
+              <i class="glyphicon glyphicon-eye-open"></i>
+           <% end %>
             <% if current_user %>
     					<% if can? :destroy, practice %>
                 <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -83,7 +106,7 @@
     <% end %>
   </div>
   <div class="col-md-6">
-    <div class="alert alert-info" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
+    <div class="alert alert-warning" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
       <span class="pull-right"> 
          <span id="display">time remaining </span>
       </span>
@@ -191,5 +214,4 @@
         document.querySelector('#display').innerHTML = "<strong> time up</strong>";
      }
    
-
 </script>

@@ -1,7 +1,7 @@
 class AssignmentGroupsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_load_and_authorize_resource only: [:student_solutions, :view_solutions]
+  skip_load_and_authorize_resource only: [:student_solutions, :view_solutions, :statistics]
 
   before_action :set_assignment_group, only: [:show, :edit, :update, :destroy]
 
@@ -78,6 +78,10 @@ class AssignmentGroupsController < ApplicationController
     @assignment_group.update_attributes(view_solutions: @assignment_group.view_solutions == false ? true : false)
   end
 
+  def statistics
+    @assignment_group = AssignmentGroup.find(params[:assignment_group_id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_assignment_group
@@ -87,6 +91,6 @@ class AssignmentGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_group_params
-      params.require(:assignment_group).permit(:title, :batch_id, :tag_list, :due_datetime, :allow_points, :notes, :view_solutions, assignment_ids: [], student_ids: [])
+      params.require(:assignment_group).permit(:title, :batch_id, :tag_list, :due_datetime, :allow_points, :notes, :view_solutions, :is_timed, assignment_ids: [], student_ids: [])
     end
 end

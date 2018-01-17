@@ -11,6 +11,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'devise'
 gem 'devise_invitable'
 gem 'pry'
+gem 'chartkick'
 gem 'faker'
 gem 'rails', '~> 5.0.6'
 gem 'pg' , group: :production

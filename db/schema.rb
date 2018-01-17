@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116152517) do
+ActiveRecord::Schema.define(version: 20180117034409) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20180116152517) do
     t.boolean  "allow_points",   default: true
     t.text     "notes"
     t.boolean  "view_solutions", default: false
+    t.boolean  "is_timed",       default: false
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180116152517) do
     t.string   "code"
     t.boolean  "approved",   default: false
     t.integer  "points"
+    t.integer  "minutes",    default: 5
   end
 
   create_table "batch_students", force: :cascade do |t|
@@ -174,6 +176,15 @@ ActiveRecord::Schema.define(version: 20180116152517) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "submission_timers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "assignment_group_id"
+    t.integer  "assignment_id"
+    t.integer  "practice_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "submissions", force: :cascade do |t|
     t.text     "statement"
     t.string   "output"
@@ -181,9 +192,10 @@ ActiveRecord::Schema.define(version: 20180116152517) do
     t.string   "language"
     t.integer  "assignment_id"
     t.integer  "practice_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "is_checked",    default: "f"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "is_checked",      default: "f"
+    t.integer  "time_in_seconds", default: 0
   end
 
   create_table "taggings", force: :cascade do |t|
