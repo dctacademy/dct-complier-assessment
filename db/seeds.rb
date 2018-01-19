@@ -13,12 +13,12 @@ Role.create(name: "solver")
 Role.create(name: "moderator")
 Role.create(name: "student")
 
-NotificationTypes.create(name: "assignment_created")
-NotificationTypes.create(name: "assignment_submitted")
-NotificationTypes.create(name: "assignment_checed")
-NotificationTypes.create(name: "assignment_correction")
-NotificationTypes.create(name: "comment_created")
-NotificationTypes.create(name: "comment_deleted")
+NotificationType.create(name: "assignment_created")
+NotificationType.create(name: "assignment_submitted")
+NotificationType.create(name: "assignment_checed")
+NotificationType.create(name: "assignment_correction")
+NotificationType.create(name: "comment_created")
+NotificationType.create(name: "comment_deleted")
 
 u = User.create(email: "admin@gmail.com", username: "admin", password: "secret123")
 u.roles.push(Role.first)
@@ -43,4 +43,3 @@ batch.students.push(Student.all)
 
 Assignment.create(title: "The Hashtag Generator", body: "generate hash tag" )
 Assignment.create(title: "Add 2 numbers", body: "add 2 + 2")
-
