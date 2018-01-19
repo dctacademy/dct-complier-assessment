@@ -1,4 +1,20 @@
 <% @a = current_user.answers.map{|n| n.id} %>
+<div class="col-md-4 pull-right compiler-question">
+  <!-- <div class="row question-padding"> -->
+    <!-- <span class="right">Favourite</span> -->
+  <!-- </div> -->
+
+  <div class="row question-padding">
+    <p>
+      <strong>Tags:</strong>
+      <%= @assignment.try(:tag_list) %>
+      <%= @assignment.try(:company_list) %>
+      <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart heart-icon pull-right" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
+    </p>
+    <p>
+      <strong>Title:</strong>
+      <%= @assignment.title %>
+    </p>
 <div class="col-md-12">
 <p>
   <strong>Tags:</strong>
@@ -30,10 +46,25 @@
   <%= raw(@assignment.body) %>
 </p>
 
-<p>
-  <strong>Url:</strong>
-  <%= @assignment.url %>
-</p>
+    <p>
+      <strong>Body:</strong>
+      <%= raw(@assignment.body) %>
+    </p>
+
+    <p>
+      <strong>Url:</strong>
+      <%= @assignment.url %>
+    </p>
+</div>
+
+<div class="row pull-right question-padding">
+  <% if can? :update, @assignment %>
+  <%= link_to 'Edit', edit_assignment_path(@assignment) , class: "btn btn-info btn-small"%>
+  <% end %>
+
+  <%= link_to 'Back', assignments_path , class: "btn btn-primary btn-small"%>
+</div>
+
 
 <% if can? :update, @assignment %>
   <% if !@assignment.approved %> 
@@ -42,7 +73,6 @@
   <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
 <% end %>
 
-<%= link_to 'Back', assignments_path %>
 
 </div>
 

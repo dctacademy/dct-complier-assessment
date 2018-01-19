@@ -1,7 +1,10 @@
-<h2 align="center">Listing various sources of questions</h2>
+<h2 class="page-heading">Listing various sources of questions</h2>
 
-<ul>
+<ul class="special-list">
   <% @sources.each do |s| %>
-    <li><%= s %></li>
+    <li>
+      <i class="fa fa-question-circle-o question-icon"></i>
+        <%= s %>
+      </li>
   <% end %>
 </ul>

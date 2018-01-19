@@ -1,10 +1,7 @@
 <div class="row">
-  <div class="col-md-9">
-    <div class="page-header">
-      <h3><%= @batch.title %></h3>
-    </div>
-
+  <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
     <div class="row">
+
       <div class="col-md-4">
         <p class="text-left">
          <strong>Start date:</strong> <%= @batch.start_date.strftime("%d, %B %Y") %>
@@ -73,14 +70,107 @@
 
 <%= link_to 'Back', batches_path %>
 
+              <%= link_to 'Destroy', @batch, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"%>
 
-  </div>
+              <%= link_to 'Back', batches_path , class: "btn btn-primary"%>
+            </div>
+          </div>
+        </div>
 
-  <div class="col-md-3">
-    
-      <div class="page-header">
-        <h3>Batch Students</h3>
+        <div class="row">
+          <div class="col-md-4">
+            <p><strong>Start date:</strong> <%= @batch.start_date.strftime("%d, %B %Y") %></p>
+          </div>
+          <div class="col-md-4">
+            <p><strong>End date:</strong> <%= @batch.end_date.strftime("%d, %B %Y") %></p>
+          </div>
+          <div class="col-md-4">
+            <p><strong>Course:</strong> <%= @batch.course.name %></p>
+          </div>
+        </div>
+
+        <div class="row margin-heading">
+          <div class="col-lg-6">
+            <h2 class="page-heading">Listings Assignments
+              <small>(<%= @batch.assignment_groups.count %>)</small>
+            </h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="pull-right">
+              <% if can? :create, AssignmentGroup.new %>
+              <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
+              <% end %>
+
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
+          <div class="col-lg-4">
+            <div class="assignment-box">
+              <div class="row">
+                <div class="col-lg-9">
+                  <p><%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %></p>
+                </div>
+                <div class="col-lg-3">
+                  <p class="assignment-count"><%= assignment_group.assignments.count %></p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i>
+                    <%= assignment_group.created_at.strftime("%d, %b %Y %H:%M %p") %></p>
+                    <p class="text-center">to</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i><%= assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 edit-button">
+                    <% if can? :update, assignment_group %>
+                    <%= link_to 'Edit', edit_batch_assignment_group_path(@batch, assignment_group) , class: "btn btn-info"%></td>
+                    <% end %>
+                  </div>
+                  <div class="col-lg-8">
+                    <p class="assignment-languages"><%= assignment_group.tag_list %></p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <% end %>
+          </div>
+
+
+
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <h3 class="page-heading">Batch Students</h3>
+          <ul class="list-group">
+            <% @batch.students.each do |student| %>
+            <li class="list-group-item">
+              <%= student.name %>
+              <span class="pull-right">
+                <%= button_to "follow" %>
+              </span>
+            </li>
+            <% end %>
+          </ul>
+
+        </div>
       </div>
+    </div>
       <ul class="list-group">
       <% @batch.students.order('points DESC').each do |student| %>
         <li class="list-group-item">
@@ -95,4 +185,3 @@
       </ul>
 
   </div>
-</div>

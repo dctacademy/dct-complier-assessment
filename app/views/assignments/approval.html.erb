@@ -1,4 +1,4 @@
-<h2 align="center">Listing Questions Needing Approval To Be Made Api Available</h2>
+<h2 class="page-heading">Listing Questions Needing Approval To Be Made Api Available</h2>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -20,7 +20,7 @@
         <td><%= raw (assignment.body).truncate(75) %></td>
         <td><%= assignment.answers.size %></td>
         <td><%= assignment.tag_list %></td>
-        <td><%= link_to 'Show', assignment %></td>
+        <td><%= link_to 'Show', assignment , class: "btn btn-success btn-small" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,5 +1,4 @@
-
-  <h4>Invite New User</h4>
+<h4 class="page-heading">Invite New User</h4>
 <%= form_for @user = User.new , html: {id: "inviteForm"} do |f| %>
 
   <% if @user.errors.any? %>
@@ -13,21 +12,48 @@
         </div>
     <% end %>
 
-      <%= f.label :username %>
-      <%= f.text_field :username , class: "form-control"%>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+            <%= f.label :username, class: "control-label" %>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <%= f.text_field :username , class: "form-control"%>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :email %>
-      <%= f.text_field :email ,class: "form-control" %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+            <%= f.label :email, class: "control-label" %>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <%= f.text_field :email ,class: "form-control" %>
+          </div>
+        </div>
+      </div>
 
+      <div class="form-group invite-user-radio">
+        <div class="row">
+          <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+            <%= f.label :role_ids, class: "control-label" %>
+          </div>
+          <div class="col-lg-10 col-md-9 col-sm-9 col-xs-9">
+            <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %>
+          </div>
+        </div>
+      </div>
       <%= f.label :password %>
       <%= f.password_field :password ,class: "form-control" %>
 
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation ,class: "form-control" %>
 
-      <%= f.label :role_ids %><br>
-      <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %><br>
-
-        <%= f.submit "Add & Invite", class: "btn btn-success"%>
+      <div class="form-group">
+        <div class="col-lg-7 col-md-8 col-sm-8 col-xs-8">
+           <%= f.submit "Add & Invite", class: "btn btn-success pull-right"%>
+        </div>
+      </div>
 
     <% end %>

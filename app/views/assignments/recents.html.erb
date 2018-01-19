@@ -1,4 +1,4 @@
-<h2 align="center">Listing Recently Added Questions</h2>
+<h2 class="page-heading">Listing Recently Added Questions</h2>
 
 <table id="myTable" class="table table-striped">
   <thead>
@@ -22,13 +22,13 @@
         <td><%= assignment.is_allowed ? "true" : "false" %></td>
         <td><%= assignment.answers.size %></td>
         <td><%= assignment.tag_list %></td>
-        <td><%= link_to 'Solve', assignment %>
+        <td><%= link_to 'Solve', assignment , class: "btn btn-success btn-small"%>
           <% if current_user %>
             <% if can? :update, assignment %>
-              <%= link_to 'Edit', edit_assignment_path(assignment) %>
+              <%= link_to 'Edit', edit_assignment_path(assignment) , class: "btn btn-info btn-small" %>
             <% end %>
             <% if can? :destroy, assignment %>
-              <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-small"%></td>
             <% end %>
         <% end %>
       </tr>

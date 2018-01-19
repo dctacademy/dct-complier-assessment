@@ -1,7 +1,10 @@
-<div class="container is-fluid">
-  <span>Username</span> <%= @user.username %>
-  <span>Email</span> <%= @user.email %>
-  <span>Roles</span><% @user.roles.each do |r| %>
-              <li><%= r.name %></li>
-              <% end %>
+<div class="container">
+  <p><strong>Username: </strong> <%= @user.username %></p>
+  <p><strong>Email: </strong> <%= @user.email %></p>
+  <p>
+    <strong>Roles: </strong>
+    <% @user.roles.each do |r| %>
+      <li><%= r.name %></li>
+    <% end %>
+  </p>
 </div>

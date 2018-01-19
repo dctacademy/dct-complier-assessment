@@ -12,52 +12,76 @@
     <% end %>
 
     <div class="form-group">
-      <%= f.label :title, class: "col-sm-2 control-label" %>
-      <div class="col-sm-10">
-        <%= f.text_field :title, class: "form-control" %>
-     </div>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :start_date, class: "col-sm-2 control-label" %>
-      <div class="col-sm-10">
-        <%= f.text_field :start_date, class: "form-control" %>
-     </div>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :end_date, class: "col-sm-2 control-label" %>
-      <div class="col-sm-10">
-        <%= f.text_field :end_date, class: "form-control" %>
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :title, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :course, class: "col-sm-2 control-label" %>
-      <div class="col-sm-10">
-        <%= f.collection_select :course_id, Course.all, :id, :name, {prompt: "Select Course"}, {class: "chosen-select form-control"} %>
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :start_date, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <%= f.text_field :start_date, class: "form-control" %>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :students, class: "col-sm-2 control-label" %>
-      <div class="col-sm-10">
-        <%= f.collection_select :student_ids, Student.all, :id, :name, {prompt: "Select Students"}, {class: "chosen-select form-control", multiple: true} %>
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :end_date, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <%= f.text_field :end_date, class: "form-control" %>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :is_completed, class: "col-sm-2 control-label" %>
-        <div class="checkbox col-sm-10">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :course, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <%= f.collection_select :course_id, Course.all, :id, :name, {prompt: "Select Course"}, {class: "chosen-select form-control"} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :students, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+          <%= f.collection_select :student_ids, Student.all, :id, :name, {prompt: "Select Students"}, {class: "chosen-select form-control", multiple: true} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <%= f.label :is_completed, class: "control-label" %>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
           <label>
-             <%= f.check_box :is_completed %> 
+             <%= f.check_box :is_completed %>
           </label>
         </div>
       </div>
+    </div>
 
       <div class="form-group">
-        <div class="col-sm-offset-2">
-           <%= f.submit "submit", class: "btn btn-primary " %>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+           <%= f.submit "submit", class: "btn btn-primary pull-right" %>
         </div>
       </div>
     </div>

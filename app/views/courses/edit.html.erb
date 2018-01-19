@@ -1,10 +1,19 @@
 <div class="row">
-	<div class="col-md-8">
-		<div class="page-header">
-			<h1>Edit Course</h1>
+	<div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
+		<div class="row main-headline">
+			<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+					<h2 class="page-heading">Edit Course</h2>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+				<%= link_to 'Show', @course , class: "btn btn-success"%>
+				<%= link_to 'Back', courses_path , class: 'btn btn-primary'%>
+			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
 		<%= render 'form', course: @course %>
 	</div>
 </div>
-<%= link_to 'Show', @course %> |
-<%= link_to 'Back', courses_path %>
