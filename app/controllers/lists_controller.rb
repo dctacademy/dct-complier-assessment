@@ -6,6 +6,7 @@ class ListsController < ApplicationController
   # GET /lists.json
   def index
     @lists = List.all
+
     respond_to do |format|
       format.html {}
       format.json { render json: @lists}
@@ -15,6 +16,7 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
+    @assignments = @list.assignments
     respond_to do |format|
       format.html {}
       format.json { render json: @list,except: [:created_at,:updated_at],include: [:assignments,:tags]}
@@ -24,10 +26,12 @@ class ListsController < ApplicationController
   # GET /lists/new
   def new
     @list = List.new
+    @assignments = Assignment.where(approved: true).includes(:tags)
   end
 
   # GET /lists/1/edit
   def edit
+    @assignments = Assignment.where(approved: true).includes(:tags)
   end
 
   # POST /lists

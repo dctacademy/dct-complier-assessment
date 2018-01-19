@@ -1,0 +1,27 @@
+
+<table id="myTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Tags</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td><%= assignment.code %></td>
+        <td><%= link_to assignment.title, assignment %></td>
+        <td><%= assignment.tag_list.join(", ") %></td>    
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<script>
+  $(document).ready(function(){
+    $('#myTable').DataTable();
+  });
+</script>
