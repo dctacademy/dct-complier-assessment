@@ -13,11 +13,19 @@ class PracticesController < ApplicationController
   # GET /practices/1
   # GET /practices/1.json
   def show
-    @assignment = Assignment.find(Practice.find(params[:id]).assignment)
+    practice = Practice.find(params[:id])
+    @assignment = Assignment.find(practice.assignment)
+    @assignment_group = practice.assignment_group
     @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
     @rb = @assignment.answers.where(language: "ruby")
     @js = @assignment.answers.where(language: "javascript")
     @py = @assignment.answers.where(language: "python")
+    # create time of viewing the assignment only once when the user clicks on the practice link
+    #binding.pry
+    SubmissionTimer.create(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id) if SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id).nil?
+    #binding.pry
+    @start_time = SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id)
+    #binding.pry
   end
 
   # GET /practices/new

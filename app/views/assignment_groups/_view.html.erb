@@ -1,0 +1,1 @@
+<%= link_to "Solutions - #{@assignment_group.view_solutions == false ? 'is hidden' : 'is shown'}", assignment_groups_view_solutions_path(assignment_group_id: @assignment_group.id), remote: true %>

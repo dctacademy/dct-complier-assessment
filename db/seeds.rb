@@ -13,6 +13,13 @@ Role.create(name: "solver")
 Role.create(name: "moderator")
 Role.create(name: "student")
 
+NotificationTypes.create(name: "assignment_created")
+NotificationTypes.create(name: "assignment_submitted")
+NotificationTypes.create(name: "assignment_checed")
+NotificationTypes.create(name: "assignment_correction")
+NotificationTypes.create(name: "comment_created")
+NotificationTypes.create(name: "comment_deleted")
+
 u = User.create(email: "admin@gmail.com", username: "admin", password: "secret123")
 u.roles.push(Role.first)
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215070218) do
+ActiveRecord::Schema.define(version: 20180117034409) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -25,9 +25,13 @@ ActiveRecord::Schema.define(version: 20171215070218) do
   create_table "assignment_groups", force: :cascade do |t|
     t.string   "title"
     t.integer  "batch_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.datetime "due_datetime"
+    t.boolean  "allow_points",   default: true
+    t.text     "notes"
+    t.boolean  "view_solutions", default: false
+    t.boolean  "is_timed",       default: false
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -41,13 +45,16 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.boolean  "is_allowed", default: false
     t.string   "code"
     t.boolean  "approved",   default: false
+    t.integer  "points"
+    t.integer  "minutes",    default: 5
   end
 
   create_table "batch_students", force: :cascade do |t|
     t.integer  "batch_id"
     t.integer  "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "points",     default: 0
   end
 
   create_table "batches", force: :cascade do |t|
@@ -58,6 +65,14 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.boolean  "is_completed", default: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "submission_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "courses", force: :cascade do |t|
@@ -94,6 +109,22 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notification_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "url"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "notification_type_id"
+    t.integer  "practice_id"
+  end
+
   create_table "permissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "role_id"
@@ -121,6 +152,15 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "solutions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "body"
+    t.string   "language"
+    t.integer  "assignment_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "student_courses", force: :cascade do |t|
     t.integer  "student_id"
     t.integer  "course_id"
@@ -136,6 +176,15 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "submission_timers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "assignment_group_id"
+    t.integer  "assignment_id"
+    t.integer  "practice_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   create_table "submissions", force: :cascade do |t|
     t.text     "statement"
     t.string   "output"
@@ -143,8 +192,10 @@ ActiveRecord::Schema.define(version: 20171215070218) do
     t.string   "language"
     t.integer  "assignment_id"
     t.integer  "practice_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "is_checked",      default: "f"
+    t.integer  "time_in_seconds", default: 0
   end
 
   create_table "taggings", force: :cascade do |t|

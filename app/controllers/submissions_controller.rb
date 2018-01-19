@@ -25,11 +25,17 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
-
     respond_to do |format|
       if @submission.save
         #format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
         format.json { render :show, status: :created, location: @submission }
+        Notification.create(
+          title: "#{@submission.assignment.title}", 
+          url: "/batches/#{@submission.practice.assignment_group.batch.id}/assignment_groups/student_solutions?assignment_group_id=#{@submission.practice.assignment_group.id}&student_user_id=#{@submission.user_id}",
+          user_id: @submission.user_id,
+          practice_id: @submission.practice_id,
+          notification_type_id: NotificationType.find_by(name: "assignment_submitted").id
+          )
       else
         #format.html { render :new }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
@@ -69,6 +75,6 @@ class SubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def submission_params
-      params.require(:submission).permit(:statement, :output, :user_id, :language, :assignment_id, :practice_id)
+      params.require(:submission).permit(:statement, :output, :user_id, :language, :assignment_id, :practice_id, :time_in_seconds)
     end
 end

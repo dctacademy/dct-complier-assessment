@@ -6,6 +6,8 @@ class Assignment < ApplicationRecord
   #   string :tag_list ,:multiple => true, :stored => true
   # end
 
+  validates_presence_of :title, :body, :points
+  
   has_many :practices
   has_many :assignment_groups, through: :practices
 
@@ -24,6 +26,10 @@ class Assignment < ApplicationRecord
 
   has_many :list_assignments
   has_many :lists,through: :list_assignments
+
+  has_many :submission_timers
+
+  has_many :solutions
 
   before_validation :assign_code,on: :create
 

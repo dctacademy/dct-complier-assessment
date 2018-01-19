@@ -1,4 +1,4 @@
-<div class="col-md-8">
+<div class="col-md-12">
   <div class="row">
     <div >
       <div class="form-inline">
@@ -19,9 +19,13 @@
             <div id="text" class="padding-bottom"></div>
             <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
             <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
-            <% if @practice.assignment_group.due_datetime >= Time.now %>
-            <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
-            <% end %>
+              <% if (@practice.assignment_group.due_datetime >= Time.now) && !(@practice.submissions.where('user_id = ?', current_user.id).count > 0)%>
+              
+                <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
+
+              <% end %>                
+              <span class="alert alert-danger pull-right"><b> Note - Assignment can be submitted only once </b></span>
+
           </div>
         </div>
       </div>
@@ -37,7 +41,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-
   //this is compiler code
   var flag = true;
   var lang = $("#sel option:first").val();
@@ -84,6 +87,7 @@ $(document).ready(function(){
   });
 
     $("#sel").on('change',function(){
+      flag = true;
       lang = this.value;
       check(lang);
     });
@@ -190,6 +194,7 @@ $(document).ready(function(){
     });
 
     $("#sub").click(function(){
+      $("#sub").prop('disabled');
       var sent = editor.getValue();
       var out = result.getValue();
       var args = {};
@@ -205,8 +210,12 @@ $(document).ready(function(){
           'You must execute before you submit your code.',
           'error'
         )
+        $("#sub").removeAttr('disabled');
       }else{
+        $('#sub').hide();
+        $('#comments').show();
         if(flag){
+          args["time_in_seconds"] = countUp;
         $.ajax({
           url: "<%= submissions_path %>",
           type: "post",
@@ -219,8 +228,15 @@ $(document).ready(function(){
               'Your code was submitted successfully.',
               'success'
             )
+            id = response["id"];
+            web = "/submissions/" + id;
+            flag = false;
           }
         });
+        $("#sub").removeAttr('disabled');
+        clearInterval(countUpRef);
+        document.querySelector('#display').innerHTML = `You took ${formatTime(args["time_in_seconds"])} to solve`;
+       
       }else{
         $.ajax({
           url: web,
@@ -237,6 +253,7 @@ $(document).ready(function(){
           }
         });
       }
+      $("#sub").removeAttr('disabled');
     }
   });
 
@@ -268,6 +285,7 @@ $(document).ready(function(){
     }
   )
   });
+
 
 });//end of document
 </script>

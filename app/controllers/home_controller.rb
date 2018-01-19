@@ -43,4 +43,31 @@ class HomeController < ApplicationController
     end
   end
 
+  def check_assignment
+    submission = Submission.find(params[:submission_id])
+    batch_student = BatchStudent.find_by(batch_id: submission.practice.assignment_group.batch.id ,student_id: submission.user.student.id)
+    assignment = submission.assignment
+    submission_status = submission.is_checked
+    
+    if params[:is_checked] == "correct"
+      batch_student.update_attributes(points: batch_student.points + assignment.points) if submission.practice.assignment_group.allow_points
+    elsif params[:is_checked] == "incorrect" || params[:is_checked] == "partial output"
+      if submission.is_checked == "correct"
+        batch_student.update_attributes(points: batch_student.points - assignment.points) if submission.practice.assignment_group.allow_points
+      end
+    end
+    submission.update_attributes(is_checked: params[:is_checked])
+    Notification.create(
+      title: "#{submission.assignment.title}",
+      user_id: submission.user_id,
+      url: "/batches/#{submission.practice.assignment_group.batch.id}/assignment_groups/student_solutions?assignment_group_id=#{submission.practice.assignment_group.id}&student_user_id=#{submission.user_id}",
+      practice_id: submission.practice_id,
+      notification_type_id: NotificationType.find_by(name: "assignment_correction").id
+    )
+
+    render json: {
+      "message": "Successfully updated"
+    }
+  end
+
 end

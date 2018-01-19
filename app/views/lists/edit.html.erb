@@ -1,6 +1,10 @@
-<h1>Editing List</h1>
+<h1>Edit List</h1>
 
-<%= render 'form', list: @list %>
+<div class="col-md-4">
+  <%= render 'form', list: @list %>
+  <%= link_to 'Back', lists_path %>
+</div>
 
-<%= link_to 'Show', @list %> |
-<%= link_to 'Back', lists_path %>
+<div class="col-md-8">
+ <%= render 'assignments/index' %>
+</div>

@@ -1,18 +1,29 @@
 <% @a = current_user.answers.map{|n| n.id} %>
-<div class="col-md-4 pull-right">
-  <div>
-    <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
-    <b><span class="right">Favourite</span></b>
-  </div>
-  <br>
+<div class="col-md-12">
+
 <p>
   <strong>Tags:</strong>
   <%= @assignment.try(:tag_list) %>
-  <%= @assignment.try(:company_list) %>
 </p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @assignment.code %>
+</p>
+
 <p>
   <strong>Title:</strong>
   <%= @assignment.title %>
+</p>
+
+<p>
+  <strong>Minutes:</strong>
+  <%= @assignment.minutes %>
+</p>
+
+<p>
+  <strong>Points:</strong>
+  <%= @assignment.points %>
 </p>
 
 <p>
@@ -25,16 +36,12 @@
   <%= @assignment.url %>
 </p>
 
-<% if can? :update, @assignment %>
-<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<% end %>
-
-<%= link_to 'Back', assignments_path %>
-
 </div>
 
 <% if can? :create,Answer %>
-  <%= render '/home/index' %>
+  <div class="col-md-12">
+   <%= render '/home/index' %>
+  </div>
 <% end %>
 
 <script type="text/javascript">

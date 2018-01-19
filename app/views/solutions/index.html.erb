@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+  <% @solutions.each do |solution| %>
+<div class="well">
+
+    <h3><%= solution.assignment.title %></h3>
+
+      <strong>Solution:</strong>
+      <textarea class="cm">
+        <%= solution.body %>
+      </textarea>
+    </p>
+
+    <p>
+      <strong>Language:</strong>
+      <%= solution.language %>
+    </p>
+
+    <p>
+      <strong>User:</strong>
+      <%= solution.user.username %>
+    </p>
+
+    <% if can? :update, @solution %>
+     <%= link_to 'Edit', edit_solution_path(solution) %>
+    <% end %>
+    </div>
+
+  <% end %>
+<%= link_to 'New Solution', new_solution_path %>
+
+<script>
+  $(document).ready(function(){
+   $.each($('.cm'),function(key,obj){
+   var code = CodeMirror.fromTextArea(obj,{
+     mode: obj.name,
+     keyMap: "sublime",
+     theme: "monokai",
+     readOnly: "noCursor",
+     lineNumbers: true
+   })
+  //code.setSize(400,100);
+  })
+  })
+</script>

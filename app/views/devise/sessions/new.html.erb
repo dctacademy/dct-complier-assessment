@@ -6,6 +6,7 @@
     <p><%= f.password_field :password, autocomplete: "off",placeholder: "Password",id: "pass" %></p>
     <input type="checkbox" id="show" class="show-checkbox"> Show
     <% if devise_mapping.rememberable? -%>
+
     <div class="checkbox">
       <label><%= f.check_box :remember_me %> Remember me</label>
     </div>

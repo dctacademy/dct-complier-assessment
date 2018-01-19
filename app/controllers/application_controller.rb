@@ -4,15 +4,24 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #protect_from_forgery with: :null_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_filter :prepare_exception_notifier
 
   helper_method :current_student
 
   rescue_from CanCan::AccessDenied do
-		redirect_to root_path ,notice: "You are not Authorized to access to this page."
+		redirect_to root_path ,notice: "The page you are looking for doesn't exist"
 	end 
 
   def current_student
     @current_student ||= current_user.student
+  end
+
+  private
+  
+  def prepare_exception_notifier
+    request.env["exception_notifier.exception_data"] = {
+      :current_user => current_user
+    }
   end
 
   protected

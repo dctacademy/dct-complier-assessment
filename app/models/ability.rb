@@ -35,14 +35,21 @@ class Ability
         can :read ,[Assignment,Answer]
         can :update, Assignment
     elsif user.role? "student"
-        can :read, [Assignment,Answer, Batch, AssignmentGroup, Practice]
-        can :create, [Answer,Submission]
+        can [:update, :destroy], Comment do |com|
+            com.user == user
+        end
+        can :read, [Answer, Batch, AssignmentGroup, Practice, Solution, Comment]
+        can :read, Notification do |notification|
+            notification.user = user 
+        end
+        can :create, [Answer,Submission, Comment]
         can :update, Answer do |ans|
           ans.user = user
         end
         can :update , Submission do |subm|
           subm.user = user
         end
+
     end
     # The first argument to `can` is the action you are giving the user
     # permission to do.

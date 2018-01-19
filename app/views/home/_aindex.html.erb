@@ -181,6 +181,7 @@ $(document).ready(function(){
   });
 
     $("#sel").on('change',function(){
+      flag = true;
       lang = this.value;
       check(lang);
     });
@@ -286,6 +287,7 @@ $(document).ready(function(){
     });
 
     $("#sub").click(function(){
+      $("#sub").prop('disabled');
       var sent = editor.getValue();
       var out = result.getValue();
       var args = {};
@@ -300,6 +302,7 @@ $(document).ready(function(){
           'You must execute before you submit your code.',
           'error'
         )
+        $("#sub").removeAttr('disabled');
       }else{
         if(flag){
         $.ajax({
@@ -314,6 +317,9 @@ $(document).ready(function(){
               'Your code was submitted successfully.',
               'success'
             )
+            id = response["id"];
+            web = "/answers/" + id;
+            flag = false;
             $("#link").prop("hidden",false);
             switch(lang){
               case "javascript":
@@ -328,6 +334,7 @@ $(document).ready(function(){
             }
           }
         });
+        $("#sub").removeAttr('disabled');
       }else{
         $.ajax({
           url: web,
@@ -344,6 +351,7 @@ $(document).ready(function(){
           }
         });
       }
+      $("#sub").removeAttr('disabled');
     }
   });
 

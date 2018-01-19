@@ -1,17 +1,74 @@
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
     <div class="row">
-      <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
 
-        <div class="row">
-          <div class="col-lg-6">
-            <h3 class="page-heading"><%= @batch.title %></h3>
-          </div>
-          <div class="col-lg-6">
-            <div class="pull-right">
-              <% if can? :update, @batch %>
-              <%= link_to 'Edit', edit_batch_path(@batch) , class: "btn btn-info"%>
-              <% end %>
+      <div class="col-md-4">
+        <p class="text-left">
+         <strong>Start date:</strong> <%= @batch.start_date.strftime("%d, %B %Y") %>
+       </p>
+      </div>
+      <div class="col-md-4">
+        <p class="text-left">
+          <strong>End date:</strong> <%= @batch.end_date.strftime("%d, %B %Y") %>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <p class="text-left">
+          <strong>Course:</strong> <%= @batch.course.name %>
+        </p>
+      </div>
+    </div>
+  
+    <div class="page-header">
+      <h2>Listing Assignments 
+        <small><%= @batch.assignment_groups.count %></small>
+      </h2>
+    </div>
+
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Timed</th>
+        <th>Languages</th>
+        <th>Assignments</th>
+        <th>Created Date</th>
+        <th>Due Datetime</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
+        <tr>
+          <td>
+            <%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %>
+          </td>
+           <td>
+            <% if assignment_group.is_timed %>
+                <i class="glyphicon glyphicon-time"></i>
+            <% else %>
+                -
+            <% end %>
+          </td>
+          <td><%= assignment_group.tag_list %></td>
+          <td><%= assignment_group.assignments.count %></td>
+          <td><%= assignment_group.created_at.strftime("%d, %b %Y") %></td>
+          <td><%= assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></td>
+         
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% if can? :create, AssignmentGroup.new %>
+  <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
+<% end %>
+
+<% if can? :update, @batch %>
+  <%= link_to 'Edit', edit_batch_path(@batch) %> |
+<% end %>
+
+<%= link_to 'Back', batches_path %>
 
               <%= link_to 'Destroy', @batch, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"%>
 
@@ -114,5 +171,17 @@
         </div>
       </div>
     </div>
+      <ul class="list-group">
+      <% @batch.students.order('points DESC').each do |student| %>
+        <li class="list-group-item">
+          <%= student.name  %> 
+          <% if current_user.role? "admin" %> 
+            <span class="pull-right">
+             <%= BatchStudent.find_by(batch_id: @batch.id, student_id: student.id).points %>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
 
   </div>

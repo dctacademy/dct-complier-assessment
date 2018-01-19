@@ -15,6 +15,36 @@
       <strong>Title:</strong>
       <%= @assignment.title %>
     </p>
+<div class="col-md-12">
+<p>
+  <strong>Tags:</strong>
+  <%= @assignment.try(:tag_list) %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @assignment.code %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @assignment.title %>
+</p>
+
+<p>
+  <strong>Minutes:</strong>
+  <%= @assignment.minutes %>
+</p>
+
+<p>
+  <strong>Points:</strong>
+  <%= @assignment.points %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= raw(@assignment.body) %>
+</p>
 
     <p>
       <strong>Body:</strong>
@@ -35,6 +65,13 @@
   <%= link_to 'Back', assignments_path , class: "btn btn-primary btn-small"%>
 </div>
 
+
+<% if can? :update, @assignment %>
+  <% if !@assignment.approved %> 
+    <%= link_to "Approve", assignments_approve_assignment_path(assignment_id: @assignment.id), remote: true, class: "btn btn-success btn-sm", id: "approve-assignment" %> 
+  <% end %>
+  <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
+<% end %>
 
 
 </div>

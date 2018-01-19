@@ -1,16 +1,30 @@
 Rails.application.routes.draw do
 
+  resources :comments
+  resources :notification_types
+  resources :notifications
+  resources :roles
+  get 'dashboard/index'
+
+  resources :solutions
+
   resources :practices do
     get 'submissions'
   end
+  
+  get 'assignment_groups/view_solutions'
+  get 'assignment_groups/statistics'
+
   resources :assignment_groups
   resources :batches do
+    get '/assignment_groups/student_solutions'
     resources :assignment_groups
   end
   resources :students
   resources :courses
   devise_for :users , :path_prefix => "my"
   resources :users
+  get 'assignments/approve_assignment'
   resources :assignments do
     collection do
       get 'recents' # to override assignments_recents action will be recents_assignments
@@ -22,6 +36,7 @@ Rails.application.routes.draw do
       get 'findslug'
       get 'random'
     end
+    resources :solutions
   end
 
   resources :submissions
@@ -49,13 +64,14 @@ Rails.application.routes.draw do
   match 'forks' ,to: 'forks#create' ,via: :post
   get 'forks/myforks'
 
-  root "assignments#index"
+  root "dashboard#index"
 
   get 'tags/question_filter'
 
   get 'home/check_submission'
   get 'home/input'
   get 'home/check_cache'
+  get 'home/check_assignment'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
