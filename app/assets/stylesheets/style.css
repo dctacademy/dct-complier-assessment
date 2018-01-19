@@ -38,3 +38,244 @@ input[type=checkbox].glyphicon{
   position: fixed !important;
   right: 0;
 }
+
+
+/* general */
+
+/*input{
+  border-radius: 0 !important;
+}*/
+
+body{
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.heading-margin{
+  margin: 15px 0px !important;
+  padding: 0;
+}
+
+.small-heading{
+  color: grey;
+  font-size: 22px;
+}
+
+/* navbar */
+
+.navbar-brand img{
+  height: 27px;
+}
+
+/* batches */
+
+.main-headline{
+  padding: 10px 0px;
+}
+
+.page-heading{
+  color: #7b7878;
+  font-size: 26px;
+  margin: 0px;
+  padding-bottom: 15px;
+}
+
+.btn-small{
+  padding: 2px !important;
+  width: 60px;
+}
+
+.table{
+  border: 1px solid #dddddd;
+}
+
+div#batch_course_id_chosen,
+div#batch_student_ids_chosen{
+  width: 100% !important;
+  height: 34px !important;
+  border-radius: 0;
+}
+
+
+/* assignments */
+
+.assignment-box{
+  border: 1px solid #cacaca;
+  padding: 13px;
+  background: #f9f9f9;
+  box-shadow: 0px 2px 6px 3px #ccc;
+  margin-bottom: 20px;
+  min-height: 204px;
+}
+
+.assignment-count{
+  float: right;
+  color: #636363;
+  font-weight: bold;
+}
+
+.assignment-languages{
+  background: #443d3d;
+  border: 1px solid #bfb6b6;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 10px;
+}
+
+.assignment-box .edit-button a{
+  padding: 2px !important;
+  width: 60px;
+}
+
+.margin-heading{
+  margin: 20px 0px;
+}
+
+.assignment-box .clock-icon{
+  padding-right: 2px;
+  color: #5a5353;
+}
+
+/* compiler */
+
+/*.stats-compiler{
+  font-size: 23px;
+  font-weight: 600;
+  color: #4e4a4a;
+}*/
+
+.compiler-page .stat-icon{
+  font-size: 20px;
+  color: #2c2f2f;
+}
+
+.heart-icon{
+  color: #ff6161;
+  top: -8px !important;
+  right: 15px;
+}
+
+.compiler-question{
+  border: 1px solid #bbb8b8;
+}
+
+.question-padding{
+  padding: 10px;
+}
+
+/* users */
+
+ul.special-list li{
+  list-style-type: none;
+}
+
+ul.special-list{
+  padding-left: 10px;
+}
+
+.user-icon,
+.tag-icon,
+.question-icon{
+  color: #8e8e8e;
+  padding-right: 8px;
+}
+
+.invite-user-radio input[type=checkbox],
+.invite-user-radio label{
+  margin-right: 5px;
+}
+
+/* login screen */
+
+.login {
+  width: 400px;
+  margin: 100px auto;
+  font-size: 16px;
+}
+
+/* Reset top and bottom margins from certain elements */
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.login-header {
+  background: #28d;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+  border: 1px solid #dad3d3;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+  padding: 12px;
+}
+
+.login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+}
+
+/* Text fields' focus effect */
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+  border-color: #888;
+}
+
+.login input[type="submit"] {
+  background: #28d;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+  background: #17c;
+}
+
+/* Buttons' focus effect */
+.login input[type="submit"]:focus {
+  border-color: #05a;
+}
+
+.login input#show,
+.login .checkbox input{
+  width: auto;
+  display: inline-block;
+}
+
+.login .checkbox{
+  display: inline-block;
+}
+
+.login input#show{
+  margin-left: 13px;
+}
+
+.login p.forgot-password{
+  padding: 0px;
+  text-align: center;
+}

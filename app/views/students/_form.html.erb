@@ -12,26 +12,53 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "form-control" %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :name, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :email %>
-    <%= f.text_field :email, class: "form-control" %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :email, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :mobile %>
-    <%= f.text_field :mobile, class: "form-control" %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :mobile, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.text_field :mobile, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :course %>
-    <%= f.collection_select :course_ids, Course.all, :id, :name, {}, {class: "chosen-select form-control",  multiple: true} %>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <%= f.label :course, class: "control-label" %>
+      </div>
+      <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <%= f.collection_select :course_ids, Course.all, :id, :name, {}, {class: "chosen-select form-control",  multiple: true} %>
+      </div>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "submit", class: "btn btn-primary" %>
+  <div class="form-group">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+       <%= f.submit "submit", class: "btn btn-primary pull-right" %>
+    </div>
   </div>
+
 <% end %>

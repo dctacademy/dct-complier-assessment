@@ -1,7 +1,7 @@
-<div class="col-md-8">
+<div class="col-md-8 compiler-page">
   <div class="row">
-    <div >
-      <h2>Compiler</h2>
+    <div class="col-md-12">
+      <h2 class="page-heading">Compiler</h2>
       <div class="form-inline">
 
       <select class="form-control-sm col-md-3" name="language" id="sel">
@@ -9,9 +9,14 @@
         <option value="javascript">JavaScript</option>
         <option value="python">Python3</option>
       </select>
-       <h4 class="pull-right"><b class="font">Stats:</b><i class="icon-javascript" style="font-size:2em" id="js" ><%= @js.size %></i> || <i class="icon-python" style="font-size:2em" id="py" ><%= @py.size %></i> || <i class="icon-ruby" style="font-size:2em" id="rb" ><%= @rb.size %></i></h4><br/><br/>
+       <h4 class="pull-right">
+         <!-- <b class="stats-compiler">Stats:</b> -->
+         <i class="icon-javascript stat-icon" id="js" ></i><span class="stat-icon-count"><%= @js.size %></span>
+         <i class="icon-python stat-icon" id="py" ></i><span class="stat-icon-count"><%= @py.size %></span>
+         <i class="icon-ruby stat-icon" id="rb" ></i><span class="stat-icon-count"><%= @rb.size %></span>
+       </h4>
     </div>
-
+    <div class="row">
       <div class="col-md-12">
         <!-- text -->
         <div id="text" class="padding-bottom"></div>
@@ -20,10 +25,12 @@
         <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
       </div>
     </div>
+
+    </div>
   </div>
 
     <div  id="para">
-      <h2>Output</h2>
+      <h2 class="page-heading heading-margin">Output</h2>
       <div id="result" class="padding-bottom"></div>
     </div>
 <!-- accordion -->
