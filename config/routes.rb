@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :comments
   resources :notification_types
+
+  get 'notifications/all'
   resources :notifications
   resources :roles
   get 'dashboard/index'
