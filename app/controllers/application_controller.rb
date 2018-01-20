@@ -10,14 +10,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do
 		redirect_to root_path ,notice: "The page you are looking for doesn't exist"
-	end 
+	end
 
   def current_student
     @current_student ||= current_user.student
   end
 
   private
-  
+
   def prepare_exception_notifier
     request.env["exception_notifier.exception_data"] = {
       :current_user => current_user

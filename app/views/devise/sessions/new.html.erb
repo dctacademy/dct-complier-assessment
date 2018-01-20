@@ -2,8 +2,8 @@
   <h2 class="login-header">Log in</h2>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="login-container">
-    <p><%= f.text_field :username, autofocus: true ,placeholder: "Username"%></p>
-    <p><%= f.password_field :password, autocomplete: "off",placeholder: "Password",id: "pass" %></p>
+    <p><%= f.text_field :email, autofocus: true ,placeholder: "your email"%></p>
+    <p><%= f.password_field :password, autocomplete: "off",placeholder: "your password",id: "pass" %></p>
     <input type="checkbox" id="show" class="show-checkbox"> Show
     <% if devise_mapping.rememberable? -%>
 
