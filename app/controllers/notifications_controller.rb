@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
 
-	before_action :authenticate_user!
+	before_action :authenticate_user!, expect: [:index]
 	load_and_authorize_resource
 	
 	def index
