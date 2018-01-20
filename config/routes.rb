@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   resources :notification_types
 
   get 'notifications/all'
-  resources :notifications
   resources :roles
+  resources :notifications
+
   get 'dashboard/index'
 
   resources :solutions
