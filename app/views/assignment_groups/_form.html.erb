@@ -29,8 +29,12 @@
 
   <div class="form-group">
     <%= f.label :assignment_id %>
-    <%= f.collection_select :assignment_ids, @a = Assignment.all, :id, :code, {}, {class: "form-control chosen-select", multiple: true,include_blank: true} %>
-  </div>
+    <%= f.collection_select :assignment_ids, @a = Assignment.all, :id, :code, {}, {class: "form-control chosen-select", multiple: true,include_blank: true} %> or select from 
+    <a href="#" data-toggle="modal" data-target="#myModal">
+      List
+    </a>
+
+  </div> 
 
   <div class="form-group">
     <%= f.label :students %>
@@ -68,13 +72,50 @@
   </div>
 <% end %>
 
-<li class="search-choice"><span>1</span><a class="search-choice-close" data-option-array-index="0"></a></li>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+          Select List
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'lists/index' %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   var studentList = document.getElementById('assignment_group_student_ids');
+  var assignmentList = document.getElementById('assignment_group_assignment_ids');
+
   for(var i = 0; i < studentList.options.length;i++) {
     studentList.options[i].selected = true;
   }
+
+  $('.radioBtn').on('click', function(){
+    var listId = parseInt($('.radioBtn :checked').val().split("=>")[1]);
+    $("#assignment_group_assignment_ids option:selected").prop("selected", false);
+    $.ajax({
+      url: '/assignment_groups/lists', 
+      type: 'GET',
+       data: {
+        list_id: listId
+      },
+      success: function(response){
+        if(response.length !== 0){
+          response.forEach(function(assignment){
+            assignmentList.options[assignment.id].selected = true;
+          });
+          $('#assignment_group_assignment_ids').trigger("chosen:updated");
+        }
+      }
+    })
+  });
   
 </script>
 
