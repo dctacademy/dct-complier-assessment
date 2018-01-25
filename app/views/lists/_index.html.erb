@@ -1,0 +1,30 @@
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Select</th>
+      <th>Title</th>
+      <th>User</th>
+      <th>Tags list</th>
+      <th>Assignment Count</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lists.each do |list| %>
+      <tr>
+        <td>
+        <div class="radioBtn">
+           <%= radio_button_tag :id, value: list.id %> 
+        </div>
+        </td>
+        <td><%= list.title %></td>
+        <td><%= list.user_id %></td>
+        <td><%= list.tag_list %></td>
+        <td><%= list.assignments.count %></td>
+        <td><%= link_to 'Show', list %></td>     
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,31 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-8">
+    <div class="page-header">
+      <h2> List </h2>
+    </div>
+    <%= render 'index' %>
+    <%= link_to 'New List', new_list_path, class: "btn btn-primary" %>
 
-<h1>Lists</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>User</th>
-      <th>Tags list</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @lists.each do |list| %>
-      <tr>
-        <td><%= list.title %></td>
-        <td><%= list.user_id %></td>
-        <td><%= list.tag_list %></td>
-        <td><%= link_to 'Show', list %></td>
-        <td><%= link_to 'Edit', edit_list_path(list) %></td>
-        <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  </div>
+  <div class="col-md-4">
+    
+  </div>
+</div>
 
 <br>
 
-<%= link_to 'New List', new_list_path %>

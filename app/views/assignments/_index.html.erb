@@ -5,6 +5,8 @@
       <th>Code</th>
       <th>Title</th>
       <th>Tags</th>
+      <th>Lists</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -13,7 +15,13 @@
       <tr>
         <td><%= assignment.code %></td>
         <td><%= link_to assignment.title, assignment %></td>
-        <td><%= assignment.tag_list.join(", ") %></td>    
+        <td><%= assignment.tag_list.join(" , ") %></td> 
+        <td><%= assignment.lists.pluck(:title).join(" , ") %></td> 
+        <td>
+          <% if can? :update, assignment %>
+            <%= link_to "edit", edit_assignment_path(assignment) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

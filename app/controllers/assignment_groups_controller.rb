@@ -1,7 +1,7 @@
 class AssignmentGroupsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_load_and_authorize_resource only: [:student_solutions, :view_solutions, :statistics]
+  skip_load_and_authorize_resource only: [:student_solutions, :view_solutions, :statistics, :lists]
 
   before_action :set_assignment_group, only: [:show, :edit, :update, :destroy]
 
@@ -20,10 +20,12 @@ class AssignmentGroupsController < ApplicationController
   def new
     @assignment_group = AssignmentGroup.new
     @assignment_group.batch_id = params[:batch_id] if params[:batch_id]
+    @lists = List.all
   end
 
   # GET /assignment_groups/1/edit
   def edit
+    @lists = List.all
   end
 
   # POST /assignment_groups
@@ -80,6 +82,11 @@ class AssignmentGroupsController < ApplicationController
 
   def statistics
     @assignment_group = AssignmentGroup.find(params[:assignment_group_id])
+  end
+
+  def lists
+    @list = List.find(params[:list_id])
+    render json: @list.assignments
   end
 
   private

@@ -24,7 +24,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :add_assignments %><br>
+    <%= f.label :select_assignments %><br>
     <%= f.select :assignment_ids,Assignment.all.map { |m| [m.code, m.id] },{ include_blank: true },{ class: 'chosen-select' ,multiple: true}%>
   </div>
 

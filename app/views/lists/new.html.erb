@@ -1,10 +1,15 @@
-<h1>New List</h1>
 
 <div class="col-md-4">
+	<div class="page-header">
+		<h2>Add List</h2>
+	</div>
   <%= render 'form', list: @list %>
   <%= link_to 'Back', lists_path %>
 </div>
 
 <div class="col-md-8">
+	<div class="page-header">
+		<h2>Select Assignments </h2>
+	</div>
  <%= render 'assignments/index' %>
 </div>

@@ -1,7 +1,7 @@
 <div class="row">
 	<%= render 'breadcrum' %>
 
-<div class="col-md-8">
+<div class="col-md-7">
 	<div class="page-header">
     <% if current_user.role? "admin" %>
       <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
@@ -121,7 +121,7 @@
 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-5">
 	<div class="page-header">
 		<h2>Assigned to</h2>
 	</div>
