@@ -3,35 +3,29 @@
     <div class="page-header">
       <h2>List Batches</h2>
     </div>
-    <table class="table table-striped">
-       <thead>
-    <tr>
-      <th>Title</th>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Course</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#ongoing" aria-controls="home" role="tab" data-toggle="tab">Ongoing</a></li>
+    <li role="presentation"><a href="#completed" aria-controls="profile" role="tab" data-toggle="tab">Completed</a></li>
+  </ul>
 
-  <tbody>
-    <% @batches.each do |batch| %>
-      <tr>
-        <td><%= batch.title %></td>
-        <td><%= batch.start_date.strftime("%d, %B %Y") %></td>
-        <td><%= batch.end_date.strftime("%d, %B %Y") %></td>
-        <td><%= batch.course.name %></td>
-        <td><%= link_to 'View Assignments', batch %></td>
-        <% if can? :update, batch %>
-         <td><%= link_to 'Edit', edit_batch_path(batch) %></td>
-        <% end %>
-        <% if can? :destroy, batch %>
-         <td><%= link_to 'Destroy', batch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-    </table>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="ongoing">
+      <% @batches = Batch.where('end_date < ? AND is_completed = ?', Date.today, false ) %>
+      <br/>
+      <%= render 'index' %> 
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="completed">
+      <% @batches = Batch.where('is_completed = ?', true) %>
+      <%= render 'index' %>
+    </div>
+
+  </div>
+  
+  </div>
   </div>
 
   <div class="col-md-3">
