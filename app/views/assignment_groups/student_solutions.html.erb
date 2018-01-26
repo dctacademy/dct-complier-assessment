@@ -18,7 +18,8 @@
 									<i class="glyphicon glyphicon-time"></i><span class="timeTaken"></span>
 							</div>
 							<div>
-								<textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %></textarea>
+								<textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %>        
+                </textarea>
 								<br/>
 								<% if current_user.role? "admin" %>
 								<div class="row">
@@ -55,7 +56,7 @@
 		<% if current_user.role? "admin" %>
 		<div class="col-md-4">
 	 		 <h3 class="page-header" id="name">Output</h3>
-	 		 <div id="result" class="padding-bottom"></div>
+	 		 <div id="result" class="padding-bottom affix"></div>
 		</div> 
 		<% end %>
 	<% end %>
@@ -67,7 +68,6 @@
 	   var code = CodeMirror.fromTextArea(obj,{
 	     mode: obj.name,
 	     keyMap: "sublime",
-	     theme: "monokai",
 	     lineNumbers: true
 	   })
 	  //code.setSize(400,100);
@@ -78,7 +78,6 @@
       value: "Your result appears here",
       mode: "text",
       keyMap: "sublime",
-      theme: "monokai",
       tabSize: 2,
       tabIndex: 2,
       readOnly: "nocursor"

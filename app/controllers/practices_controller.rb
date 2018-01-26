@@ -79,7 +79,11 @@ class PracticesController < ApplicationController
 
   def submissions
     @practice = Practice.find(params[:practice_id])
+    @assignment = Assignment.find(@practice.assignment_id)
     @submissions = @practice.submissions
+    @hash_solutions = {}
+    # show only the solutions for assignments of the languages chosen in practice assignment group
+    @assignment.solutions.pluck(:language).uniq.find_all{|l| @practice.assignment_group.tag_list.include?(l.downcase)}.each {|language| @hash_solutions[language] = @assignment.solutions.where('language = ?', language)}
   end
 
   private

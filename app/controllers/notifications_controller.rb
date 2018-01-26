@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
 
-	before_action :authenticate_user!
-	load_and_authorize_resource
+	#before_action :authenticate_user!, except: [:index]
+	#load_and_authorize_resource
 	
 	def index
 		if params[:agi].present?
@@ -12,6 +12,11 @@ class NotificationsController < ApplicationController
 		else 
 			@notifications = 	(current_user.role? "admin") ? Notification.order('created_at DESC') : current_user.notifications.order('created_at DESC')
 		end
+	end
+
+	def all
+		@notifications = Notification.order('created_at DESC')
+		render json: @notifications
 	end
 
 end

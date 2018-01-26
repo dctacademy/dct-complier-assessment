@@ -13,6 +13,8 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1
   # GET /assignments/1.json
   def show
+    @lists = @assignment.lists
+    @solutions = @assignment.solutions
     respond_to do |format|
       format.html{
         @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
@@ -156,6 +158,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:title, :body, :url, :user_id, :source , :tag_list, :company_list, :approved, :points, :minutes)
+      params.require(:assignment).permit(:title, :body, :url, :user_id, :source , :tag_list, :company_list, :approved, :points, :minutes, list_ids: [])
     end
 end

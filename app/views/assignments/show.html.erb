@@ -1,88 +1,113 @@
 <% @a = current_user.answers.map{|n| n.id} %>
-<div class="col-md-4 pull-right compiler-question">
-  <!-- <div class="row question-padding"> -->
-    <!-- <span class="right">Favourite</span> -->
-  <!-- </div> -->
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="/assignments">Assignments</a></li>
+  <li class="active"><%= @assignment.title %></li>
+</ol>
 
-  <div class="row question-padding">
-    <p>
-      <strong>Tags:</strong>
-      <%= @assignment.try(:tag_list) %>
-      <%= @assignment.try(:company_list) %>
-      <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart heart-icon pull-right" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
-    </p>
-    <p>
-      <strong>Title:</strong>
-      <%= @assignment.title %>
-    </p>
-<div class="col-md-12">
-<p>
-  <strong>Tags:</strong>
-  <%= @assignment.try(:tag_list) %>
-</p>
+<div class="row">
+  <div class="col-md-12">
+      <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#home" aria-controls="home" role="pill" data-toggle="pill">Statement</a>
+    </li>
+    <li role="presentation">
+      <a href="#profile" aria-controls="profile" role="pill" data-toggle="pill">Lists</a>
+    </li>
+    <li role="presentation">
+      <a href="#messages" aria-controls="messages" role="pill" data-toggle="pill">Solutions</a>
+    </li>
+    <li role="presentation">
+      <a href="#settings" aria-controls="settings" role="pill" data-toggle="pill">Settings</a>
+    </li>
+  </ul>
 
-<p>
-  <strong>Code:</strong>
-  <%= @assignment.code %>
-</p>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+      <br/>
+    <div class="row">
+      <div class="col-md-8">
+        <%= raw(@assignment.body) %>
+        <%= render '/home/aindex' %>
+      </div>
+      <div class="col-md-4">
+        <p>
+          <strong>Tags:</strong>
+          <%= @assignment.try(:tag_list) %>
+        </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @assignment.title %>
-</p>
+        <p>
+          <strong>Code:</strong>
+          <%= @assignment.code %>
+        </p>
 
-<p>
-  <strong>Minutes:</strong>
-  <%= @assignment.minutes %>
-</p>
+        <p>
+          <strong>Title:</strong>
+          <%= @assignment.title %>
+        </p>
 
-<p>
-  <strong>Points:</strong>
-  <%= @assignment.points %>
-</p>
+        <p>
+          <strong>Minutes:</strong>
+          <%= @assignment.minutes %>
+        </p>
 
-<p>
-  <strong>Body:</strong>
-  <%= raw(@assignment.body) %>
-</p>
+        <p>
+          <strong>Points:</strong>
+          <%= @assignment.points %>
+        </p>
 
-    <p>
-      <strong>Body:</strong>
-      <%= raw(@assignment.body) %>
-    </p>
+        <p>
+          <strong>Url:</strong>
+          <%= @assignment.url %>
+        </p>
 
-    <p>
-      <strong>Url:</strong>
-      <%= @assignment.url %>
-    </p>
+          <% if can? :update, @assignment %>
+            <% if !@assignment.approved %>
+              <%= link_to "Approve", assignments_approve_assignment_path(assignment_id: @assignment.id), remote: true, class: "btn btn-success btn-sm", id: "approve-assignment" %>
+            <% end %>
+              <%= link_to 'Edit', edit_assignment_path(@assignment) %>
+          <% end %>
+
+      </div>
+
+    </div>
+    </div> <!-- assignment statement ends here -->
+
+    <div role="tabpanel" class="tab-pane" id="profile">
+      <div class="row">
+        <div class="col-md-8">
+          <br/>
+          <%= render 'lists/index' %>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+      </div>
+    </div> <!-- lists ends here  -->
+
+    <div role="tabpanel" class="tab-pane" id="messages">
+      <br/>
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <div class="col-md-offset-5">
+            <%= link_to assignment_solutions_path(@assignment.id), class: "btn btn-primary btn-lg" do %>
+              View Solutions
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div> <!-- solutions ends here -->
+
+
+    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+  </div>
+
+  </div>
 </div>
 
-<div class="row pull-right question-padding">
-  <% if can? :update, @assignment %>
-  <%= link_to 'Edit', edit_assignment_path(@assignment) , class: "btn btn-info btn-small"%>
-  <% end %>
 
-  <%= link_to 'Back', assignments_path , class: "btn btn-primary btn-small"%>
-</div>
-
-
-<% if can? :update, @assignment %>
-  <% if !@assignment.approved %> 
-    <%= link_to "Approve", assignments_approve_assignment_path(assignment_id: @assignment.id), remote: true, class: "btn btn-success btn-sm", id: "approve-assignment" %> 
-  <% end %>
-  <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<% end %>
-
-
-</div>
-
-<% if can? :create,Answer %>
-  <% if @rb.size == 3 && @js.size == 3 && @py.size == 3 %>
-    <p>Solutions are already given for this question solve something else.</p>
-  <%  else %>
-    <%= render '/home/aindex' %>
-    <% end %>
-<% end %>
 
 <script type="text/javascript">
   $(document).ready(function(){

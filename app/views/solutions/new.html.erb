@@ -1,5 +1,10 @@
-<h1>New Solution</h1>
+<div class="row">
+	<div class="col-md-8">
+		<div class="page-header">
+			<h2>New Solution <small><%= @assignment.title %> (<%= @assignment.code %>)</small></h2>
+		</div>
+		<%= render 'form', solution: @solution %>
+	</div>
+</div>
 
-<%= render 'form', solution: @solution %>
 
-<%= link_to 'Back', solutions_path %>

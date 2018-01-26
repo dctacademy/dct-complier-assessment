@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
 
+  # custom actions routes
+  get 'assignment_groups/lists'
+  get 'lists/assignments'
+
   resources :comments
   resources :notification_types
-  resources :notifications
+
+  get 'notifications/all'
   resources :roles
+  resources :notifications
+
   get 'dashboard/index'
 
   resources :solutions

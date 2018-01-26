@@ -83,7 +83,15 @@
               <li><%= link_to "Make api available" , approval_assignments_path %></li> -->
             </ul>
           </li>
-          <li><%= link_to "Add List",new_list_path %></li>
+          <% if can? :read, List.new %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lists<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "All", lists_path %></li>
+                <li><%= link_to "New", new_list_path %></li>
+              </ul>
+            </li>
+          <% end %>
         </ul>
         <% end %>
         

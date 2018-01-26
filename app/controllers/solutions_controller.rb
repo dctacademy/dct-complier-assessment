@@ -8,6 +8,8 @@ class SolutionsController < ApplicationController
   def index
     @assignment = Assignment.find(params[:assignment_id])
     @solutions = @assignment.solutions
+    @hash_solutions = {}
+    @solutions.pluck(:language).uniq.each {|language| @hash_solutions[language] = @solutions.where('language = ?', language)}
   end
 
   # GET /solutions/1
@@ -18,10 +20,12 @@ class SolutionsController < ApplicationController
   # GET /solutions/new
   def new
     @solution = Solution.new
+    @assignment = Assignment.find(params[:assignment_id])
   end
 
   # GET /solutions/1/edit
   def edit
+    @assignment = Assignment.find(params[:assignment_id])
   end
 
   # POST /solutions
@@ -29,6 +33,7 @@ class SolutionsController < ApplicationController
   def create
     @solution = Solution.new(solution_params)
     @solution.user_id = current_user.id
+    @assignment = Assignment.find(params[:assignment_id])
     respond_to do |format|
       if @solution.save
         format.html { redirect_to @solution, notice: 'Solution was successfully created.' }
@@ -43,6 +48,7 @@ class SolutionsController < ApplicationController
   # PATCH/PUT /solutions/1
   # PATCH/PUT /solutions/1.json
   def update
+    @assignment = Assignment.find(params[:assignment_id])
     respond_to do |format|
       if @solution.update(solution_params)
         format.html { redirect_to @solution, notice: 'Solution was successfully updated.' }
@@ -59,7 +65,7 @@ class SolutionsController < ApplicationController
   def destroy
     @solution.destroy
     respond_to do |format|
-      format.html { redirect_to solutions_url, notice: 'Solution was successfully destroyed.' }
+      format.html { redirect_to assignment_solutions_path(@solution.assignment_id), notice: 'Solution was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,6 +78,6 @@ class SolutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def solution_params
-      params.require(:solution).permit(:user_id, :body, :language, :assignment_id)
+      params.require(:solution).permit(:user_id, :body, :language, :assignment_id, :code_type)
     end
 end

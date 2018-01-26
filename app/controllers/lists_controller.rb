@@ -1,5 +1,7 @@
 class ListsController < ApplicationController
+  before_action :authenticate_user!, except: [:assignments]
   load_and_authorize_resource
+  skip_load_and_authorize_resource only: [:assignments]
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   # GET /lists
@@ -27,10 +29,12 @@ class ListsController < ApplicationController
   def new
     @list = List.new
     @assignments = Assignment.where(approved: true).includes(:tags)
+    @lists = List.all
   end
 
   # GET /lists/1/edit
   def edit
+    @lists = List.all
     @assignments = Assignment.where(approved: true).includes(:tags)
   end
 
@@ -72,6 +76,17 @@ class ListsController < ApplicationController
       format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def assignments
+    if params[:status] == 'notInList'
+      @assignments = Assignment.where.not(id: ListAssignment.all.pluck(:assignment_id))
+    elsif params[:status] == 'inList'
+      @assignments = Assignment.where(id: ListAssignment.all.pluck(:assignment_id))
+    else 
+      @assignments = Assignment.all
+    end
+    render json: @assignments
   end
 
   private
