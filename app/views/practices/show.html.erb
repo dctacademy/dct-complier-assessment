@@ -5,12 +5,14 @@
 	  <li><a href="/batches/<%= @practice.assignment_group.batch_id %>/assignment_groups/<%= @practice.assignment_group_id%>">Assignment Group</a></li>
 	  <li class="active"><%= @practice.assignment_group.title %></li>
 	</ol>
-	
+
 	<div class="col-md-12">
 	<h3 class="alert alert-success" id="watch">
 		<i class="glyphicon glyphicon-time "></i>
 		<span id="display"></span>
 	</h3>
+
+	<div id="countdown"></div>
 
 		<div class="page-header">
 			<h2> <b>Assignment:</b> <%= @practice.assignment_group.title %></h2>
@@ -18,13 +20,101 @@
 	</div>
 		<%= render "assignments/show" %>
 	</div>
-	
+
 	<% if @practice.submissions.where('user_id = ?', current_user.id).count.zero? %>
 		<p class="alert alert-danger"> Commenting can be done only submitting the assignment </p>
 	<% else %>
 		<%= render 'assignment_groups/comment_form', sub: @practice.submissions.where('user_id = ?', current_user.id).first %>
-		<% end %>		
+		<% end %>
 </div>
+
+<style>
+
+.countdownHolder{
+	/*width:450px;
+	margin:0 auto;*/
+	font: 40px/1.5 'Open Sans Condensed',sans-serif;
+	/*text-align:center;*/
+	letter-spacing:-10px;
+}
+
+.position{
+	display: inline-block;
+	height: 1.6em;
+	overflow: hidden;
+	position: relative;
+	width: 1.05em;
+}
+
+.digit{
+	position:absolute;
+	display:block;
+	width:1em;
+	background-color:#444;
+	border-radius:0.2em;
+	text-align:center;
+	color:#fff;
+	letter-spacing:-1px;
+}
+
+.digit.static{
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.35);
+
+	background-image: linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+	background-image: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+	background-image: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+	background-image: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+	background-image: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.5, #3A3A3A),
+		color-stop(0.5, #444444)
+	);
+	border-radius: 0;
+}
+
+/**
+ * You can use these classes to hide parts
+ * of the countdown that you don't need.
+ */
+
+.countDays{ /* display:none !important;*/ }
+.countDiv0{ /* display:none !important;*/ }
+.countHours{}
+.countDiv1{}
+.countMinutes{}
+.countDiv2{}
+.countSeconds{}
+
+
+.countDiv{
+	display:inline-block;
+	width:16px;
+	height:1.6em;
+	position:relative;
+}
+
+.countDiv:before,
+.countDiv:after{
+	position:absolute;
+	width:5px;
+	height:5px;
+	background-color:#444;
+	border-radius:50%;
+	left:50%;
+	margin-left:-3px;
+	top:0.5em;
+	box-shadow:1px 1px 1px rgba(4, 4, 4, 0.5);
+	content:'';
+}
+
+.countDiv:after{
+	top:0.9em;
+}
+</style>
 
 
 <script>
@@ -48,7 +138,7 @@
 	     	$('#watch').addClass("alert-warning");
 	    }
     }
-   
+
 
     function formatTime(count){
       var days = Math.floor(count/86400);
@@ -71,6 +161,145 @@
      	 	setWatchBkClass(seconds);
 	 		document.querySelector('#display').innerHTML = `You took ${formatTime(seconds)} to solve`;
 	 <% end %>
-     
+
 </script>
 
+
+
+<script>
+(function($){
+
+// Number of seconds in every time division
+var days	= 24*60*60,
+	hours	= 60*60,
+	minutes	= 60;
+
+// Creating the plugin
+$.fn.countup = function(prop){
+
+	var options = $.extend({
+		callback	: function(){},
+		start		: new Date()
+	},prop);
+
+	var passed = 0, d, h, m, s,
+		positions;
+
+	// Initialize the plugin
+	init(this, options);
+
+	positions = this.find('.position');
+
+
+
+	(function tick(){
+		console.log(positions.eq(6));
+
+		passed = Math.floor((new Date() - options.start) / 1000);
+
+		// Number of days passed
+		d = Math.floor(passed / days);
+		updateDuo(0, 1, d);
+		passed -= d*days;
+
+		// Number of hours left
+		h = Math.floor(passed / hours);
+		updateDuo(2, 3, h);
+		passed -= h*hours;
+
+		// Number of minutes left
+		m = Math.floor(passed / minutes);
+		updateDuo(4, 5, m);
+		passed -= m*minutes;
+
+		// Number of seconds left
+		s = passed;
+		updateDuo(6, 7, s);
+
+		// Calling an optional user supplied callback
+		options.callback(d, h, m, s);
+
+		// Scheduling another call of this function in 1s
+		setTimeout(tick, 1000);
+	})();
+
+	// This function updates two digit positions at once
+	function updateDuo(minor,major,value){
+		switchDigit(positions.eq(minor),Math.floor(value/10)%10);
+		switchDigit(positions.eq(major),value%10);
+	}
+
+	return this;
+};
+
+
+function init(elem, options){
+	elem.addClass('countdownHolder');
+	// Creating the markup inside the container
+	$.each(['Days','Hours','Minutes','Seconds'],function(i){
+
+		$('<span class="count'+this+'">').html(
+			'<span class="position">\
+				<span class="digit static">0</span>\
+			</span>\
+			<span class="position">\
+				<span class="digit static">0</span>\
+			</span>'
+		).appendTo(elem);
+
+
+		if(this!="Seconds"){
+			elem.append('<span class="countDiv countDiv'+i+'"></span>');
+		}
+	});
+
+}
+
+// Creates an animated transition between the two numbers
+function switchDigit(position,number){
+
+	var digit = position.find('.digit')
+
+	if(digit.is(':animated')){
+		return false;
+	}
+
+	if(position.data('digit') == number){
+		// We are already showing this number
+		return false;
+	}
+
+	position.data('digit', number);
+
+	var replacement = $('<span>',{
+		'class':'digit',
+		css:{
+			top:'-2.1em',
+			opacity:0
+		},
+		html:number
+	});
+
+	// The .static class is added when the animation
+	// completes. This makes it run smoother.
+
+	digit
+		.before(replacement)
+		.removeClass('static')
+		.animate({top:'2.5em',opacity:0},'fast',function(){
+			digit.remove();
+		})
+
+	replacement
+		.delay(100)
+		.animate({top:0,opacity:1},'fast',function(){
+			replacement.addClass('static');
+		});
+}
+})(jQuery);
+
+
+$('#countdown').countup({
+	start: new Date('jan,01,2014,00:00:00') //year, month, day, hour, min, sec
+});
+</script>
