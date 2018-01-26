@@ -6,8 +6,15 @@
     <li class="active"><%= @practice.assignment_group.title %></li>
   </ol>
 <div class="col-md-8">
-  <h3 class="page-header">Submission <%= @practice.assignment.code %> <%= @practice.assignment.title %></h3>
-  
+  <h1 class="page-header">Editorial Submissions</h1> 
+
+  <% if @hash_solutions.empty? %>
+    <p class="alert alert-info"> No Editorial Submissions found </p>
+  <% else %>
+    <%= render 'solutions/index' %> 
+  <% end %>
+
+  <h3 class="page-header">Other Submissions for <%= @practice.assignment.code %> <%= @practice.assignment.title %></h3> 
   <% if @submissions.empty? %>
     <p class="alert alert-info"> No Submissions Found</p>
     <%= link_to "back", :back %>
@@ -50,7 +57,6 @@
    var code = CodeMirror.fromTextArea(obj,{
      mode: obj.name,
      keyMap: "sublime",
-     theme: "monokai",
      lineNumbers: true,
      readOnly: true
    })
@@ -62,7 +68,6 @@
       value: "Your result appears here",
       mode: "text",
       keyMap: "sublime",
-      theme: "monokai",
       tabSize: 2,
       tabIndex: 2,
       readOnly: "nocursor"

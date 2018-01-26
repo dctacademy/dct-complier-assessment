@@ -1,6 +1,8 @@
-<h1>Editing Solution</h1>
-
-<%= render 'form', solution: @solution %>
-
-<%= link_to 'Show', @solution %> |
-<%= link_to 'Back', solutions_path %>
+<div class="row">
+	<div class="col-md-8">
+		<div class="page-header">
+			<h2>Edit Solution <small><%= @assignment.title %> (<%= @assignment.code %>)</small> </h2>
+		</div>
+		<%= render 'form', solution: @solution %>
+	</div>
+</div>

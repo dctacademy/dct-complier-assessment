@@ -1,44 +1,26 @@
-<p id="notice"><%= notice %></p>
-  <% @solutions.each do |solution| %>
-<div class="well">
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="/assignments">Assignments</a></li>
+  <li><%= link_to @assignment.title, @assignment %></li>
+  <li class="active">Solutions</li>
+</ol>
 
-    <h3><%= solution.assignment.title %></h3>
+<div class="col-md-8">
+	<%= render 'index' %>
+</div>
 
-      <strong>Solution:</strong>
-      <textarea class="cm">
-        <%= solution.body %>
-      </textarea>
-    </p>
-
-    <p>
-      <strong>Language:</strong>
-      <%= solution.language %>
-    </p>
-
-    <p>
-      <strong>User:</strong>
-      <%= solution.user.username %>
-    </p>
-
-    <% if can? :update, @solution %>
-     <%= link_to 'Edit', edit_solution_path(solution) %>
-    <% end %>
-    </div>
-
-  <% end %>
-<%= link_to 'New Solution', new_solution_path %>
-
-<script>
-  $(document).ready(function(){
-   $.each($('.cm'),function(key,obj){
-   var code = CodeMirror.fromTextArea(obj,{
-     mode: obj.name,
-     keyMap: "sublime",
-     theme: "monokai",
-     readOnly: "noCursor",
-     lineNumbers: true
-   })
-  //code.setSize(400,100);
-  })
-  })
-</script>
+<div class="col-md-4">
+	<div class="page-header">
+		<h2>Stats</h2>
+	</div>
+	<ul class="list-group">
+		<% @hash_solutions.each do |language, solutions| %>
+			<li class="list-group-item">
+				<%= language %> 
+				<span class="badge"> 
+					<%= solutions.length %>
+				</span>
+			</li>	
+		<% end %>
+		</ul>
+</div>

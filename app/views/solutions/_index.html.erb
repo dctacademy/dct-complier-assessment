@@ -1,0 +1,66 @@
+<% if can? :create, Solution.new %>
+  <div class="row">
+    <%= link_to 'New Solution', new_assignment_solution_path(@assignment), class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<% if !@hash_solutions.empty? %>
+      <% @hash_solutions.each do |language, solutions| %>
+        <div class="page-header">
+          <h2><%= language %> <small><%= solutions.first.assignment.title %></small></h2>
+        </div>
+
+          <% solutions.each do |solution| %>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= solution.id %>" aria-expanded="true" aria-controls="collapseOne">
+                      <%= solution.code_type %>
+                    </a>
+                  </h4>
+                </div>
+                <div id="<%= solution.id %>" class="panel-collapse collapsing" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                     <textarea class="cm"  name="<%= solution.language.downcase %>" ><%= solution.body %>     
+                      </textarea>
+
+              <br/>     
+              <p>
+                <strong>Language:</strong>
+                <%= solution.language %>
+              </p>
+
+              <p>
+                <strong>User:</strong>
+                <%= solution.user.username %>
+              </p>
+
+              <% if can? :update, solution %>
+               <%= link_to 'Edit', edit_assignment_solution_path(solution.assignment, solution) %> 
+              <% end %>
+              <% if can? :destroy, solution %>
+                | <%= link_to 'Destroy', assignment_solution_path(solution.assignment, solution), method: :delete, data: {confirm: "Are you sure?"} %>
+              <% end %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% end %>
+        <% end %>
+<% end %>
+
+<script>
+ $(document).ready(function(){
+    $.each($('.cm'),function(key,obj){
+     var code = CodeMirror.fromTextArea(obj,{
+       mode: obj.name,
+       keyMap: "sublime",
+       lineNumbers: true
+     })
+    //code.setSize(400,100);
+  })
+  })
+</script>
