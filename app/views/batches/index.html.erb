@@ -8,13 +8,15 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#ongoing" aria-controls="home" role="tab" data-toggle="tab">Ongoing</a></li>
     <li role="presentation"><a href="#completed" aria-controls="profile" role="tab" data-toggle="tab">Completed</a></li>
+    <% if current_user.role? "admin" %>
+       <li role="presentation"><a href="#all" aria-controls="profile" role="tab" data-toggle="tab">All</a></li>
+    <% end %>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="ongoing">
       <% @batches = Batch.where('end_date < ? AND is_completed = ?', Date.today, false ) %>
-      <br/>
       <%= render 'index' %> 
     </div>
 
@@ -22,6 +24,13 @@
       <% @batches = Batch.where('is_completed = ?', true) %>
       <%= render 'index' %>
     </div>
+
+    <% if current_user.role? "admin" %>
+     <div role="tabpanel" class="tab-pane" id="all">
+      <% @batches = Batch.order('start_date DESC') %>
+      <%= render 'index' %>
+    </div>
+    <% end %>
 
   </div>
   
