@@ -13,6 +13,8 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1
   # GET /assignments/1.json
   def show
+    @lists = @assignment.lists
+    @solutions = @assignment.solutions
     respond_to do |format|
       format.html{
         @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
