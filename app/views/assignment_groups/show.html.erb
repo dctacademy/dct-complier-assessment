@@ -83,6 +83,11 @@
             %>
               <i class="glyphicon glyphicon-eye-open"></i>
            <% end %>
+
+          <% if !practice.submissions.where('user_id = ?', current_user.id).empty? %>
+           <i class="glyphicon glyphicon-ok"></i>
+          <% end %>
+
             <% if current_user %>
     					<% if can? :destroy, practice %>
                 <%= link_to 'Destroy', practice, method: :delete, data: { confirm: 'Are you sure?' } %>
