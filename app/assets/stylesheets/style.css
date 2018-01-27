@@ -80,8 +80,8 @@ body{
 }
 
 .btn-small{
-  padding: 2px !important;
-  width: 60px;
+  padding: 4px !important;
+  /*width: 60px;*/
 }
 
 .table{
@@ -93,6 +93,17 @@ div#batch_student_ids_chosen{
   width: 100% !important;
   height: 34px !important;
   border-radius: 0;
+}
+
+/* batches show */
+
+.batch-details{
+  border: 1px solid #e2e0e0;
+  padding: 10px;
+}
+
+.batch-details p{
+  margin-bottom: 0px;
 }
 
 

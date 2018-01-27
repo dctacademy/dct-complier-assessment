@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col-lg-9">
-        <div class="row">
+        <div class="row batch-details">
 
           <div class="col-md-4">
             <p class="text-left">
@@ -23,13 +23,13 @@
         </div>
 
         <div class="row">
-          <div class="page-header">
+          <!-- <div class="page-header">
             <h2>Listing Assignments
               <small><%= @batch.assignment_groups.count %></small>
             </h2>
-          </div>
+          </div> -->
 
-          <table class="table table-striped">
+          <!-- <table class="table table-striped">
             <thead>
               <tr>
                 <th>Title</th>
@@ -62,24 +62,12 @@
               </tr>
               <% end %>
             </tbody>
-          </table>
+          </table> -->
 
-          <% if can? :create, AssignmentGroup.new %>
-          <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
-          <% end %>
 
-          <% if can? :update, @batch %>
-          <%= link_to 'Edit', edit_batch_path(@batch) %> |
-          <% end %>
-
-          <%= link_to 'Back', batches_path %>
-
-          <%= link_to 'Destroy', @batch, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"%>
-
-          <%= link_to 'Back', batches_path , class: "btn btn-primary"%>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-4">
             <p><strong>Start date:</strong> <%= @batch.start_date.strftime("%d, %B %Y") %></p>
           </div>
@@ -89,7 +77,82 @@
           <div class="col-md-4">
             <p><strong>Course:</strong> <%= @batch.course.name %></p>
           </div>
+        </div> -->
+
+        <div class="row margin-heading">
+          <div class="col-lg-6">
+            <h2 class="page-heading">Listings Assignments
+              <small>(<%= @batch.assignment_groups.count %>)</small>
+            </h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="pull-right">
+              <!-- <% if can? :create, AssignmentGroup.new %>
+              <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
+              <% end %> -->
+
+              <% if can? :create, AssignmentGroup.new %>
+              <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary btn-small" %>
+              <% end %>
+
+              <!-- <% if can? :update, @batch %>
+              <%= link_to 'Edit', edit_batch_path(@batch) %> |
+              <% end %> -->
+
+              <%#= link_to 'Back', batches_path %>
+
+              <%= link_to 'Destroy', @batch, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger btn-small"%>
+
+              <%= link_to 'Back', batches_path , class: "btn btn-primary btn-small"%>
+
+
+            </div>
+          </div>
+
         </div>
+
+        <div class="row">
+          <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
+          <div class="col-lg-4">
+            <div class="assignment-box">
+              <div class="row">
+                <div class="col-lg-9">
+                  <p><%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %></p>
+                </div>
+                <div class="col-lg-3">
+                  <p class="assignment-count"><%= assignment_group.assignments.count %></p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i>
+                    <%= assignment_group.created_at.strftime("%d, %b %Y %H:%M %p") %></p>
+                    <p class="text-center">to</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i><%= assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 edit-button">
+                    <% if can? :update, assignment_group %>
+                    <%= link_to 'Edit', edit_batch_assignment_group_path(@batch, assignment_group) , class: "btn btn-info"%></td>
+                    <% end %>
+                  </div>
+                  <div class="col-lg-8">
+                    <p class="assignment-languages"><%= assignment_group.tag_list %></p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <% end %>
+          </div>
 
       </div>
 
@@ -97,7 +160,7 @@
         <div class="row">
           <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
             <h3 class="page-heading">Batch Students</h3>
-            <ul class="list-group">
+            <!-- <ul class="list-group">
               <% @batch.students.each do |student| %>
               <li class="list-group-item">
                 <%= student.name %>
@@ -106,7 +169,7 @@
                 </span>
               </li>
               <% end %>
-            </ul>
+            </ul> -->
 
           </div>
 
@@ -127,66 +190,9 @@
 
 
 
-      <div class="row margin-heading">
-        <div class="col-lg-6">
-          <h2 class="page-heading">Listings Assignments
-            <small>(<%= @batch.assignment_groups.count %>)</small>
-          </h2>
-        </div>
-        <div class="col-lg-6">
-          <div class="pull-right">
-            <% if can? :create, AssignmentGroup.new %>
-            <%= link_to 'New Assignment Group', new_batch_assignment_group_path(@batch), class: "btn btn-primary" %>
-            <% end %>
 
 
-          </div>
-        </div>
 
-      </div>
-
-      <div class="row">
-        <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
-        <div class="col-lg-4">
-          <div class="assignment-box">
-            <div class="row">
-              <div class="col-lg-9">
-                <p><%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %></p>
-              </div>
-              <div class="col-lg-3">
-                <p class="assignment-count"><%= assignment_group.assignments.count %></p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-lg-12">
-                <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i>
-                  <%= assignment_group.created_at.strftime("%d, %b %Y %H:%M %p") %></p>
-                  <p class="text-center">to</p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-12">
-                  <p class="text-center"><i class="fa fa-clock-o clock-icon" aria-hidden="true"></i><%= assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %></p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 edit-button">
-                  <% if can? :update, assignment_group %>
-                  <%= link_to 'Edit', edit_batch_assignment_group_path(@batch, assignment_group) , class: "btn btn-info"%></td>
-                  <% end %>
-                </div>
-                <div class="col-lg-8">
-                  <p class="assignment-languages"><%= assignment_group.tag_list %></p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <% end %>
-        </div>
 
 
     </div>
