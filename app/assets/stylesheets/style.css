@@ -146,6 +146,20 @@ div#batch_student_ids_chosen{
   color: #5a5353;
 }
 
+/* assignent-group */
+
+.datetimepicker-assignmentgrp{
+  width: 100% !important;
+}
+
+.chosen-container{
+  width: 100% !important;
+}
+
+.margin-bottom-15{
+  margin-bottom: 15px;
+}
+
 /* compiler */
 
 /*.stats-compiler{

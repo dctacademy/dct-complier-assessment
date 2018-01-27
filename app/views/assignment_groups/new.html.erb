@@ -1,13 +1,21 @@
 <div class="row">
 	<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
 		<div class="row">
-			<div class="col-md-9 col-sm-9 col-xs-9 col-lg-9">
-				<h2 class="page-heading">New Assignment Group</h2>
-				<%= render 'form', assignment_group: @assignment_group %>
+			<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+				<div class="row margin-bottom-15">
+					<div class="col-lg-8">
+						<h2 class="page-heading">New Assignment Group</h2>
+					</div>
+					<div class="col-lg-4">
+							<%= link_to 'Back', assignment_groups_path, class: "btn btn-primary btn-small pull-right" %>
+					</div>
+				</div>
+
+
+					<%= render 'form', assignment_group: @assignment_group %>
+
 			</div>
-			<div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
-				<%= link_to 'Back', assignment_groups_path, class: "btn btn-primary" %>
-			</div>
+
 		</div>
 
 	</div>
