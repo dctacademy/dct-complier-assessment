@@ -41,7 +41,7 @@
     </thead>
 
     <tbody>
-      <% @batch.assignment_groups.order('created_at DESC').each do |assignment_group| %>
+      <% @assignment_groups.order('created_at DESC').each do |assignment_group| %>
         <tr>
           <td>
             <%= link_to assignment_group.title, batch_assignment_group_path(@batch, assignment_group) %>
