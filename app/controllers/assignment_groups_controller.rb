@@ -3,7 +3,7 @@ class AssignmentGroupsController < ApplicationController
   load_and_authorize_resource
   skip_load_and_authorize_resource only: [:student_solutions, :view_solutions, :statistics, :lists]
 
-  before_action :set_assignment_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment_group, only: [:edit, :update, :destroy]
 
   # GET /assignment_groups
   # GET /assignment_groups.json
@@ -14,6 +14,12 @@ class AssignmentGroupsController < ApplicationController
   # GET /assignment_groups/1
   # GET /assignment_groups/1.json
   def show
+    begin
+      @assignment_group = (current_user.role? "admin") ? AssignmentGroup.find(params[:id]) : current_student.assignment_groups.find(params[:id])
+      @batch = Batch.find(params[:batch_id])
+    rescue 
+      redirect_to root_path, notice: "The page you are looking for does not exist"
+    end
   end
 
   # GET /assignment_groups/new

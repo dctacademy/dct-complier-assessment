@@ -16,16 +16,20 @@ class PracticesController < ApplicationController
     practice = Practice.find(params[:id])
     @assignment = Assignment.find(practice.assignment)
     @assignment_group = practice.assignment_group
-    @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
-    @rb = @assignment.answers.where(language: "ruby")
-    @js = @assignment.answers.where(language: "javascript")
-    @py = @assignment.answers.where(language: "python")
-    # create time of viewing the assignment only once when the user clicks on the practice link
-    #binding.pry
-    SubmissionTimer.create(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id) if SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id).nil?
-    #binding.pry
-    @start_time = SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id)
-    #binding.pry
+    if (current_user.role? "admin") || (@assignment_group.students.pluck(:student_id).include? current_student.id)
+        @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
+        @rb = @assignment.answers.where(language: "ruby")
+        @js = @assignment.answers.where(language: "javascript")
+        @py = @assignment.answers.where(language: "python")
+        # create time of viewing the assignment only once when the user clicks on the practice link
+        #binding.pry
+        SubmissionTimer.create(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id) if SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id).nil?
+        #binding.pry
+        @start_time = SubmissionTimer.find_by(user_id: current_user.id, practice_id: params[:id], assignment_id: @assignment.id, assignment_group_id: practice.assignment_group_id)
+        #binding.pry
+    else 
+      redirect_to root_path, notice: "The page you are looking for does not exist"
+    end
   end
 
   # GET /practices/new
