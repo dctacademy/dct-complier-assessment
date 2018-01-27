@@ -12,6 +12,7 @@ class BatchesController < ApplicationController
   # GET /batches/1
   # GET /batches/1.json
   def show
+    @assignment_groups = (current_user.role? "admin") ? @batch.assignment_groups : current_student.assignment_groups.where('batch_id = ?', @batch.id)
   end
 
   # GET /batches/new
