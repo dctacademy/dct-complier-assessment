@@ -2,7 +2,6 @@
 	<%= render 'breadcrum' %>
 
 <div class="col-md-7">
-	<div class="page-header">
     <% if current_user.role? "admin" %>
       <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&agi=true" , class: "pull-right"  do %>
       <i class="glyphicon glyphicon-bell gi-2x"></i>
@@ -15,10 +14,19 @@
     <% else %>
       <p class="alert alert-info">Assignments in this group is not timed. Relax !!!</p>
     <% end %>
-		<h2><%= @assignment_group.title %>
 
-    
-   
+		<div class="row">
+			<div class="col-lg-8">
+				<h2 class="page-heading"><%= @assignment_group.title %></h2>
+			</div>
+			<div class="col-lg-4">
+				<%= link_to 'Back', batch_path(params[:batch_id]) ,class: "btn btn-primary btn-small pull-right" %>
+			</div>
+		</div>
+
+
+
+
     <% if current_user.role? "admin" %>
       <!-- Single button -->
       <div class="btn-group pull-right">
@@ -29,26 +37,25 @@
           <li id="view_solutions"><%= link_to "Solutions - #{@assignment_group.view_solutions == false ? 'is hidden' : 'is shown'}", assignment_groups_view_solutions_path(assignment_group_id: @assignment_group.id), remote: true %></li>
           <li>
             <%= link_to assignment_groups_statistics_path(assignment_group_id: @assignment_group.id) do %>
-              <i class="glyphicon glyphicon-equalizer"></i> Statistics  
+              <i class="glyphicon glyphicon-equalizer"></i> Statistics
             <% end %>
             </li>
           <li role="separator" class="divider"></li>
           <% if can? :update, @assignment_group %>
             <li>
-              <%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %> 
+              <%= link_to 'Edit', edit_batch_assignment_group_path(params[:batch_id],@assignment_group) %>
             </li>
           <% end %>
            <% if can? :destroy, @assignment_group %>
             <li>
-              <%= link_to 'Destroy', batch_assignment_group_path(params[:batch_id],@assignment_group), method: :delete, data: {confirm: "Are you sure?"} %> 
+              <%= link_to 'Destroy', batch_assignment_group_path(params[:batch_id],@assignment_group), method: :delete, data: {confirm: "Are you sure?"} %>
             </li>
           <% end %>
-          
+
         </ul>
       </div>
       <% end %>
-    </h2>
-	 </div>
+
   <div>
 </div>
 
@@ -78,8 +85,8 @@
             <% if !SubmissionTimer.find_by(
                user_id: current_user.id,
                practice_id: practice.id,
-               assignment_id: practice.assignment.id, 
-               assignment_group_id: @assignment_group.id).nil? 
+               assignment_id: practice.assignment.id,
+               assignment_group_id: @assignment_group.id).nil?
             %>
               <i class="glyphicon glyphicon-eye-open"></i>
            <% end %>
@@ -89,7 +96,7 @@
               <% end %>
             <% end %>
             <% if @assignment_group.view_solutions %>
-  					 <%= link_to "View Solutions" , practice_submissions_path(practice) %>     
+  					 <%= link_to "View Solutions" , practice_submissions_path(practice) %>
             <% end %>
          </td>
       </tr>
@@ -107,7 +114,7 @@
   </div>
   <div class="col-md-6">
     <div class="alert alert-warning" role="alert">Assignments in this group is due on <%= @assignment_group.due_datetime.strftime("%d, %b %Y %H:%M %p") %>
-      <span class="pull-right"> 
+      <span class="pull-right">
          <span id="display">time remaining </span>
       </span>
     </div>
@@ -117,35 +124,33 @@
 
 
 
-<%= link_to 'Back', batch_path(params[:batch_id]) %>
+
 
 </div>
 
 <div class="col-md-5">
-	<div class="page-header">
-		<h2>Assigned to</h2>
-	</div>
+		<h2 class="page-heading">Assigned to</h2>
     <ul class="list-group">
     <% @assignment_group.students.each do |student| %>
       <li class="list-group-item">
         <% if current_user.role? "admin" %>
           <%= link_to student.name, batch_assignment_groups_student_solutions_path(@batch.id, assignment_group_id: @assignment_group.id, student_user_id: student.user.id) %>
           <div class="pull-right">
-            <% 
-              submissions = Submission.where(user_id: student.user.id, practice_id: @assignment_group.practice_ids) 
-               total_points = 0 
+            <%
+              submissions = Submission.where(user_id: student.user.id, practice_id: @assignment_group.practice_ids)
+               total_points = 0
                student_points = 0
               @assignment_group.practices.each do |practice|
                   total_points += practice.assignment.points
               end
 
-              submissions.each do |submission| 
+              submissions.each do |submission|
                 student_points += submission.assignment.points if submission.is_checked == "correct"
               end
             %>
 
             <span class="badge">
-               <%= submissions.pluck(:is_checked).count("correct") %> 
+               <%= submissions.pluck(:is_checked).count("correct") %>
                <i class="glyphicon glyphicon-ok"></i>
             </span>
            <span class="badge">
@@ -165,7 +170,7 @@
             <span class="badge">
               <%= student_points %>  / <%= total_points %>
             </span>
-            
+
             <%= link_to  "/notifications?assignment_group_id=#{@assignment_group.id}&student_user_id=#{student.user.id}&agisui=true" , class: "pull-right"  do %>
              <i class="glyphicon glyphicon-bell gi-2x"></i>
             <% end %>
@@ -177,7 +182,7 @@
       </li>
     <% end %>
     </ul>
-  
+
     <%#= render '/notifications/index' %>
 </div>
 
@@ -213,5 +218,5 @@
      } else {
         document.querySelector('#display').innerHTML = "<strong> time up</strong>";
      }
-   
+
 </script>
