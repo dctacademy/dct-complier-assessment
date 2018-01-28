@@ -46,6 +46,14 @@ input[type=checkbox].glyphicon{
   border-radius: 0 !important;
 }*/
 
+.margin-bottom-15{
+  margin-bottom: 15px;
+}
+
+.no-margin{
+  margin: 0;
+}
+
 body{
   font-family: 'Open Sans', sans-serif !important;
 }
@@ -156,8 +164,15 @@ div#batch_student_ids_chosen{
   width: 100% !important;
 }
 
-.margin-bottom-15{
-  margin-bottom: 15px;
+.search-components h1{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.search-components{
+  width: 230px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* compiler */
