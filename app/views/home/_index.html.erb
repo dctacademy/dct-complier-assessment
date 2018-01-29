@@ -10,6 +10,22 @@
              <% end %>
           </select>
         </div>
+
+        <div class="form-group pull-right">
+          <label> Select Theme </label>
+          <select class="form-control" id="theme">
+            <option value="">Default</option>
+            <option value="monokai">Monokai</option>
+            <option value="railscasts">Railscast</option>
+            <option value="blackboard">Blackboard</option>
+            <option value="dracula">Dracula</option>
+            <option value="material">Material</option>
+            <option value="eclipse">Eclipse</option>
+            <option value="elegant">Elegant</option>
+
+
+          </select>
+        </div>
       </div>
       <br/>
 
@@ -40,7 +56,18 @@
 
 
 <script type="text/javascript">
+  var editor;
 $(document).ready(function(){
+
+$('#theme')[0].addEventListener('change',function(){
+    editor.setOption('theme', $(this).val());
+    $('<link>',{
+      rel: 'stylesheet',
+      href: '/stylesheets/' + $(this).val() + '.css',
+  }).appendTo($('body'));
+    }, false);
+
+
   //this is compiler code
   var flag = true;
   var lang = $("#sel option:first").val();
@@ -53,7 +80,7 @@ $(document).ready(function(){
   var jsid = 0;
   var pid = 0;
   check(lang);
-  var editor = CodeMirror(document.getElementById('text'),{
+  editor = CodeMirror(document.getElementById('text'),{
     value: "#type code here",
     mode: "ruby",
     lineNumbers: true,
@@ -284,6 +311,7 @@ $(document).ready(function(){
   )
   });
 
+  
 
 });//end of document
 </script>
