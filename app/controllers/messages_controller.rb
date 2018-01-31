@@ -31,15 +31,12 @@ class MessagesController < ApplicationController
     @message.user_id = current_user.id
     respond_to do |format|
       if @message.save
-      format.js 
-
-      ActionCable.server.broadcast "messages",
+      ActionCable.server.broadcast "messages_#{@chat_room.id}",
           message: @message.body,
           user: @message.user.username
             head :ok
-       
-      else
-        format.js
+
+      format.js
       end
     end
   end
