@@ -31,11 +31,7 @@ class MessagesController < ApplicationController
     @message.user_id = current_user.id
     respond_to do |format|
       if @message.save
-      ActionCable.server.broadcast "messages_#{@chat_room.id}",
-          message: @message.body,
-          user: @message.user.username
-            head :ok
-
+      MessageRelayJob.perform_later(@message)
       format.js
       end
     end

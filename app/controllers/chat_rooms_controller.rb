@@ -12,7 +12,7 @@ class ChatRoomsController < ApplicationController
   # GET /chat_rooms/1
   # GET /chat_rooms/1.json
   def show
-    @messages = @chat_room.messages
+    @messages = @chat_room.messages.order('created_at DESC')
     @message = Message.new
   end
 
@@ -32,7 +32,7 @@ class ChatRoomsController < ApplicationController
 
     respond_to do |format|
       if @chat_room.save
-        format.html { redirect_to @chat_room, notice: 'Chat room was successfully created.' }
+        format.html { redirect_to batch_chat_room_path(@chat_room.batch, @chat_room), notice: 'Chat room was successfully created.' }
         format.json { render :show, status: :created, location: @chat_room }
       else
         format.html { render :new }

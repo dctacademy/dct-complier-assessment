@@ -1,7 +1,10 @@
 <div class="row col-md-8 col-md-offset-2">
   <h1><%= @chat_room.title %></h1>
 
+  <%= render 'messages/form' %>
+
 <div class="panel panel-default">
+
   <% if @chat_room.messages.any? %>
     <div class="panel-body" id="messages">
       <%= render 'messages/message', collection: @chat_room.messages%>
@@ -12,10 +15,8 @@
   <%end%>
 </div>
 
-  <%= render 'messages/form' %>
 </div>
 
 <% if can? :update, @chat_room %> 
 	<%= link_to 'Edit', edit_batch_chat_room_path(@chat_room.batch, @chat_room) %> |
 <% end %>
-<%= link_to 'Back', chat_rooms_path %>
