@@ -177,6 +177,7 @@ $(document).ready(function(){
               rcode = sent;
               break;
           }
+        sendAjax();
         $.ajax({
           url: "<%= home_input_path %>",
           type: "get",
@@ -284,6 +285,29 @@ $(document).ready(function(){
   )
   });
 
+  function sendAjax(){
+    $.ajax({
+      url: '/practices/live_code',
+      type: 'GET',
+      data: {
+        data: {
+           user_id: <%= current_user.id %>,
+           practice_id: <%= @practice.id %>, 
+           code: editor.getValue()
+        }
+      }
+    });
+  }
+
+
+  var keyStrokeCount = 0;
+  $('#text').on('keyup', function(e){
+    if(keyStrokeCount > 5){
+      sendAjax();
+      keyStrokeCount = 0;
+    }
+    keyStrokeCount++;
+  });
 
 });//end of document
 </script>

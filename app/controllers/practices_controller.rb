@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource only: [:submissions]
+  skip_authorize_resource only: [:submissions, :live_code]
   before_action :set_practice, only: [:show, :edit, :update, :destroy]
 
   # GET /practices
@@ -88,6 +88,19 @@ class PracticesController < ApplicationController
     @hash_solutions = {}
     # show only the solutions for assignments of the languages chosen in practice assignment group
     @assignment.solutions.pluck(:language).uniq.find_all{|l| @practice.assignment_group.tag_list.include?(l.downcase)}.each {|language| @hash_solutions[language] = @assignment.solutions.where('language = ?', language)}
+  end
+
+  def live_code
+    # if params[:data]
+    #   PracticeRelayJob.perform_later(params[:data])
+    # end
+    if params[:data]
+      # ActionCable.server.broadcast "practices_#{params[:data][:user_id]}_#{params[:data][:practice_id]}",
+      #   message: params[:data][:code]
+      #   head :ok
+      ActionCable.server.broadcast "practices", 
+        message: params[:data][:code]
+    end 
   end
 
   private

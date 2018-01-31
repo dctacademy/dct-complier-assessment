@@ -1,0 +1,18 @@
+<div class="row col-md-8 col-md-offset-2">
+<textarea class="cm" name="javascript" ></textarea>
+</div>
+
+
+<script>
+  var code;
+  $(document).ready(function(){ 
+    $.each($('.cm'),function(key,obj){
+     code = CodeMirror.fromTextArea(obj,{
+       mode: obj.name,
+       keyMap: "sublime",
+       lineNumbers: true
+     })
+    //code.setSize(400,100);
+  })
+});
+</script>
