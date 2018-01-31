@@ -1,5 +1,6 @@
 <%= render 'breadcrum' %>
 
+
 <div class="row">
 	<% if (current_user.role? "student") && (Date.today > @assignment_group.due_datetime) %>
 		<div class="alert alert-warning"> 
@@ -16,6 +17,10 @@
 							<div class="page-header">
 									<h4> <%= sub.assignment.code %> - <%= sub.assignment.title %> </h4> 
 									<i class="glyphicon glyphicon-time"></i><span class="timeTaken"></span>
+
+                  <div class="pull-right">
+                  <button id="<%= sub.id %>" class="codePlayBack" data-toggle="modal" data-target="#myModal"> <i class="glyphicon glyphicon-play gi-1x"></i> Code Play Back</button>
+                  </div>
 							</div>
 							<div>
 								<textarea class="cm"  name="<%= sub.language %>" ><%= sub.statement %>        
@@ -53,6 +58,24 @@
 				<% end %>
 		</div>
 
+
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Step-By-Step Code Playback</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="cm" name="javascript">
+        </textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 		<% if current_user.role? "admin" %>
 		<div class="col-md-4">
 	 		 <h3 class="page-header" id="name">Output</h3>
@@ -63,12 +86,13 @@
 </div>
 
 <script type="text/javascript">
+  var code;
   $(document).ready(function(){
 	  $.each($('.cm'),function(key,obj){
-	   var code = CodeMirror.fromTextArea(obj,{
+	  code = CodeMirror.fromTextArea(obj,{
 	     mode: obj.name,
 	     keyMap: "sublime",
-	     lineNumbers: true
+	     lineNumbers: true,
 	   })
 	  //code.setSize(400,100);
   })
@@ -142,5 +166,33 @@
   	$('.timeTaken')[i].innerHTML = ` ${formatTime(submissionTimes[i])} `;
   }
 
+  var playBack;
+  $('.codePlayBack').on('click', function(){
+    var that = this;
+    code.getDoc().setValue('');
+    code.refresh();
+    setTimeout(function(){ // after 2 secons when modal opens
+      $.ajax({
+      url: '/practices/code_play_backs',
+      type: 'GET',
+      data: {
+        submission_id: $(that).attr('id')
+      },
+      success: function(codes){
+        var i = 0;
+        playBack = setInterval(function(){
+          code.getDoc().setValue(codes[i].statement);
+          i++;
+          if(i >= codes.length){
+            clearInterval(playBack);
+          }
+        }, 1000);
+      }
+     });
+    }, 1000); // start showing data
+  });
 
+  $("#myModal").on("hidden.bs.modal", function () {
+    clearInterval(playBack);
+  });
 </script>

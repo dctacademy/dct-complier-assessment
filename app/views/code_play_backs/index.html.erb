@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Code Play Backs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Practice</th>
+      <th>User</th>
+      <th>Statement</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @code_play_backs.each do |code_play_back| %>
+      <tr>
+        <td><%= code_play_back.practice_id %></td>
+        <td><%= code_play_back.user_id %></td>
+        <td><%= code_play_back.statement %></td>
+        <td><%= link_to 'Show', code_play_back %></td>
+        <td><%= link_to 'Edit', edit_code_play_back_path(code_play_back) %></td>
+        <td><%= link_to 'Destroy', code_play_back, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Code Play Back', new_code_play_back_path %>

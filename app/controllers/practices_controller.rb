@@ -1,7 +1,7 @@
 class PracticesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource only: [:submissions]
+  skip_authorize_resource only: [:submissions, :code_play_backs]
   before_action :set_practice, only: [:show, :edit, :update, :destroy]
 
   # GET /practices
@@ -88,6 +88,12 @@ class PracticesController < ApplicationController
     @hash_solutions = {}
     # show only the solutions for assignments of the languages chosen in practice assignment group
     @assignment.solutions.pluck(:language).uniq.find_all{|l| @practice.assignment_group.tag_list.include?(l.downcase)}.each {|language| @hash_solutions[language] = @assignment.solutions.where('language = ?', language)}
+  end
+
+  def code_play_backs
+    @submission = Submission.find(params[:submission_id])
+    @code_play_backs = CodePlayBack.where(user_id: @submission.user_id, practice_id: @submission.practice_id).order('created_at')
+    render json: @code_play_backs
   end
 
   private
