@@ -15,7 +15,7 @@
 //= require chosen-jquery
 //= require chosen
 //= require chartkick
-//= require_tree .
+//= require_tree ./channels
 
 $(document).ready(function(){
 	$('#batch_start_date').datepicker(

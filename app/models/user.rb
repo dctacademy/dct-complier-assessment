@@ -22,6 +22,7 @@ class User < ApplicationRecord
      has_many :comments
 
      has_many :assignment_timers
+     has_many :messages, dependent: :destroy
 
      belongs_to :student
      #after_create :assign_user_role

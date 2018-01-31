@@ -16,18 +16,18 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="ongoing">
-      <% @batches = Batch.where('end_date >= ? AND is_completed = ?', Date.today, false ) %>
+      <% @batches = @batches.where('end_date >= ? AND is_completed = ?', Date.today, false ) %>
       <%= render 'index' %> 
     </div>
 
     <div role="tabpanel" class="tab-pane" id="completed">
-      <% @batches = Batch.where('is_completed = ?', true) %>
+      <% @batches = @batches.where('is_completed = ?', true) %>
       <%= render 'index' %>
     </div>
 
     <% if current_user.role? "admin" %>
      <div role="tabpanel" class="tab-pane" id="all">
-      <% @batches = Batch.order('start_date DESC') %>
+      <% @batches = @batches.order('start_date DESC') %>
       <%= render 'index' %>
     </div>
     <% end %>

@@ -1,0 +1,25 @@
+<table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Batch</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chat_rooms.each do |chat_room| %>
+      <tr>
+        <td><%= chat_room.title %></td>
+        <td><%= chat_room.batch.title %></td>
+        <td><%= link_to 'messages', batch_chat_room_path(chat_room.batch, chat_room) %></td>
+        <% if can? :update, chat_room %>
+         <td><%= link_to 'Edit', edit_chat_room_path(chat_room) %></td>
+        <% end %>
+        <% if can? :destroy, chat_room %>
+          <td><%= link_to 'Destroy', chat_room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

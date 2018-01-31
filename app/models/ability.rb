@@ -38,6 +38,9 @@ class Ability
         can [:update, :destroy], Comment do |com|
             com.user == user
         end
+        can :read, ChatRoom do |room|
+            user.student.batches.pluck(:id).include? room.batch_id
+        end
         can :read, [Answer, Batch, AssignmentGroup, Practice, Solution, Comment]
         can :read, Notification do |notification|
             notification.user = user 

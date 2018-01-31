@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount ActionCable.server => '/cable'
+
   # custom actions routes
   get 'assignment_groups/lists'
   get 'lists/assignments'
@@ -26,7 +28,13 @@ Rails.application.routes.draw do
   resources :batches do
     get '/assignment_groups/student_solutions'
     resources :assignment_groups
+    resources :chat_rooms
   end
+
+  resources :chat_rooms do 
+    resources :messages
+  end
+
   resources :students
   resources :courses
   devise_for :users , :path_prefix => "my"

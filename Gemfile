@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'chosen-rails'
+gem 'redis'
 gem 'exception_notification'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'devise'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126023515) do
+ActiveRecord::Schema.define(version: 20180130040933) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 20180126023515) do
     t.datetime "updated_at",                   null: false
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text     "body"
     t.integer  "user_id"
@@ -107,6 +114,15 @@ ActiveRecord::Schema.define(version: 20180126023515) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "chat_room_id"
+    t.integer  "batch_id"
+    t.text     "body"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "notification_types", force: :cascade do |t|
