@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  practice_id: 1
+  user_id: 1
+  statement: MyText
+
+two:
+  practice_id: 1
+  user_id: 1
+  statement: MyText

@@ -42,7 +42,7 @@ class Ability
         can :read, Notification do |notification|
             notification.user = user 
         end
-        can :create, [Answer,Submission, Comment]
+        can :create, [Answer,Submission, Comment, CodePlayBack]
         can :update, Answer do |ans|
           ans.user = user
         end

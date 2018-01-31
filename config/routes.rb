@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :code_play_backs
   # custom actions routes
   get 'assignment_groups/lists'
   get 'lists/assignments'
+  get 'practices/code_play_backs'
 
   resources :comments
   resources :notification_types
