@@ -10,6 +10,64 @@
              <% end %>
           </select>
         </div>
+      
+        <div class="form-group pull-right">
+          <% themes = [{"3024-day": "3024 Day"}]%>
+          <label> Select Theme </label>
+          <select class="form-control" id="theme">
+            <option value="">Default</option>
+            <option value="3024-day">3024 Day</option>
+            <option value="3024-night">3024 Night</option>
+            <option value="abcdef">ABCDEF</option>
+            <option value="ambiance-mobile">Ambiance Mobile</option>
+            <option value="ambiance">Ambiance</option>
+            <option value="base16-dark">Base16 Dark</option>
+            <option value="base16-light">Base16 Light</option>
+            <option value="bespin">Bespin</option>
+            <option value="blackboard">Blackboard</option>
+            <option value="cobalt">Cobalt</option>
+            <option value="colorforth">Colorforth</option>
+            <option value="dracula">Dracula</option>
+            <option value="duotone-dark">Duotone Dark</option>
+            <option value="duotone-light">Duotone Light</option>
+            <option value="eclipse">Eclipse</option>
+            <option value="elegant">Elegant</option>
+            <option value="erlang-dark">Erlang Dark</option>
+            <option value="hopscotch">Hopscotch</option>
+            <option value="icecoder">Icecoder</option>
+            <option value="isotope">Isotope</option>
+            <option value="lesser-dark">Lesser Dark</option>
+            <option value="liquibyte">Liquibyte</option>
+            <option value="material">Material</option>
+            <option value="mbo">Mbo</option>
+            <option value="mdn-like">Mdn Like</option>
+            <option value="midnight">Midnight</option>
+            <option value="monokai">Monokai</option>
+            <option value="neat">Neat</option>
+            <option value="neo">Neo</option>
+            <option value="night">Night</option>
+            <option value="panda-syntax">Panda Syntax</option>
+            <option value="paraiso-dark">Paraiso Dark</option>
+            <option value="paraiso-light">Paraiso Light</option>
+            <option value="pastel-on-dark">Pastel on Dark</option
+              >
+            <option value="railscasts">Railscasts</option>
+            <option value="rubyblue">Rubyblue</option>
+            <option value="seti">Seti</option>
+            <option value="solarized">Solarized</option>
+            <option value="the-matrix">The Matrix</option>
+            <option value="tomorrow-night-bright">Tomorrow Night 
+            Bright</option>
+            <option value="tomorrow-night-eighties">Tomorrow Night Eighties</option>
+            <option value="ttcn">Ttcn</option>
+            <option value="twilight">Twilight</option>
+            <option value="vibrant-ink">Vibrant Ink</option>
+            <option value="xq-light">XQ Light</option>
+            <option value="xq-dark">XQ Dark</option>
+            <option value="yeti">Yeti</option>
+            <option value="zenburn">Zenburn</option>
+          </select>
+        </div>
       </div>
       <br/>
 
@@ -40,7 +98,38 @@
 
 
 <script type="text/javascript">
-$(document).ready(function(){
+  var editor;
+  $(document).ready(function(){
+  
+  // theme selection
+    var themeThat;
+    $('#theme')[0].addEventListener('change',function(){
+      themeThat = this;
+      editor.setOption('theme', $(this).val());
+      $('<link>',{
+        rel: 'stylesheet',
+        href: '/stylesheets/' + $(this).val() + '.css',
+       }).appendTo($('body'));
+
+    $.ajax({
+      <% if current_user.editor_setting.nil? %>
+        url: '/editor_settings',
+        type: 'POST',
+      <% else %>
+        url: '/editor_settings/<%= current_user.editor_setting.id%>',
+        type: 'PATCH',
+      <% end %>
+        data: {
+          editor_setting: {
+           theme_name: $('#theme :selected')[0].text ,
+           theme_css: $('#theme :selected')[0].value
+          }
+        }
+    });
+
+    }, false);
+
+
   //this is compiler code
   var flag = true;
   var lang = $("#sel option:first").val();
@@ -53,7 +142,7 @@ $(document).ready(function(){
   var jsid = 0;
   var pid = 0;
   check(lang);
-  var editor = CodeMirror(document.getElementById('text'),{
+  editor = CodeMirror(document.getElementById('text'),{
     value: "#type code here",
     mode: "ruby",
     lineNumbers: true,
@@ -287,6 +376,17 @@ $(document).ready(function(){
   )
   });
 
+
+  // set theme 
+  <% if !current_user.editor_setting.nil? %>
+  $('#theme').val("<%= current_user.editor_setting.theme_css %>");
+  editor.setOption('theme', '<%= current_user.editor_setting.theme_css %>');
+    $('<link>',{
+      rel: 'stylesheet',
+      href: '/stylesheets/' + '<%= current_user.editor_setting.theme_css %>' + '.css',
+    }).appendTo($('body'));
+  <% end %>
+
   function ajaxForPlayBack(){
     $.ajax({
       url: '/code_play_backs',
@@ -310,7 +410,6 @@ $(document).ready(function(){
       keyStrokeCountPlayBack++;
     });
   <% end %>
-
 
 
 });//end of document

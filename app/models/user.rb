@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
      has_many :assignment_timers
 
+     has_one :editor_setting
      has_many :code_play_backs
 
      belongs_to :student

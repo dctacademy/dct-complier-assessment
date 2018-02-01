@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @editor_setting.user_id %>
+</p>
+
+<p>
+  <strong>Theme name:</strong>
+  <%= @editor_setting.theme_name %>
+</p>
+
+<p>
+  <strong>Theme css:</strong>
+  <%= @editor_setting.theme_css %>
+</p>
+
+<%= link_to 'Edit', edit_editor_setting_path(@editor_setting) %> |
+<%= link_to 'Back', editor_settings_path %>

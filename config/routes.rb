@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+  resources :editor_settings
   resources :code_play_backs
   # custom actions routes
   get 'assignment_groups/lists'
