@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Practice:</strong>
+  <%= @code_play_back.practice_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @code_play_back.user_id %>
+</p>
+
+<p>
+  <strong>Statement:</strong>
+  <%= @code_play_back.statement %>
+</p>
+
+<%= link_to 'Edit', edit_code_play_back_path(@code_play_back) %> |
+<%= link_to 'Back', code_play_backs_path %>

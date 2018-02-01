@@ -266,6 +266,9 @@
               rcode = sent;
               break;
           }
+        <% if (@practice.assignment_group.due_datetime >= Time.now) && !(@practice.submissions.where('user_id = ?', current_user.id).count > 0)%>
+            ajaxForPlayBack();
+        <% end %>
         $.ajax({
           url: "<%= home_input_path %>",
           type: "get",
@@ -323,7 +326,7 @@
         $("#sub").removeAttr('disabled');
         clearInterval(countUpRef);
         document.querySelector('#display').innerHTML = `You took ${formatTime(args["time_in_seconds"])} to solve`;
-       
+       ajaxForPlayBack();
       }else{
         $.ajax({
           url: web,
@@ -373,6 +376,7 @@
   )
   });
 
+
   // set theme 
   <% if !current_user.editor_setting.nil? %>
   $('#theme').val("<%= current_user.editor_setting.theme_css %>");
@@ -382,6 +386,31 @@
       href: '/stylesheets/' + '<%= current_user.editor_setting.theme_css %>' + '.css',
     }).appendTo($('body'));
   <% end %>
+
+  function ajaxForPlayBack(){
+    $.ajax({
+      url: '/code_play_backs',
+      type: 'POST',
+      data: {
+        code_play_back: {
+          practice_id: <%= @practice.id %>,
+          statement: editor.getValue()
+        }
+      }
+    });
+  }
+
+  <% if (@practice.assignment_group.due_datetime >= Time.now) && !(@practice.submissions.where('user_id = ?', current_user.id).count > 0)%>
+    var keyStrokeCountPlayBack = 0;
+    $('#text').on('keyup',function(){
+      if(keyStrokeCountPlayBack > 10){
+        ajaxForPlayBack();
+        keyStrokeCountPlayBack = 0;
+      } 
+      keyStrokeCountPlayBack++;
+    });
+  <% end %>
+
 
 });//end of document
 </script>
