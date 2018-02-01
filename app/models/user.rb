@@ -23,6 +23,8 @@ class User < ApplicationRecord
 
      has_many :assignment_timers
 
+     has_one :editor_setting
+
      belongs_to :student
      #after_create :assign_user_role
 

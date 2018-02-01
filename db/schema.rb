@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126023515) do
+ActiveRecord::Schema.define(version: 20180201150759) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -67,6 +67,21 @@ ActiveRecord::Schema.define(version: 20180126023515) do
     t.datetime "updated_at",                   null: false
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "code_play_backs", force: :cascade do |t|
+    t.integer  "practice_id"
+    t.integer  "user_id"
+    t.text     "statement"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text     "body"
     t.integer  "user_id"
@@ -77,6 +92,14 @@ ActiveRecord::Schema.define(version: 20180126023515) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "editor_settings", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "theme_name"
+    t.string   "theme_css"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -107,6 +130,15 @@ ActiveRecord::Schema.define(version: 20180126023515) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "chat_room_id"
+    t.integer  "batch_id"
+    t.text     "body"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "notification_types", force: :cascade do |t|

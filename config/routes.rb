@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :editor_settings
   # custom actions routes
   get 'assignment_groups/lists'
   get 'lists/assignments'

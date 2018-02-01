@@ -1,0 +1,32 @@
+<%= form_for(editor_setting) do |f| %>
+  <% if editor_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(editor_setting.errors.count, "error") %> prohibited this editor_setting from being saved:</h2>
+
+      <ul>
+      <% editor_setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %>
+    <%= f.number_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :theme_name %>
+    <%= f.text_field :theme_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :theme_css %>
+    <%= f.text_field :theme_css %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
