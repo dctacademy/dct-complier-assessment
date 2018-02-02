@@ -62,12 +62,14 @@
   <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content modal-lg">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Step-By-Step Code Playback</h4>
+
+        <h4 class="modal-title modal-lg" id="myModalLabel">Step-By-Step Code Playback</h4>
+
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-lg">
         <textarea class="cm" name="javascript">
         </textarea>
       </div>
@@ -167,6 +169,7 @@
   }
 
   var playBack;
+  var playBackInterval = 1000;
   $('.codePlayBack').on('click', function(){
     var that = this;
     code.getDoc().setValue('');
@@ -186,7 +189,7 @@
           if(i >= codes.length){
             clearInterval(playBack);
           }
-        }, 1000);
+        }, playBackInterval);
       }
      });
     }, 1000); // start showing data

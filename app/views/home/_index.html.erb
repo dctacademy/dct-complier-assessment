@@ -162,7 +162,10 @@
           if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
         }
       }
-  });
+  }
+  );
+  editor.setSize(900,700);
+
 
   var result = CodeMirror(document.getElementById('result'),{
     value: "Your result appears here",
@@ -411,6 +414,18 @@
     });
   <% end %>
 
+ <% unless current_user.role? "admin" %>
+  $('#text')[0].addEventListener('paste', function(e){
+    e.preventDefault();
+    swal(
+      'Ooops...!!!',
+      "Code needs to be typed. Pasting disabled",
+      'error'
+    )
+  }, true);
+ <% end %>
+
+ $('.CodeMirror').css('font-size', '15px');
 
 });//end of document
 </script>
